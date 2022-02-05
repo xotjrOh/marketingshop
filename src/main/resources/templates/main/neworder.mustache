@@ -1,0 +1,269 @@
+<div class="container-fluid">
+    <div class="row">
+        <main class="main py-3 px-3 px-xl-5 w-100">
+            <div class="row">
+                <div class="col-12 col-xl-8">
+                    <div class="d-flex flex-row align-items-center justify-content-between mb-3 col-heading">
+                        <p class="text-muted m-0">"주문내역"탭에서 구매 상품의 후기와 별점을 남기고 10%를 환급받으세요~!</p>
+                        <a href="/customer/orders" class="btn btn-sm btn-outline-primary">주문내역</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="/customer/addOrder" method="post" id="order-form" class="form form-horizontal">
+                                <div class="form-group">
+                                    <label for="orderform-category" class="control-label">카테고리</label>
+                                    <select class="form-control" id="orderform-category" name="category" style="font-family: 'FontAwesome','Second Font name'" onchange="change(this.value)">
+                                        {{#categories}}
+                                        <option class="category-option" value="{{.}}">{{.}}</option>
+                                        {{/categories}}
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="orderform-service" class="control-label">서비스 ( 가격 / 1,000개 )<span id="orderform-service-id" class="ml-2 badge badge-primary">#2668</span></label>
+                                    <select id="orderform-service" class="form-control" name="service" onchange="selectService(this.options)">
+                                        <option data-type="12" value="0000">데이터를 불러오는 중입니다</option>
+                                        <!--<option data-type="12" value="2781">🔥⚡⚡ Instagram Likes [LQ/Mixed - Max 5K] -- 110원 / 1,000개</option>
+                                        <option data-type="12" value="3983">🔥⚡⚡ Instagram Likes [LQ/Mixed - Max 10K] [S3] -- 132원 / 1,000개</option>
+                                        <option data-type="12" value="3742">🔥⚡⚡ Instagram Likes [LQ/Mixed - Max 10K] [S2] -- 154원 / 1,000개</option>
+                                        <option data-type="12" value="2833">🔥⚡⚡ Instagram Likes [Mixed - Max 50K] -- 176원 / 1,000개</option>
+                                        <option data-type="12" value="2717">🔥⚡⚡ Instagram Likes + Reach [Mixed - Max 15K] -- 198원 / 1,000개</option>
+                                        <option data-type="12" value="2961">🔥⚡⚡ Instagram Likes [Mixed - Max 5K] -- 220원 / 1,000개</option>
+                                        <option data-type="12" value="3755">🔥⚡⚡ Instagram Likes [LQ/Mixed - Max 10K] [S4] -- 286원 / 1,000개</option>
+                                        <option data-type="12" value="3716">🔥⚡⚡ Instagram Likes [LQ/Mixed - Max 10K] -- 440원 / 1,000개</option>
+                                        <option data-type="12" value="3970">🔥⚡⚡ Instagram Likes [Mixed - Max 30K] -- 572원 / 1,000개</option>
+                                        <option data-type="12" value="3989">🔥⚡⚡ Instagram Likes + Impressions + Reach [HQ/Mixed - Max 300K] -- 748원 / 1,000개</option>
+                                        <option data-type="12" value="3715">🔥⚡⚡ Instagram Likes [HQ - Max 15K] -- 857원 / 1,000개</option>
+                                        <option data-type="12" value="2849">🔥⚡⚡ Instagram Likes [HQ - Max 40K] -- 880원 / 1,000개</option>
+                                        <option data-type="12" value="2812">🔥⚡⚡ Instagram Likes [Mixed - Max 80K] -- 1,078원 / 1,000개</option>
+                                        <option data-type="12" value="2463">🔥⚡⚡ Instagram Likes [HQ/Mixed - Max 385K] -- 836원 / 1,000개</option>
+                                        <option data-type="12" value="3975">🔥⚡⚡ Instagram Likes + Impressions + Reach [HQ/Mixed - Max 100K] -- 1,122원 / 1,000개</option>
+                                        <option data-type="12" value="2528">🔥⚡⚡ Instagram Likes [HQ - Max 30K] -- 3,190원 / 1,000개</option>
+                                        <option data-type="12" value="2450">🔥⚡ Instagram Likes [HQ - Max 45K] -- 5,830원 / 1,000개</option>
+                                        <option data-type="12" value="2536">🔥⚡⚡ Instagram Likes [HQ Mixed - Max 50K] -- 5,280원 / 1,000개</option>-->
+                                    </select>
+                                </div>
+
+                                <div class="form-group fields" id="service_notice">
+                                    <label for="service_notice" class="control-label">공지사항(필독)</label>
+                                    <div class="card bg-light card-body">{{>description/allDescription}}</div>
+                                </div>
+
+                                <div class="form-group fields" id="service_description">
+                                    <label for="service_description" class="control-label">상세설명</label>
+                                    <div class="card bg-light card-body"></div>
+                                </div>
+                                {{#addorder}}
+                                <div class="form-group hidden fields"> <!--이 2개는 addorder일때만 존재-->
+                                    <label class="control-label"></label>
+                                    <input class="form-control w-full" value="{{category}}" type="text" id="field-orderform-fields-cur-category">
+                                </div>
+                                <div class="form-group hidden fields">
+                                    <label class="control-label"></label>
+                                    <input class="form-control w-full" value="{{service}}" type="text" id="field-orderform-fields-cur-service">
+                                </div>
+                                {{/addorder}}
+                                <div class="form-group hidden fields" id="order_type">
+                                    <label class="control-label" for="field-orderform-fields-user_name">Type</label>
+                                    <input class="form-control w-full" name="type" value="" type="text" id="field-orderform-fields-type">
+                                </div>
+                                <div class="form-group hidden fields" id="order_user_name">
+                                    <label class="control-label" for="field-orderform-fields-user_name">Username</label>
+                                    <input class="form-control w-full" name="privateid" value="{{user.privateid}}" type="text" id="field-orderform-fields-user_name">
+                                </div>
+                                <!-------------------------------------------------실제 입력폼-------------------------------------------->
+                                <div id="fields">
+                                    <div class="form-group fields hidden" id="order_link">
+                                        <label class="control-label" for="field-orderform-fields-link">적용할 링크</label>
+                                        <input class="form-control" name="link" value="" type="text" id="field-orderform-fields-link">
+                                    </div> {{!12 디폴트 2개}}  {{!14 Custom Comments Package 2개}}  {{!2 Custom Comments 3개}}  {{!10 Package 1개}}  {{!15 Comment Likes 3개}}
+                                    <div class="form-group fields hidden" id="order_quantity">
+                                        <label class="control-label" for="field-orderform-fields-quantity">적용 개수</label>
+                                        <input class="form-control" name="quantity" value="" type="text" id="field-orderform-fields-quantity" onkeyup="defaultPrice(this)"><small class="help-block min-max">{{!Min:100 - Max: 50000}}</small>
+                                    </div> {{!12 디폴트 2개}}  {{!2 Custom Comments 3개 뺏음}}  {{!15 Comment Likes 3개}}
+                                    <!--<div class="form-group hidden fields" id="order_keywords">
+                                        <label class="control-label" for="field-orderform-fields-keywords">Keywords (1 per line)</label>
+                                        <textarea class="form-control" name="OrderForm[keywords]" id="field-orderform-fields-keywords" cols="30" rows="10"></textarea>
+                                    </div>-->
+                                    <div class="form-group hidden fields" id="order_comment">
+                                        <label class="control-label" for="field-orderform-fields-comment">댓글 (1줄에 1개)</label>
+                                        <textarea class="form-control" name="comments" id="field-orderform-fields-comment" cols="30" rows="10"></textarea>
+                                    </div>  {{!14 Custom Comments Package 2개}}  {{!2 Custom Comments 3개}}
+                                    <!--<div class="form-group hidden fields" id="order_mentionUsernames">
+                                        <label class="control-label" for="field-orderform-fields-mentionUsernames">Usernames (1 per line)</label>
+                                        <textarea class="form-control" name="OrderForm[mentionUsernames]" id="field-orderform-fields-mentionUsernames" cols="30" rows="10"></textarea>
+                                    </div>
+                                    <div class="form-group hidden fields" id="order_usernames">
+                                        <label class="control-label" for="field-orderform-fields-usernames">Usernames (1 per line)</label>
+                                        <textarea class="form-control w-full" name="OrderForm[usernames]" id="field-orderform-fields-usernames" cols="30" rows="10"></textarea>
+                                    </div>
+                                    <div class="form-group hidden fields" id="order_usernames_custom">
+                                        <label class="control-label" for="field-orderform-fields-usernames_custom">Usernames (1 per line)</label>
+                                        <textarea class="form-control" name="OrderForm[usernames_custom]" id="field-orderform-fields-usernames_custom" cols="30" rows="10"></textarea>
+                                    </div>-->
+                                    <div class="form-group fields" id="order_username">
+                                        <label class="control-label" for="field-orderform-fields-username">유저 이름</label>
+                                        <input class="form-control" name="username" value="" type="text" id="field-orderform-fields-username">
+                                    </div>  {{!100 Subscriptions 3개}}
+                                    <!--<div class="form-group hidden fields" id="order_mediaUrl">
+                                        <label class="control-label" for="field-orderform-fields-mediaUrl">Media URL</label>
+                                        <input class="form-control" name="OrderForm[mediaUrl]" value="" type="text" id="field-orderform-fields-mediaUrl">
+                                    </div>
+                                    <div class="form-group hidden fields" id="order_hashtag">
+                                        <label class="control-label" for="field-orderform-fields-hashtag">Hashtag</label>
+                                        <input class="form-control" name="OrderForm[hashtag]" value="" type="text" id="field-orderform-fields-hashtag">
+                                    </div>
+                                    <div class="form-group hidden fields" id="order_hashtags">
+                                        <label class="control-label" for="field-orderform-fields-hashtags">Hashtags (1 per line)</label>
+                                        <textarea class="form-control" name="OrderForm[hashtags]" id="field-orderform-fields-hashtags" cols="30" rows="10"></textarea>
+                                    </div>-->
+                                    {{!<div id="dripfeed">
+                                        <div class="form-group fields hidden" id="order_check">
+                                            <div class="form-group__checkbox">
+                                                <label class="form-group__checkbox-label">
+                                                    <input name="OrderForm[check]" value="1" type="checkbox" id="field-orderform-fields-check">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <label for="field-orderform-fields-check" class="form-group__label-title">
+                                                    Drip-feed
+                                                </label>
+                                            </div>
+                                            <div class="hidden depend-fields" id="dripfeed-options" data-depend="field-orderform-fields-check">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="field-orderform-fields-runs">Runs ( Total orders to be sent)</label>
+                                                    <input class="form-control" name="OrderForm[runs]" value="" type="text" id="field-orderform-fields-runs">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label" for="field-orderform-fields-interval">Interval (Break between each run, In minutes)</label>
+                                                    <input class="form-control" name="OrderForm[interval]" value="" type="text" id="field-orderform-fields-interval">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label" for="field-orderform-fields-total-quantity">Total quantity</label>
+                                                    <input class="form-control" name="OrderForm[total_quantity]" value="" type="text" id="field-orderform-fields-total-quantity" readonly="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>}}
+                                    <div class="form-group fields" id="order_posts">
+                                        <label class="control-label" for="field-orderform-fields-posts">적용할 게시물 수</label>
+                                        <input class="form-control" name="posts" value="" type="text" id="field-orderform-fields-posts">
+                                    </div>  {{!100 Subscriptions 3개}}
+                                    <div class="form-group fields" id="order_min">
+                                        <label class="control-label" for="order_count">개수</label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control" id="order_count" name="min" value="" placeholder="최소"><small class="help-block min-max">Min: 100 - Max: 50000</small>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control" id="order_count" name="max" value="" placeholder="최대">
+                                            </div>
+                                        </div>
+                                    </div>  {{!100 Subscriptions 3개}}
+                                    <div class="form-group fields hidden" id="order_comment_username">
+                                        <label class="control-label" for="field-orderform-fields-comment_username">적용할 유저이름</label>
+                                        <input class="form-control" name="comment_username" value="" type="text" id="field-orderform-fields-comment_username">
+                                    </div>  {{!15 Comment Likes 3개}}
+                                    <!--<div class="form-group hidden fields" id="order_answer_number">
+                                        <label class="control-label" for="field-orderform-fields-answer_number">Answer number</label>
+                                        <input class="form-control" name="OrderForm[answer_number]" value="" type="text" id="field-orderform-fields-answer_number">
+                                    </div>
+                                    <div class="form-group hidden fields" id="order_email">
+                                        <label class="control-label" for="field-orderform-fields-email">Email</label>
+                                        <input class="form-control" name="OrderForm[email]" value="" type="text" id="field-orderform-fields-email">
+                                    </div>
+                                    <div class="form-group hidden fields" id="order_groups">
+                                        <label class="control-label" for="field-orderform-fields-groups">Groups</label>
+                                        <textarea class="form-control" name="OrderForm[groups]" id="field-orderform-fields-groups" cols="30" rows="10"></textarea>
+                                    </div>-->
+                                    <div class="form-group fields" id="order_average_time" style="display: block;">
+                                        <label class="control-label" for="field-orderform-fields-average_time">적용 완료까지 예상시간
+                                            <span class="ml-1 mr-1 fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" title="" data-original-title="최근 10건의 평균 적용시간(1,000개 기준)">
+                                            </span>
+                                        </label>
+                                        <input class="form-control" readonly="" value="" type="text" id="field-orderform-fields-average_time" disabled="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="charge-div">
+                                    <label for="charge" class="control-label">전체 비용</label>
+                                    <input type="text" class="form-control" id="charge" name="charge" value="" readonly="">
+                                </div>
+
+
+                                <input type="hidden" name="_csrf" value="VTzbhihVxNnHZ7Sgpf2aPwGsUxlfpPiB634WnZ9yzM4sXZ3JZzD9g78FmffrifZdd9Y7ejvJvsCHB2fe20eUug==">
+                                <button type="submit" class="btn btn-primary btn-block">주문 제출</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4 mt-3 mt-xl-0">
+                    <!--<div class="row">
+                        <div class="col-6">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h4 class="h4 text-uppercase">7206995</h4>
+
+
+                                </div>
+                                <div class="card-footer">
+                                    <i class="fas fa-crown text-primary mr-2"></i>
+                                    <span>전체 주문건수</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h4 class="h4 text-uppercase">3163</h4>
+                                </div>
+                                <div class="card-footer">
+                                    <i class="fas fa-shopping-cart text-primary mr-2"></i>
+                                    <span>서비스 개수</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="row mt-3" id="commentlist">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center alert-primary border-0">
+                                    <h6 class="h6 m-0"><font color="#000"><b id="comment-star-title">서비스에 대한 평가</b></font></h6>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="collapse" data-target="#service-comment">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                                <div class="card-body collapse pt-0 alert-primary show" id="service-comment">
+                                    <div class="card comment-card-in">
+                                        <div class="card-body text-muted" id="comment-list-show">
+
+                                            <font color="#000">
+                                                <p style=""><b>오태석  <small>2022년 1월 12일(수) 14시</small></b></p>
+                                                <p>공급 ㅈㄴ게 느리네 진짜 </p>
+                                            </font>
+
+                                            <hr style="margin-top: 19px; margin-bottom: 19px; border-top-color: rgb(56, 56, 56); color: rgb(92, 92, 92); font-family: &quot;Source Sans Pro&quot;, sans-serif; font-size: 13px;">
+                                            <font color="#000">
+                                                <p style=""><b>안민우  <small>2022년 1월 12일(수) 10시</small></b></p>
+                                                <p>이런 공급사는 알아서 좀 빼둬라;; </p>
+                                            </font>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{>main/qna}}
+                </div>
+            </div>
+            <script type="text/javascript">
+              let formData = localStorage.getItem('signup');
+              formData && formData.removeItem('signup');
+            </script>
+        </main>
+        <!-- Main End -->
+    </div>
+</div>

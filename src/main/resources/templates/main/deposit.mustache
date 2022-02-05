@@ -1,0 +1,95 @@
+<body class="app position-relative vsc-initialized" style="height: 100%; zoom: 1;" data-aos-easing="ease" data-aos-duration="400" data-aos-delay="0">
+<div class="zeynep-overlay"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Main -->
+        <main class="main py-3 px-3 px-xl-5 w-100">
+            <div class="row">
+                <div class="col-12 col-xl-8">
+                    <form class="card" method="post" action="">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="method" class="control-label"><font color="#000">결제수단</font></label>
+                                <select class="form-control" id="method" name="AddFoundsForm[type]">
+                                    <option value="kakaopay">카카오페이(간편결제)</option>
+                                    <option value="html5_inicis">일반결제</option>
+                                    <option value="payco">페이코</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="amount" class="control-label">
+                                    <span id="amount_label"><font color="#000">충전금액</font></span> <span id="amount_label_currency" class="hidden"></span>
+                                    <small>최소 : 5,000원 </small>
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend bg-muted">
+                                        <span class="input-group-text"><i class="fas fa-won-sign"></i></span>
+                                    </div>
+                                    <input type="number" class="form-control" name="AddFoundsForm[amount]" id="amount" value="" step="5000" placeholder="0">
+                                </div>
+                            </div>
+                            <input type="hidden" name="_csrf" value="7SIXa9dLwUZehZBlWC2tCkeYHr9dNOrPGtKiuDjIIze6bU4z4R3xAAvx0idvd584Bukz_jdio7ZJovHvQKYSQA==">
+                            <button type="button" class="btn btn-primary btn-block" id="addCharge-btn" onclick="addCharge()">충전</button>
+                        </div>
+                    </form>
+
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <h6 class="font-weight-bold m-0"><i class="fas fa-money-check-edit-alt mr-2"></i>내 결제내역</h6>
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table modern m-0">
+                                <thead>
+                                <tr>
+                                    <th>결제번호</th>
+                                    <th>결제일시</th>
+                                    <th>결제수단</th>
+                                    <th>충전금액</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#paymentData}}
+                                <tr>
+                                    <td>{{id}}</td>
+                                    <td><span class="nowrap">{{createdate}}</span></td>
+                                    <td>{{pg}}</td>
+                                    <td>{{money}}</td>
+                                </tr>
+                                {{/paymentData}}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <div class="nav-pills">
+                                <ul class="pagination ">
+                                    {{^paymentData.first}}
+                                    <li>
+                                        <a href="/customer/deposit/1" aria-label="First">
+                                            <span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
+                                        </a>
+                                    </li>
+                                    {{/paymentData.first}}
+                                    {{#pagelist}}
+                                    <li {{#curpage}}class="active"{{/curpage}} ><a href="/customer/deposit/{{page}}">{{page}}</a></li>
+                                    {{/pagelist}}
+                                    {{^paymentData.last}}
+                                    <li>
+                                        <a href="/customer/deposit/{{paymentData.totalPages}}" aria-label="Last">
+                                            <span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {{/paymentData.last}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- Main End -->
+    </div>
+</div>
+
+
+</body>

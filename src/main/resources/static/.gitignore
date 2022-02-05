@@ -1,0 +1,4 @@
+node_modules
+
+#oauth파일
+application-oauth.properties

@@ -1,0 +1,127 @@
+<!--<div>orders 내용입니다</div>
+<a class="CommentAndRating" href="#" data-toggle="modal" data-target="#CommentModal" onclick="serviceComment()">
+    <i class="fas fa-star-half-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+    평가
+</a>-->
+
+
+<body class="app position-relative" style="height: 100%;">
+<div class="zeynep-overlay"></div>
+<!--<div class="preloader">
+    <img src="https://cdn.chorap.xyz/smmkings/assets/img/preloader.svg" />
+    <h6 class="m-0 text-uppercase text-white">Loading<span class="dot">.</span></h6>
+</div>-->
+<div class="container-fluid">
+    <div class="row">
+        <!-- Main -->
+        <main class="py-0 px-3 px-xl-5 w-100">
+            <div class="d-none" data-searchable></div>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <ul class="nav nav-pills d-flex flex-nowrap overflow-auto pb-2 pb-md-0">
+                        <li class="mr-2 pill-item"><a href="/customer/orders" class="btn btn-outline-primary">전체</a></li>
+                        <li class="mr-2 pill-item"><a class="btn btn-outline-dark"
+                                                      href="/customer/orders/pending/1">대기중</a></li>
+                        <li class="mr-2 pill-item"><a class="btn btn-outline-warning"
+                                                      href="/customer/orders/inprogress/1">진행중</a></li>
+                        <li class="mr-2 pill-item"><a class="btn btn-outline-success"
+                                                      href="/customer/orders/completed/1">완료</a></li>
+                        <li class="mr-2 pill-item"><a class="btn btn-outline-danger"
+                                                      href="/customer/orders/partial/1">부분공급</a></li>
+                        <li class="mr-2 pill-item"><a class="btn btn-outline-warning"
+                                                      href="/customer/orders/processing/1">작업지연</a></li>
+                        <li class="mr-4 pill-item"><a class="btn btn-outline-secondary"
+                                                      href="/customer/orders/canceled/1">취소</a></li>
+                        <li><a class="btn btn-outline-info" href="#" data-toggle="modal" data-target="#orderConditionModal">
+                            <i class="fas fa-info-circle fa-sm fa-fw"></i>상태 설명</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {{#orderList}}
+                    <div class="order card mb-3" data-status="{{status}}">
+                        <div class="card-body order py-0">
+                            <div class="row">
+                                <div class="col-6 col-xl-auto">
+                                    <h5 class="m-0">{{orderid}}</h5>
+                                    {{^subsDetail}}<small class="text-muted">{{!createdate}}타임</small>{{/subsDetail}}
+                                </div>
+
+                                <div class="col-6 col-xl-4 text-right text-xl-left">
+                                    <p data-toggle="tooltip" title="서비스 번호: {{serviceList.service}}" data-placement="left">{{serviceList.name}}</p>
+                                    <small class="text-muted">{{link}}</small>
+                                </div>
+                                <div class="col-12 col-xl-2 details">
+                                    <div>
+                                        <div class="detail text-center" data-toggle="tooltip" data-placement="bottom" title="시작개수">
+                                            <i class="fas fa-play mb-2"></i>
+                                            <h6 class="m-0">{{start_count}}</h6>
+                                        </div>
+                                        <div class="detail text-center" data-toggle="tooltip" data-placement="bottom" title="주문수량">
+                                            <i class="fas fa-truck-loading mb-2"></i>
+                                            <h6 class="m-0">{{quantity}}</h6>
+                                        </div>
+                                        <div class="detail text-center" data-toggle="tooltip" data-placement="bottom" title="남은수량">
+                                            <i class="fas fa-stopwatch mb-2"></i>
+                                            <h6 class="m-0">{{remains}}</h6>
+                                        </div>
+                                        {{^comment}} <!--리뷰 남기기-->
+                                        <a href="#" class="detail text-center rate-Atag" data-toggle="modal" data-target="#CommentModal" title="리뷰 등록"
+                                                                        data-orderid="{{orderid}}" data-servicenum="{{serviceList.service}}"
+                                                                        data-servicename="{{serviceList.name}}" onclick="ClickStar(this)">
+                                            <div class="m-0">
+                                                <i class="far fa-star"></i>
+                                            </div>
+                                        </a>
+                                        {{/comment}}
+                                        {{#comment}} <!--리뷰 수정-->
+                                        <a href="#" class="detail text-center rate-Atag" data-toggle="modal" data-target="#CommentChangeModal" title="리뷰 수정"
+                                                                       data-commentid="{{comment.id}}" data-servicenum="{{serviceList.service}}" data-star="{{comment.star}}"
+                                                                       data-content="{{comment.content}}" data-servicename="{{serviceList.name}}" onclick="ClickChangeStar(this)">
+                                            <div class="m-0">
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                        </a>
+                                        {{/comment}}
+                                    </div>
+                                </div>
+                                <div class="col-6 col-xl-auto text-xl-right ml-xl-auto">
+                                    <h5 class="m-0">{{charge}}원</h5>
+                                </div>
+                                <div class="col-6 col-xl-2 flex-row justify-content-end">
+                                    {{{status_html}}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/orderList}}
+
+                    {{#orders}}
+                    <ul class="pagination">
+                        {{^orderList.first}}
+                        <li>
+                            <a href="/customer/orders/all/1" aria-label="First">
+                                <span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
+                            </a>
+                        </li>
+                        {{/orderList.first}}
+                        {{#pagelist}}
+                        <li {{#curpage}}class="active"{{/curpage}} ><a href="/customer/orders/all/{{page}}">{{page}}</a></li>
+                        {{/pagelist}}
+                        {{^orderList.last}}
+                        <li>
+                            <a href="/customer/orders/all/{{orderList.totalPages}}" aria-label="Last">
+                                <span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
+                            </a>
+                        </li>
+                        {{/orderList.last}}
+                    </ul>
+                    {{/orders}}
+                </div>
+            </div>
+        </main>
+        <!-- Main End -->
+    </div>
+</div>
+</body>

@@ -1,0 +1,83 @@
+{{>layouts/mainSetting}}
+<body id="page-top" class="app position-relative vsc-initialized" data-aos-easing="ease" data-aos-duration="400" data-aos-delay="0">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -------------------------------------------------------------------------------------------------->
+
+    {{>layouts/aside}}
+
+    <!-- End of Sidebar -------------------------------------------------------------------------------------------------->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        {{#msg}}
+            <div class="alert alert-danger alert-dismissible" role="alert" style="display: block;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4><b>{{.}}</b></h4>
+            </div>
+            <div class="zeynep-overlay"></div>
+        {{/msg}}
+        {{#orderStatus}}
+        <div class="alert alert-success alert-dismissible" role="alert" style="display: block;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h4><b>주문이 완료되었습니다</b></h4>
+            주문번호: {{orderid}}<br>
+            서비스 ( 가격 / 1,000 ): {{serviceList.name}}<br>
+            링크: {{link}}<br>
+            주문개수: {{quantity}}<br>
+            가격: {{charge}}원<br>
+            잔액: {{user.balance}}원
+        </div>
+        <div class="zeynep-overlay"></div>
+        {{/orderStatus}}
+        {{#subscription}}
+        <div class="alert alert-success alert-dismissible" role="alert" style="display: block;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h4><b>주문이 완료되었습니다</b></h4>
+            자동화 주문번호: {{subsid}}<br>
+            서비스 ( 가격 / 1,000 ): {{serviceList.name}}<br>
+            유저 이름: {{username}}<br>
+            주문 개수: {{min}}-{{max}}<br>
+            게시물 수: {{posts}}
+        </div>
+        <div class="zeynep-overlay"></div>
+        {{/subscription}}
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar ------------------------------------------------------------------------------------------>
+
+            {{>layouts/header}}
+
+            <!-- End of Topbar -------------------------------------------------------------------------------------->
+
+            <!-- Begin Page Content -->
+            {{>main/neworder}}
+
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer ------------------------------------------------------------------------->
+
+        {{>layouts/footer}}
+
+        <!-- End of Footer -------------------------------------------------------------------------->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+
+<!-- -------------------------------plus alpha------------------------------------------- -->
+
+{{>layouts/plusAlpha}}
+
+</body>
+
+</html>
