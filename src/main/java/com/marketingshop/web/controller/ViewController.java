@@ -136,12 +136,14 @@ public class ViewController {
 	 }
 
 	@GetMapping("orders/all/{page}")
-	public String ordersPage(Model model, @PathVariable int page, @LoginUser SessionUser user) throws ParseException {
+	public String ordersPage(Model model, @PathVariable int page, @LoginUser SessionUser user, String search) throws ParseException {
 		model.addAttribute("orders",true);
 		model.addAttribute("user",user);
+		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("orderid").descending()); //Page request [number: 11, size 1, sort: orderid: DESC]
 
-		Pageable pageable = PageRequest.of(page-1,10, Sort.by("orderid").descending()); //Page request [number: 11, size 1, sort: orderid: DESC]
-		Page<OrderStatus> orderlist = orderStatusService.getMultiOrderStatusList(user.getPrivateid(),pageable);//Page 12 of 12 containing com.marketingshop.web.entity.OrderStatus instances
+		System.out.println("search"+search);
+		if (search == null) search="";
+		Page<OrderStatus> orderlist = orderStatusService.getMultiOrderStatusListBySearch(user.getPrivateid(), search, pageable);//Page 12 of 12 containing com.marketingshop.web.entity.OrderStatus instances
 
 		int startPage = Math.max(1,page-3);
 		int endPage = Math.min(orderlist.getTotalPages(),page+3);
@@ -179,14 +181,15 @@ public class ViewController {
 	}
 
 	@GetMapping("orders/{status}/{page}")
-	public String ordersStatusPage(Model model, @PathVariable String status, @PathVariable int page, @LoginUser SessionUser user) throws ParseException {
+	public String ordersStatusPage(Model model, @PathVariable String status, @PathVariable int page, @LoginUser SessionUser user, String search) throws ParseException {
 		if (status.equals("inprogress")) status="in progress";
 
 		model.addAttribute("orders",true);
 		model.addAttribute("user",user);
 
 		Pageable pageable = PageRequest.of(page-1,10, Sort.by("orderid").descending()); //Page request [number: 11, size 1, sort: orderid: DESC]
-		Page<OrderStatus> orderlist = orderStatusService.getMultiOrderStatusListByStatus(user.getPrivateid(),status,pageable);//Page 12 of 12 containing com.marketingshop.web.entity.OrderStatus instances
+		if (search == null) search="";
+		Page<OrderStatus> orderlist = orderStatusService.getMultiOrderStatusListByStatusAndSearch(user.getPrivateid(), status, search, pageable);//Page 12 of 12 containing com.marketingshop.web.entity.OrderStatus instances
 
 		int startPage = Math.max(1,page-3);
 		int endPage = Math.min(orderlist.getTotalPages(),page+3);
@@ -241,12 +244,13 @@ public class ViewController {
 
 
 	@GetMapping("subscriptions/all/{page}")
-	public String subscriptionsPage(Model model, @PathVariable int page, @LoginUser SessionUser user){
+	public String subscriptionsPage(Model model, @PathVariable int page, @LoginUser SessionUser user, String search){
 		model.addAttribute("subscriptions",true);
 		model.addAttribute("user",user);
 
 		Pageable pageable = PageRequest.of(page-1,10, Sort.by("subsid").descending()); //Page request [number: 11, size 1, sort: orderid: DESC]
-		Page<Subscription> subscriptionList = subscriptionService.getMultiSubscriptionList(user.getPrivateid(),pageable);//Page 12 of 12 containing com.marketingshop.web.entity.OrderStatus instances
+		if (search == null) search="";
+		Page<Subscription> subscriptionList = subscriptionService.getMultiSubscriptionListBySearch(user.getPrivateid(), search, pageable);//Page 12 of 12 containing com.marketingshop.web.entity.OrderStatus instances
 
 		int startPage = Math.max(1,page-3);
 		int endPage = Math.min(subscriptionList.getTotalPages(),page+3);
@@ -268,12 +272,13 @@ public class ViewController {
 	}
 
 	@GetMapping("subscriptions/{status}/{page}") //이유는 모르나 위와 중복체크되지 않음
-	public String subscriptionsStatusPage(Model model, @PathVariable String status, @PathVariable int page, @LoginUser SessionUser user){
+	public String subscriptionsStatusPage(Model model, @PathVariable String status, @PathVariable int page, @LoginUser SessionUser user, String search){
 		model.addAttribute("subscriptions",true);
 		model.addAttribute("user",user);
 
 		Pageable pageable = PageRequest.of(page-1,10, Sort.by("subsid").descending()); //Page request [number: 11, size 1, sort: orderid: DESC]
-		Page<Subscription> subscriptionList = subscriptionService.getMultiSubscriptionListByStatus(user.getPrivateid(),status,pageable);//Page 12 of 12 containing com.marketingshop.web.entity.OrderStatus instances
+		if (search == null) search="";
+		Page<Subscription> subscriptionList = subscriptionService.getMultiSubscriptionListByStatusAndSearch(user.getPrivateid(), status, search, pageable);//Page 12 of 12 containing com.marketingshop.web.entity.OrderStatus instances
 
 		int startPage = Math.max(1,page-3);
 		int endPage = Math.min(subscriptionList.getTotalPages(),page+3);

@@ -23,7 +23,7 @@ class OrderStatusRepositoryTest {
 
     @Test
     void findByUserId() {
-        List<OrderStatus> orderstatuslist = orderStatusRepository.findByUserId(5l);
+        List<OrderStatus> orderstatuslist = orderStatusRepository.findByUserId(5L);
         System.out.println(orderstatuslist);
     }
 
@@ -50,9 +50,21 @@ class OrderStatusRepositoryTest {
     void findByIdAndUser() {
         /*orderStatusRepository.findById();*/
 
-        Optional<OrderStatus> test = orderStatusRepository.findByOrderidAndUser(7479250l, userRepository.getById(5l));
+        Optional<OrderStatus> test = orderStatusRepository.findByOrderidAndUser(7479250L, userRepository.getById(5L));
         System.out.println(test);
-        System.out.println(test.get());
 
+    }
+
+    @Test
+    void findByUserAndLinkContaining() {
+        Pageable pageable = PageRequest.of(0,10, Sort.by("orderid").descending());
+        User user = userRepository.getById(5L);
+        String search = null;
+        Page<OrderStatus> test = orderStatusRepository.findByUserAndLinkContaining(user, search, pageable);
+        for (OrderStatus t: test) {
+            System.out.println(t);
+        }
+
+        System.out.println(test.get().collect(Collectors.toList()));
     }
 }

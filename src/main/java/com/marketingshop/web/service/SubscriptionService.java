@@ -72,9 +72,9 @@ public class SubscriptionService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Page<Subscription> getMultiSubscriptionList(String privateid, Pageable pageable){ //구해야하는 orderid묶고 보내고 받고, id마다 구데이터에 신규데이터 입힘
+    public Page<Subscription> getMultiSubscriptionListBySearch(String privateid, String search, Pageable pageable){ //구해야하는 orderid묶고 보내고 받고, id마다 구데이터에 신규데이터 입힘
         User user = userRepository.findByPrivateid(privateid).get();
-        Page<Subscription> subscriptionList = subscriptionRepository.findByUser(user, pageable);
+        Page<Subscription> subscriptionList = subscriptionRepository.findByUserAndUsernameContaining(user, search, pageable);
         List<String> subsids = new ArrayList<>();
         for (Subscription subscription: subscriptionList) {
             if (subscription.getStatus().equals("Completed") || subscription.getStatus().equals("Canceled")) continue;
@@ -110,13 +110,13 @@ public class SubscriptionService {
             e.printStackTrace();
         }
 
-        return subscriptionRepository.findByUser(user, pageable);
+        return subscriptionRepository.findByUserAndUsernameContaining(user, search, pageable);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Page<Subscription> getMultiSubscriptionListByStatus(String privateid, String status, Pageable pageable){ //구해야하는 orderid묶고 보내고 받고, id마다 구데이터에 신규데이터 입힘
+    public Page<Subscription> getMultiSubscriptionListByStatusAndSearch(String privateid, String status, String search, Pageable pageable){ //구해야하는 orderid묶고 보내고 받고, id마다 구데이터에 신규데이터 입힘
         User user = userRepository.findByPrivateid(privateid).get();
-        Page<Subscription> subscriptionList = subscriptionRepository.findByUserAndStatus(user, status, pageable);
+        Page<Subscription> subscriptionList = subscriptionRepository.findByUserAndStatusAndUsernameContaining(user, status, search, pageable);
         List<String> subsids = new ArrayList<>();
         for (Subscription subscription: subscriptionList) {
             if (subscription.getStatus().equals("Completed") || subscription.getStatus().equals("Canceled")) continue;
@@ -152,7 +152,7 @@ public class SubscriptionService {
             e.printStackTrace();
         }
 
-        return subscriptionRepository.findByUserAndStatus(user, status, pageable);
+        return subscriptionRepository.findByUserAndStatusAndUsernameContaining(user, status, search, pageable);
     }
 }
 

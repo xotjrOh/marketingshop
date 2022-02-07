@@ -13,6 +13,8 @@ public interface SubscriptionRepository extends JpaRepository<Subscription,Long>
     Optional<Subscription> findBySubsidAndUser(Long subsid, User user);
 
     Page<Subscription> findByUser(User user, Pageable pageable);
+    Page<Subscription> findByUserAndUsernameContaining(User user, String search, Pageable pageable);
 
     Page<Subscription> findByUserAndStatus(User user, String status, Pageable pageable);
+    Page<Subscription> findByUserAndStatusAndUsernameContaining(User user, String status, String search, Pageable pageable);
 }

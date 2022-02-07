@@ -122,7 +122,7 @@ public class OrderStatusService {
         return null;
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    /*@Transactional(rollbackFor = Exception.class)
     public Page<OrderStatus> getMultiOrderStatusList(String privateid, Pageable pageable){ //구해야하는 orderid묶고 보내고 받고, id마다 구데이터에 신규데이터 입힘
         User user = userRepository.findByPrivateid(privateid).get();
         Page<OrderStatus> orderStatusList = orderStatusRepository.findByUser(user, pageable);
@@ -204,6 +204,90 @@ public class OrderStatusService {
         }
 
         return orderStatusRepository.findByUserAndStatus(user, status, pageable);
+    }*/
+
+    @Transactional(rollbackFor = Exception.class)
+    public Page<OrderStatus> getMultiOrderStatusListBySearch(String privateid, String search, Pageable pageable) {
+        User user = userRepository.findByPrivateid(privateid).get();
+        Page<OrderStatus> orderStatusList = orderStatusRepository.findByUserAndLinkContaining(user, search, pageable);
+        List<String> orderids = new ArrayList<>();
+        for (OrderStatus orderStatus: orderStatusList) {
+            if (orderStatus.getStatus().equals("Completed") || orderStatus.getStatus().equals("Partial") || orderStatus.getStatus().equals("Canceled")) continue;
+            String orderid = String.valueOf(orderStatus.getOrderid());
+            orderids.add(orderid);
+        }
+
+        String orderidsComma = String.join(",",orderids);
+        if (orderidsComma.isEmpty()) return orderStatusList;
+
+        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("key", apiKey);
+        params.add("action", "status");
+        params.add("orders", orderidsComma);
+
+
+        String orderStatuses = webClient.post().uri("/api/v2")
+                .bodyValue(params)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+
+        JSONParser jsonParser = new JSONParser();
+        try {
+            JSONObject orderStatusJsons = (JSONObject)jsonParser.parse(orderStatuses);
+            for (String orderid : orderids) {
+                Long id = Long.valueOf(orderid);
+                OrderStatus orderstatus = orderStatusRepository.findById(id).get();
+                JSONObject orderStatusJson = (JSONObject) orderStatusJsons.get(orderid);
+                OrderStatus updated = orderstatus.update(orderStatusJson,id);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return orderStatusRepository.findByUserAndLinkContaining(user, search, pageable);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Page<OrderStatus> getMultiOrderStatusListByStatusAndSearch(String privateid, String status, String search, Pageable pageable){ //구해야하는 orderid묶고 보내고 받고, id마다 구데이터에 신규데이터 입힘
+        User user = userRepository.findByPrivateid(privateid).get();
+        Page<OrderStatus> orderStatusList = orderStatusRepository.findByUserAndStatusAndLinkContaining(user, status, search, pageable);
+        List<String> orderids = new ArrayList<>();
+        for (OrderStatus orderStatus: orderStatusList) {
+            if (orderStatus.getStatus().equals("Completed") || orderStatus.getStatus().equals("Partial") || orderStatus.getStatus().equals("Canceled")) continue;
+            String orderid = String.valueOf(orderStatus.getOrderid());
+            orderids.add(orderid);
+        }
+
+        String orderidsComma = String.join(",",orderids);
+        if (orderidsComma.isEmpty()) return orderStatusList;
+
+        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("key", apiKey);
+        params.add("action", "status");
+        params.add("orders", orderidsComma);
+
+
+        String orderStatuses = webClient.post().uri("/api/v2")
+                .bodyValue(params)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+
+        JSONParser jsonParser = new JSONParser();
+        try {
+            JSONObject orderStatusJsons = (JSONObject)jsonParser.parse(orderStatuses);
+            for (String orderid : orderids) {
+                Long id = Long.valueOf(orderid);
+                OrderStatus orderstatus = orderStatusRepository.findById(id).get();
+                JSONObject orderStatusJson = (JSONObject) orderStatusJsons.get(orderid);
+                OrderStatus updated = orderstatus.update(orderStatusJson,id);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return orderStatusRepository.findByUserAndStatusAndLinkContaining(user, status, search, pageable);
     }
 
     /*@Transactional(rollbackFor = Exception.class)

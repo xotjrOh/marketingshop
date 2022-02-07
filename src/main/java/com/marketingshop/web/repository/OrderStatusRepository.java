@@ -21,8 +21,10 @@ public interface OrderStatusRepository extends JpaRepository<OrderStatus,Long> {
     List<OrderStatus> findByUser(User user);
 
     Page<OrderStatus> findByUser(User user, Pageable pageable);
+    Page<OrderStatus> findByUserAndLinkContaining(User user,String search, Pageable pageable);
 
     Page<OrderStatus> findByUserAndStatus(User user, String status, Pageable pageable);
+    Page<OrderStatus> findByUserAndStatusAndLinkContaining(User user, String status, String search, Pageable pageable);
 
     Optional<OrderStatus> findByOrderidAndUser(Long orderid, User user);
 
