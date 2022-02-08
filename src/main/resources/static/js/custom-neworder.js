@@ -228,6 +228,13 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
             descriptionBox.innerHTML = service.description;
 
             document.querySelector("#comment-star-title").innerHTML=`${service.service} 서비스 댓글 ( <i class="fas fa-star"></i> ${service.star}점 )`;
+
+            console.log("'",service.timetocomplete,"'");
+            if (service.timetocomplete){
+                document.querySelector("#order_average_time").classList.remove("hidden");
+                document.querySelector("#order_average_time > input").value = service.timetocomplete;
+            }
+
         }).catch(e=>console.log("serviceNum이 이상함",e));
 
     let targetNode = document.querySelector("#comment-list-show");

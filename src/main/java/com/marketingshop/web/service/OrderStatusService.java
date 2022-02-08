@@ -19,6 +19,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class OrderStatusService {
     private String apiKey = "9ad7be959340d16c54fb19ca200722ac";
 
     @Transactional(rollbackFor = Exception.class)
-    public OrderStatus getOrderStatus(Long orderid) throws ParseException {
+    public OrderStatus getOrderStatus(Long orderid) throws ParseException { //addorder에서 상단 flash때매 1번 사용됨
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
         params.add("key", apiKey);
         params.add("action", "status");
@@ -106,105 +107,42 @@ public class OrderStatusService {
                 Long id = Long.valueOf(orderid);
                 JSONObject orderStatusJson = (JSONObject) orderStatusJsons.get(orderid);
 
-                OrderStatus orderStatus;
-                if (orderStatusRepository.findById(id).isPresent()) //댓글 초기화 때문에 나눠야함
+                OrderStatus orderStatus; String newStatus;
+                boolean chk = false;
+                if (orderStatusRepository.findById(id).isPresent()) { //댓글 초기화 때문에 나눠야함
                     orderStatus = orderStatusRepository.getById(id);
-                else orderStatus = new OrderStatus(user, serviceList, String.valueOf(orderStatusJson.get("charge")),subscription);
+                    newStatus = (String) orderStatusJson.get("status");
+                    if (!orderStatus.getStatus().equals(newStatus))
+                        chk=true;
+                } else {
+                    orderStatus = new OrderStatus(user, serviceList, String.valueOf(orderStatusJson.get("charge")),subscription);
+                    newStatus = orderStatus.getStatus();
+                    chk =true;
+                }
 
                 OrderStatus updated = orderStatus.update(orderStatusJson,id);
                 orderStatusRepository.save(updated);
+
+                if (chk) { //환불여부 체크
+                    if (newStatus.equals("Partial") || newStatus.equals("Canceled")) {
+                        //새로운 가격 저장
+                        int remainQuantity = Integer.parseInt(updated.getRemains());
+                        int refund = remainQuantity * serviceList.getPrice() / 1000;
+
+                        user.setBalance(user.getBalance()+refund);
+                        log.info("{}가 subsDetail 조회중 {} 상품으로 {} 만큼 환불받았습니다",user.getPrivateid(),id,refund);
+                    }
+                }
+
             }
             return orderStatusRepository.findBySubscriptionOrderByOrderidDesc(subscription);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         return null;
     }
-
-    /*@Transactional(rollbackFor = Exception.class)
-    public Page<OrderStatus> getMultiOrderStatusList(String privateid, Pageable pageable){ //구해야하는 orderid묶고 보내고 받고, id마다 구데이터에 신규데이터 입힘
-        User user = userRepository.findByPrivateid(privateid).get();
-        Page<OrderStatus> orderStatusList = orderStatusRepository.findByUser(user, pageable);
-        List<String> orderids = new ArrayList<>();
-        for (OrderStatus orderStatus: orderStatusList) {
-            if (orderStatus.getStatus().equals("Completed") || orderStatus.getStatus().equals("Partial") || orderStatus.getStatus().equals("Canceled")) continue;
-                String orderid = String.valueOf(orderStatus.getOrderid());
-                orderids.add(orderid);
-            }
-
-        String orderidsComma = String.join(",",orderids);
-        if (orderidsComma.isEmpty()) return orderStatusList;
-
-        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
-        params.add("action", "status");
-        params.add("orders", orderidsComma);
-
-
-        String orderStatuses = webClient.post().uri("/api/v2")
-                .bodyValue(params)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
-
-        JSONParser jsonParser = new JSONParser();
-        try {
-            JSONObject orderStatusJsons = (JSONObject)jsonParser.parse(orderStatuses);
-            for (String orderid : orderids) {
-                Long id = Long.valueOf(orderid);
-                OrderStatus orderstatus = orderStatusRepository.findById(id).get();
-                JSONObject orderStatusJson = (JSONObject) orderStatusJsons.get(orderid);
-                OrderStatus updated = orderstatus.update(orderStatusJson,id);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return orderStatusRepository.findByUser(user, pageable);
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    public Page<OrderStatus> getMultiOrderStatusListByStatus(String privateid, String status, Pageable pageable){ //구해야하는 orderid묶고 보내고 받고, id마다 구데이터에 신규데이터 입힘
-        User user = userRepository.findByPrivateid(privateid).get();
-        Page<OrderStatus> orderStatusList = orderStatusRepository.findByUserAndStatus(user, status, pageable);
-        List<String> orderids = new ArrayList<>();
-        for (OrderStatus orderStatus: orderStatusList) {
-            if (orderStatus.getStatus().equals("Completed") || orderStatus.getStatus().equals("Partial") || orderStatus.getStatus().equals("Canceled")) continue;
-            String orderid = String.valueOf(orderStatus.getOrderid());
-            orderids.add(orderid);
-        }
-
-        String orderidsComma = String.join(",",orderids);
-        if (orderidsComma.isEmpty()) return orderStatusList;
-
-        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
-        params.add("action", "status");
-        params.add("orders", orderidsComma);
-
-
-        String orderStatuses = webClient.post().uri("/api/v2")
-                .bodyValue(params)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
-
-        JSONParser jsonParser = new JSONParser();
-        try {
-            JSONObject orderStatusJsons = (JSONObject)jsonParser.parse(orderStatuses);
-            for (String orderid : orderids) {
-                Long id = Long.valueOf(orderid);
-                OrderStatus orderstatus = orderStatusRepository.findById(id).get();
-                JSONObject orderStatusJson = (JSONObject) orderStatusJsons.get(orderid);
-                OrderStatus updated = orderstatus.update(orderStatusJson,id);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return orderStatusRepository.findByUserAndStatus(user, status, pageable);
-    }*/
 
     @Transactional(rollbackFor = Exception.class)
     public Page<OrderStatus> getMultiOrderStatusListBySearch(String privateid, String search, Pageable pageable) {
@@ -238,7 +176,28 @@ public class OrderStatusService {
             for (String orderid : orderids) {
                 Long id = Long.valueOf(orderid);
                 OrderStatus orderstatus = orderStatusRepository.findById(id).get();
+                int oldprice = Integer.parseInt(orderstatus.getCharge().replace(",",""));
+
                 JSONObject orderStatusJson = (JSONObject) orderStatusJsons.get(orderid);
+                String NewStatus = (String) orderStatusJson.get("status");
+                if (NewStatus.equals("Partial")) {
+                    //새로운 가격 저장
+                    DecimalFormat decFormat = new DecimalFormat("###,###");
+                    String chargeSTR = String.valueOf(orderStatusJson.get("charge"));
+                    int kor_charge = (int) ((Float.parseFloat(chargeSTR))*2200);
+                    String charge = decFormat.format(kor_charge);
+                    orderstatus.setCharge(charge);
+
+                    int refund = oldprice-kor_charge;
+                    user.setBalance(user.getBalance()+refund);
+                    log.info("{}가 orders 조회중 partial로 {} 상품으로 {} 만큼 환불받았습니다",user.getPrivateid(),id,refund);
+                } else if (NewStatus.equals("Canceled")) {
+                    orderstatus.setCharge("0");
+
+                    user.setBalance(user.getBalance()+oldprice);
+                    log.info("{}가 orders 조회중 canceled로 {} 상품으로 {} 만큼 환불받았습니다",user.getPrivateid(),id,oldprice);
+                }
+
                 OrderStatus updated = orderstatus.update(orderStatusJson,id);
             }
         } catch (ParseException e) {
@@ -251,7 +210,7 @@ public class OrderStatusService {
     @Transactional(rollbackFor = Exception.class)
     public Page<OrderStatus> getMultiOrderStatusListByStatusAndSearch(String privateid, String status, String search, Pageable pageable){ //구해야하는 orderid묶고 보내고 받고, id마다 구데이터에 신규데이터 입힘
         User user = userRepository.findByPrivateid(privateid).get();
-        Page<OrderStatus> orderStatusList = orderStatusRepository.findByUserAndStatusAndLinkContaining(user, status, search, pageable);
+        List<OrderStatus> orderStatusList = orderStatusRepository.findByUserAndLinkContaining(user,search);//orderStatusRepository.findByUserAndStatusAndLinkContaining(user, status, search, pageable);
         List<String> orderids = new ArrayList<>();
         for (OrderStatus orderStatus: orderStatusList) {
             if (orderStatus.getStatus().equals("Completed") || orderStatus.getStatus().equals("Partial") || orderStatus.getStatus().equals("Canceled")) continue;
@@ -260,7 +219,7 @@ public class OrderStatusService {
         }
 
         String orderidsComma = String.join(",",orderids);
-        if (orderidsComma.isEmpty()) return orderStatusList;
+        if (orderidsComma.isEmpty()) return orderStatusRepository.findByUserAndStatusAndLinkContaining(user, status, search, pageable);
 
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
         params.add("key", apiKey);
@@ -280,7 +239,28 @@ public class OrderStatusService {
             for (String orderid : orderids) {
                 Long id = Long.valueOf(orderid);
                 OrderStatus orderstatus = orderStatusRepository.findById(id).get();
+                int oldprice = Integer.parseInt(orderstatus.getCharge().replace(",",""));
+
                 JSONObject orderStatusJson = (JSONObject) orderStatusJsons.get(orderid);
+                String NewStatus = (String) orderStatusJson.get("status");
+                if (NewStatus.equals("Partial")) {
+                    //새로운 가격 저장
+                    DecimalFormat decFormat = new DecimalFormat("###,###");
+                    String chargeSTR = String.valueOf(orderStatusJson.get("charge"));
+                    int kor_charge = (int) ((Float.parseFloat(chargeSTR))*2200);
+                    String charge = decFormat.format(kor_charge);
+                    orderstatus.setCharge(charge);
+
+                    int refund = oldprice-kor_charge;
+                    user.setBalance(user.getBalance()+refund);
+                    log.info("{}가 orders status 조회중 partial로 {} 상품으로 {} 만큼 환불받았습니다",user.getPrivateid(),id,refund);
+                } else if (NewStatus.equals("Canceled")) {
+                    orderstatus.setCharge("0");
+
+                    user.setBalance(user.getBalance()+oldprice);
+                    log.info("{}가 orders status 조회중 canceled로 {} 상품으로 {} 만큼 환불받았습니다",user.getPrivateid(),id,oldprice);
+                }
+
                 OrderStatus updated = orderstatus.update(orderStatusJson,id);
             }
         } catch (ParseException e) {
@@ -290,76 +270,4 @@ public class OrderStatusService {
         return orderStatusRepository.findByUserAndStatusAndLinkContaining(user, status, search, pageable);
     }
 
-    /*@Transactional(rollbackFor = Exception.class)
-    public List<OrderStatus> getMultiOrderStatusListBySubs(String privateid, Long subsid) throws ParseException { //구해야하는 orderid묶고 보내고 받고, id마다 구데이터에 신규데이터 입힘
-        User user = userRepository.findByPrivateid(privateid).get();
-        Subscription subscription = subscriptionRepository.getById(subsid);
-        List<OrderStatus> orderStatusList = orderStatusRepository.findByUserAndSubscription(user, subscription);
-        List<String> orderids = new ArrayList<>();
-        for (OrderStatus orderStatus: orderStatusList) {
-            if (orderStatus.getStatus().equals("Completed") || orderStatus.getStatus().equals("Partial") || orderStatus.getStatus().equals("Canceled")) continue;
-            String orderid = String.valueOf(orderStatus.getOrderid());
-            orderids.add(orderid);
-        }
-
-        String orderidsComma = String.join(",",orderids);
-        if (orderidsComma.isEmpty()) return orderStatusList;
-
-        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
-        params.add("action", "status");
-        params.add("orders", orderidsComma);
-
-
-        String orderStatuses = webClient.post().uri("/api/v2")
-                .bodyValue(params)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
-
-        JSONParser jsonParser = new JSONParser();
-        try {
-            JSONObject orderStatusJsons = (JSONObject)jsonParser.parse(orderStatuses);
-            for (String orderid : orderids) {
-                Long id = Long.valueOf(orderid);
-                OrderStatus orderstatus = orderStatusRepository.findById(id).get();
-                JSONObject orderStatusJson = (JSONObject) orderStatusJsons.get(orderid);
-                OrderStatus updated = orderstatus.update(orderStatusJson,id);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return orderStatusRepository.findByUserAndSubscription(user, subscription);
-    }*/
-
 }
-
-
-/*@Transactional(rollbackFor = Exception.class)
-    public List<OrderStatus> getOrderStatusList(Long userid) {
-        List<OrderStatus> orderStatusList = orderStatusRepository.findByUserId(userid);
-        List<String> orderids = new ArrayList<>();
-        for (OrderStatus orderStatus: orderStatusList){
-            if (orderStatus.getStatus()=="Completed") continue;
-            String orderid = String.valueOf(orderStatus.getOrderid());
-            orderids.add(orderid);
-        }
-        String orderidsComma = String.join(",",orderids);
-        System.out.println(orderidsComma);
-
-        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
-        params.add("action", "status");
-        params.add("orders", orderidsComma);
-
-        OrderStatusTemp orderStatusTemp = webClient.post().uri("/api/v2")
-                .bodyValue(params)
-                .retrieve()
-                .bodyToFlux(OrderStatusTemp.class)
-                .collectMap()
-                .block();
-
-
-        return orderStatusList;
-    }*/

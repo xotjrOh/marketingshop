@@ -63,7 +63,8 @@ public class OrderStatus{
         DecimalFormat decFormat = new DecimalFormat("###,###");
 
         int kor_charge = (int) ((Float.parseFloat(chargeSTR))*2200);
-        charge = decFormat.format(kor_charge);
+        /*charge = decFormat.format(kor_charge);*/
+        charge = "선차감";
 
         quantity = decFormat.format(kor_charge*1000/serviceList.getPrice());
 

@@ -47,6 +47,8 @@ public class ServiceList {
 	@ColumnDefault("5")
 	private Float star;
 
+	private String timetocomplete;
+
 	public void salesPlus(){
 		sales += 1;
 	}

@@ -1,8 +1,11 @@
 package com.marketingshop.web.controller;
 
+import com.marketingshop.web.annotation.LoginUser;
 import com.marketingshop.web.dto.CommentDTO;
 import com.marketingshop.web.entity.Comment;
 import com.marketingshop.web.entity.OrderStatus;
+import com.marketingshop.web.entity.SessionUser;
+import com.marketingshop.web.entity.User;
 import com.marketingshop.web.repository.CommentRepository;
 import com.marketingshop.web.repository.OrderStatusRepository;
 import com.marketingshop.web.repository.ServiceListRepository;
@@ -33,7 +36,7 @@ public class CommentController {
 
 	@PostMapping("/save")
 	@Transactional(rollbackFor = Exception.class)
-	public String save(Long orderid, CommentDTO commentDTO, String curpage) {
+	public String save(Long orderid, CommentDTO commentDTO, String curpage, @LoginUser SessionUser user) {
 		OrderStatus orderStatus = orderStatusRepository.findById(orderid).get();
 
 		Comment comment = commentDTO.toEntity(serviceListRepository, userRepository, orderStatus);
@@ -44,6 +47,10 @@ public class CommentController {
 		String serviceNum = commentDTO.getServicenum();
 		Float star = Math.round(commentRepository.findAVGByServiceNum(serviceNum)*10)/10.0f;
 		serviceListRepository.getById(serviceNum).setStar(star);
+
+		User realUser = userRepository.findByPrivateid(user.getPrivateid()).get();
+		int refund = Integer.parseInt(orderStatus.getCharge().replace(",",""))/10;
+		realUser.setBalance(realUser.getBalance()+refund); //save없이도 저장될듯. 본체를 부른거라
 
 		return "redirect:"+curpage;
 	}

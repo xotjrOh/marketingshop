@@ -68,6 +68,7 @@ public class ViewController {
 		/*if (orderForm.getCharge().contains(","))
 			System.out.println("hi");*/
 		String result = webClientService.addOrder(user.getPrivateid(), orderForm); //api 두 번 호출, 주문 및 db 저장
+		log.info("{}가 {}를 구매하였습니다. 결과값은 {}입니다.",user.getPrivateid(),orderForm.getService(),result);
 		System.out.println("결과 : "+result);
 
 		if (result.equals("빈칸을 기입해주세요") || result.equals("최소, 최대 범위를 확인해주세요") || result.equals("잔액이 부족합니다") || result.equals("주문은 정상적으로 처리되었으나 주문내역 업데이트 중 오류가 발생했습니다")){

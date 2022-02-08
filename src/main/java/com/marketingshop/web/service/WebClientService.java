@@ -6,6 +6,7 @@ import com.marketingshop.web.entity.ServiceList;
 import com.marketingshop.web.entity.Subscription;
 import com.marketingshop.web.entity.User;
 import com.marketingshop.web.repository.*;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class WebClientService {
     @Autowired
     private WebClient webClient;
