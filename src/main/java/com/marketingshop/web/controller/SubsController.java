@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +46,8 @@ public class SubsController {
 
 
 	@GetMapping("subscriptions/stop/{subsid}")
-	public String subscriptionsStop(Model model, @PathVariable String subsid, @LoginUser SessionUser user) throws InterruptedException {
+	@Transactional(rollbackFor = Exception.class)
+	public String subscriptionsStop(@PathVariable String subsid, @LoginUser SessionUser user) throws InterruptedException {
 		String WEB_DRIVER_ID = "webdriver.chrome.driver";
 		String WEB_DRIVER_PATH = "C:\\Users\\xotjr\\.spyder-py3\\chromedriver.exe";
 		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);

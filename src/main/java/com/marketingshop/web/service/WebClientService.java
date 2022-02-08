@@ -128,7 +128,7 @@ public class WebClientService {
         JSONParser jsonParser = new JSONParser();
         JSONObject orderidJson = (JSONObject)jsonParser.parse(orderid);
         Long order = (Long) orderidJson.get("order");*/ //없어진 서비스 주문하면 어찌되는지 확인하기
-        Long order = 7488231l;
+        Long order = 7527413l;
 
         serviceList.salesPlus();
         try {
