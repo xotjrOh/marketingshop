@@ -73,35 +73,35 @@ public class WebClientService {
         int max = Integer.parseInt(serviceList.getMax());
 
         if (orderForm.getType().equals("12")){ //{{!12 Default 2개}}
-            if (orderForm.getLink().isEmpty() || orderForm.getQuantity().isEmpty()) return "빈칸을 기입해주세요";
+            if (orderForm.getLink().isEmpty() || orderForm.getQuantity().isEmpty()) return "빈칸을 기입해주세요.";
             if ( Integer.parseInt(orderForm.getQuantity()) < min ||
                  Integer.parseInt(orderForm.getQuantity()) > max)
-                return "최소, 최대 범위를 확인해주세요";
+                return "최소, 최대 범위를 확인해주세요.";
             params.add("link", orderForm.getLink());
             params.add("quantity", orderForm.getQuantity());
         } else if (orderForm.getType().equals("100")){ //{{!100 Subscriptions 3개}}
-            if (orderForm.getUsername().isEmpty() || orderForm.getMin().isEmpty() || orderForm.getMax().isEmpty() || orderForm.getPosts().isEmpty()) return "빈칸을 기입해주세요";
+            if (orderForm.getUsername().isEmpty() || orderForm.getMin().isEmpty() || orderForm.getMax().isEmpty() || orderForm.getPosts().isEmpty()) return "빈칸을 기입해주세요.";
             if ( Integer.parseInt(orderForm.getMin()) < min ||
                  Integer.parseInt(orderForm.getMax()) > max ||
                  Integer.parseInt(orderForm.getMin()) > Integer.parseInt(orderForm.getMax()))
-                return "최소, 최대 범위를 확인해주세요";
+                return "최소, 최대 범위를 확인해주세요.";
             params.add("username", orderForm.getUsername());
             params.add("min", orderForm.getMin());
             params.add("max", orderForm.getMax());
             params.add("posts", orderForm.getPosts());
             params.add("delay", "0"); //나중에 설정값 넣을수도
         } else if (orderForm.getType().equals("14") || orderForm.getType().equals("2")){ //{{!14 Custom Comments Package 2개}} {{!2 Custom Comments 3개}}
-            if (orderForm.getLink().isEmpty() || orderForm.getComments().isEmpty()) return "빈칸을 기입해주세요";
+            if (orderForm.getLink().isEmpty() || orderForm.getComments().isEmpty()) return "빈칸을 기입해주세요.";
 
             String LINE_SEPERATOR=System.getProperty("line.separator");
             int quantity = orderForm.getComments().split(LINE_SEPERATOR).length;
             System.out.println(quantity);
-            if ( quantity < min || quantity > max ) return "최소, 최대 범위를 확인해주세요"; //직접 댓글 개수 구해야함
+            if ( quantity < min || quantity > max ) return "최소, 최대 범위를 확인해주세요."; //직접 댓글 개수 구해야함
 
             params.add("link", orderForm.getLink());
             params.add("comments", orderForm.getComments());
         } else if (orderForm.getType().equals("10")){ //{{!10 Package 1개}}
-            if (orderForm.getLink().isEmpty()) return "빈칸을 기입해주세요";
+            if (orderForm.getLink().isEmpty()) return "빈칸을 기입해주세요.";
             params.add("link", orderForm.getLink());
         } /*else if (orderForm.getType().equals("15"))//{{!15 Comment Likes 3개}} 임의 추정
             params.add("link", orderForm.getLink());
@@ -113,21 +113,25 @@ public class WebClientService {
 
         User user = userRepository.findByPrivateid(privateid).get();
 
-        if (!orderForm.getType().equals("100")) {
-            int price = Integer.parseInt(orderForm.getCharge().replace(",", ""));
-            if (user.getBalance() - price < 0)
-                return "잔액이 부족합니다";
-            user.setBalance(user.getBalance() - price);
-        }
-        /*String orderid = webClient.post().uri("/api/v2") //주문 오류입니다. 삭제된 서비스일 수 있습니다.
-                .bodyValue(params)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+        int price = Integer.parseInt(orderForm.getCharge().replace(",", ""));
+        if (user.getBalance() - price < 0)
+            return "잔액이 부족합니다.";
+        user.setBalance(user.getBalance() - price);
 
-        JSONParser jsonParser = new JSONParser();
-        JSONObject orderidJson = (JSONObject)jsonParser.parse(orderid);
-        Long order = (Long) orderidJson.get("order");*/ //없어진 서비스 주문하면 어찌되는지 확인하기
+        /*try {
+            String orderid = webClient.post().uri("/api/v2") //주문 오류입니다. 삭제된 서비스일 수 있습니다.
+                    .bodyValue(params)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+
+            JSONParser jsonParser = new JSONParser();
+            JSONObject orderidJson = (JSONObject) jsonParser.parse(orderid);
+            Long order = (Long) orderidJson.get("order"); //없어진 서비스 주문하면 어찌되는지 확인하기
+        } catch(Exception e){
+            log.info("{}님이 알 수 없는 주문발생, orderform : {}, params : {}",privateid,orderForm,params);
+            return "잘못된 주문입니다. 관리자에게 문의하세요";
+        }*/
         Long order = 7527413l;
 
         serviceList.salesPlus();
@@ -136,13 +140,13 @@ public class WebClientService {
                 OrderStatus orderStatus = orderStatusService.getOrderStatus(order); //smm api 값들 업데이트 시킴
                 orderStatus.inputValueUpdate(user, serviceList, orderForm);
                 orderStatusRepository.save(orderStatus);
-            } else if (orderForm.getType().equals("100")) {
+            } else {
                 Subscription subscription = subscriptionService.getSubscription(order, user, serviceList); //type에 따라 아예 저장하는 테이블이 달라짐
                 subscription.inputValueUpdate(orderForm);
                 subscriptionRepository.save(subscription);
             }
         }catch(Exception e){
-            return "주문은 정상적으로 처리되었으나 주문내역 업데이트 중 오류가 발생했습니다";
+            return "주문은 정상적으로 처리되었으나 주문내역 업데이트 중 오류가 발생했습니다.";
         }
         return  String.valueOf(order);
     }

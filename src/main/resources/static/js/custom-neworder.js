@@ -109,6 +109,10 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
     let servicenum = selectedOption.value;
     let type = selectedOption.dataset.type; //dataset 가져오기 검색해서 알아보기
     let link; let quantity; let username; let posts; let orderMin; let comment;
+
+    document.querySelector("#charge-div").classList.remove('hidden'); //금액 계산 부분 공통.
+    document.querySelector("#charge-div > input").value="";
+
     switch (type) {
         case "12" : //아래로 옮기면 딜레이때문에 사용자 편의에 문제
             link = document.querySelector("#order_link");
@@ -116,11 +120,9 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
 
             link.classList.remove("hidden");
             quantity.classList.remove("hidden");
-            document.querySelector("#charge-div").classList.remove('hidden');
 
             document.querySelector("#order_link > input").value="";
             document.querySelector("#order_quantity > input").value="";
-            document.querySelector("#charge-div > input").value="";
 
             document.querySelector("#field-orderform-fields-type").value="12";
             break;
@@ -146,11 +148,9 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
 
             link.classList.remove("hidden");
             comment.classList.remove("hidden");
-            document.querySelector("#charge-div").classList.remove('hidden');
 
             document.querySelector("#order_link > input").value="";
             document.querySelector("#order_comment > textarea").value="";
-            document.querySelector("#charge-div > input").value=""; //어차피 업데이트 되니까 빼도됨
 
             document.querySelector("#field-orderform-fields-type").value="14";
             break;
@@ -161,21 +161,17 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
             link.classList.remove("hidden");
             /*quantity.classList.remove("hidden"); //comments에 따라 값이 업데이트 되게 하는게 굳이 필요한가싶음 */
             comment.classList.remove("hidden");
-            document.querySelector("#charge-div").classList.remove('hidden');
 
             document.querySelector("#order_link > input").value="";
             document.querySelector("#order_comment > textarea").value="";
-            document.querySelector("#charge-div > input").value="";
 
             document.querySelector("#field-orderform-fields-type").value="2";
         case "10" :
             link = document.querySelector("#order_link");
 
             link.classList.remove("hidden");
-            document.querySelector("#charge-div").classList.remove('hidden');
 
             document.querySelector("#order_link > input").value="";
-            document.querySelector("#charge-div > input").value="";
 
             document.querySelector("#field-orderform-fields-type").value="10";
         /* case "15" :
@@ -205,9 +201,10 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
             quantityBox.innerHTML = `최소: ${min} - 최대: ${max}`;
             switch (type) {
                 case "12" :
-                    document.querySelector("#field-orderform-fields-quantity").dataset.price=service.price;
+                    document.querySelector("#field-orderform-fields-quantity").dataset.price = service.price;
                     break;
                 case "100" :
+                    document.querySelector("#field-orderform-fields-posts").dataset.price = service.price;
                     let autoQuantityBox = document.querySelector("#order_min small");
                     autoQuantityBox.innerHTML = `최소: ${min} - 최대: ${max}`;
                     break;
@@ -229,7 +226,6 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
 
             document.querySelector("#comment-star-title").innerHTML=`${service.service} 서비스 댓글 ( <i class="fas fa-star"></i> ${service.star}점 )`;
 
-            console.log("'",service.timetocomplete,"'");
             if (service.timetocomplete){
                 document.querySelector("#order_average_time").classList.remove("hidden");
                 document.querySelector("#order_average_time > input").value = service.timetocomplete;
@@ -284,6 +280,25 @@ function commentPrice(){
     let curPrice = Math.floor(document.querySelector("#field-orderform-fields-comment").dataset.price * comment.split('\n').length / 1000);
     document.querySelector("#charge").value= priceToString(`${curPrice}`);
 }
+
+function subsPrice(){
+    let price = document.querySelector("#field-orderform-fields-posts").dataset.price;
+    let minmax = document.querySelectorAll("#order_count");
+
+    let posts = document.querySelector("#field-orderform-fields-posts").value;
+    let min = minmax[0].value;
+    let max = minmax[1].value;
+
+    if (!posts) posts=0;
+    if (!min) min=0;
+    if (!max) max=0;
+
+    posts *= 1; min *= 1; max *= 1;
+
+    let curPrice = Math.floor(price * posts * (min+max) / 2000);
+    document.querySelector("#charge").value= priceToString(`${curPrice}`);
+}
+
 
 
 function qna_unfollow(){
