@@ -110,8 +110,8 @@ public class SubscriptionService {
                 if (subscription.equals("Active") || newStatus.equals("Canceled")){
                     //남은갯수 환불처리
                     Subscription subs = subscriptionRepository.getById(id);
-                    int total = (int) ((Integer.parseInt(subs.getMin()) + Integer.parseInt(subs.getMax())) * (Integer.parseInt(subs.getPosts())-Integer.parseInt(subs.getUse_posts())) / 2);
-                    int refund = (int) (subs.getServiceList().getPrice() * total / 1000);
+                    int remain = Integer.parseInt(subs.getPosts()) - Integer.parseInt(subs.getUse_posts());
+                    int refund = Integer.parseInt(subs.getCharge().replace(",", "")) * remain / Integer.parseInt(subs.getPosts());
                     user.setBalance(user.getBalance() + refund);
                     log.info("{}님이 subs {}를 취소하여 {}만큼 환불받았습니다.",user.getPrivateid(),subsid,refund);
                 }

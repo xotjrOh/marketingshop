@@ -120,7 +120,8 @@ public class WebClientService {
             return "가격이 업데이트 되지 않았습니다.";
         }
 
-        int price = Integer.parseInt(orderForm.getCharge().replace(",", ""));
+        int price = serviceList.getPrice() * Integer.parseInt(orderForm.getQuantity()) / 1000;
+        /*int price = Integer.parseInt(orderForm.getCharge().replace(",", ""));*/
         if (user.getBalance() - price < 0)
             return "잔액이 부족합니다.";
         user.setBalance(user.getBalance() - price);
@@ -150,7 +151,7 @@ public class WebClientService {
                 orderStatusRepository.save(orderStatus);
             } else {
                 Subscription subscription = subscriptionService.getSubscription(order, user, serviceList); //type에 따라 아예 저장하는 테이블이 달라짐
-                subscription.inputValueUpdate(orderForm);
+                subscription.inputValueUpdate(serviceList, orderForm);
                 subscriptionRepository.save(subscription);
             }
         }catch(Exception e){

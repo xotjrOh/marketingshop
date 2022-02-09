@@ -55,7 +55,6 @@ window.onload = function(){
 }
 
 function change(category){ // 카테고리 선택시 서비스 업데이트, label 채널이름, 유저이름 변경
-    console.log(category)
     let labelName = document.querySelector("#order_username label"); // 유튜브 auto면 label 명칭 변경
     if (category == "YouTube 𝐀𝐮𝐭𝐨 Video Shares" || category == "YouTube 𝐀𝐮𝐭𝐨 Video/Shorts Views"){
         labelName.innerHTML = "채널 이름";
@@ -103,7 +102,6 @@ function change(category){ // 카테고리 선택시 서비스 업데이트, lab
 
 
 function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 전달
-    console.log(options);
     allHidden();
     let selectedOption = options[options.selectedIndex];
     let servicenum = selectedOption.value;

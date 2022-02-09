@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import javax.persistence.*;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class Subscription {
     private String min;
     private String max;
     private String posts; //입력한 전체 게시물수
+    private String charge;
 
     private String use_posts_tag; //구현 기능 필요
     private String functag;
@@ -109,11 +111,15 @@ public class Subscription {
         return this; //죄다 저장하고 orderStatus도 값 두개 쌔삥으로 생성
     }
 
-    public Subscription inputValueUpdate(OrderForm orderForm) { //나중에 뷰에서 완료상태면 다르게 표시되게
+    public Subscription inputValueUpdate(ServiceList serviceListData, OrderForm orderForm) { //나중에 뷰에서 완료상태면 다르게 표시되게
         username = orderForm.getUsername();
         min = orderForm.getMin();
         max = orderForm.getMax();
         posts = orderForm.getPosts();
+
+        DecimalFormat decFormat = new DecimalFormat("###,###");
+
+        charge = decFormat.format(serviceListData.getPrice() * Integer.parseInt(orderForm.getQuantity()) / 1000);
 
         return this;
     }
