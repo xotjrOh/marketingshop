@@ -113,6 +113,11 @@ public class WebClientService {
 
         User user = userRepository.findByPrivateid(privateid).get();
 
+        if (orderForm.getCharge().isEmpty()){
+            log.info("{}님이 주문도중 가격이 업데이트 되지않았습니다. orderForm : {}",privateid,orderForm);
+            return "가격이 업데이트 되지 않았습니다.";
+        }
+
         int price = Integer.parseInt(orderForm.getCharge().replace(",", ""));
         if (user.getBalance() - price < 0)
             return "잔액이 부족합니다.";

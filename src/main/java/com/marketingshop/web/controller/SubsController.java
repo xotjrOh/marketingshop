@@ -1,7 +1,7 @@
 package com.marketingshop.web.controller;
 
 import com.marketingshop.web.annotation.LoginUser;
-import com.marketingshop.web.entity.SessionUser;
+import com.marketingshop.web.entity.*;
 import com.marketingshop.web.repository.*;
 import com.marketingshop.web.service.OrderStatusService;
 import com.marketingshop.web.service.SubscriptionService;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Controller
@@ -74,13 +75,23 @@ public class SubsController {
 
 	@GetMapping("subscriptions/reorder/{subsid}")
 	public String subscriptionsReorder(Model model, @PathVariable Long subsid, @LoginUser SessionUser user){
-		/*model.addAttribute("subscriptions",true);
 		model.addAttribute("user",user);
+		User realuser =  userRepository.findByPrivateid(user.getPrivateid()).get();
+		if (!subscriptionRepository.findBySubsidAndUser(subsid, realuser).isPresent())
+			return "404"; //본인 주문 아닌거 조회 못하게.
 
-		Pageable pageable = PageRequest.of(page-1,10, Sort.by("subsid").descending()); //Page request [number: 11, size 1, sort: orderid: DESC]
-		Page<Subscription> subscriptionList = subscriptionService.getMultiSubscriptionListByStatus(user.getPrivateid(),status,pageable);//Page 12 of 12 containing com.marketingshop.web.entity.OrderStatus instances
+		model.addAttribute("neworder",true);
+		model.addAttribute("addorder",true);
+		model.addAttribute("reorder",true);
 
-		model.addAttribute("subscriptionList",subscriptionList);*/
+		List<String> categories = webClientService.getCategories();
+		model.addAttribute("categories",categories);
+
+		Subscription subscription = subscriptionRepository.getById(subsid);
+
+		ServiceList serviceList = subscription.getServiceList(); //여기 4줄은 subs인지에 따라 경우가 다름
+		model.addAttribute("category",serviceList.getCategory());
+		model.addAttribute("service",serviceList.getService());
 
 		return "neworder";
 	}

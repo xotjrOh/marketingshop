@@ -96,8 +96,7 @@ public class ViewController {
 		List<String> categories = webClientService.getCategories();
 		model.addAttribute("categories",categories);
 
-		OrderStatus orderStatus = orderStatusRepository.findById(orderid).get();
-		System.out.println(orderStatus.toString());
+		OrderStatus orderStatus = orderStatusRepository.getById(orderid);
 		model.addAttribute("orderStatus",orderStatus);
 
 		ServiceList serviceList = orderStatus.getServiceList(); //여기 4줄은 subs인지에 따라 경우가 다름
@@ -108,7 +107,7 @@ public class ViewController {
 	}
 
 	@GetMapping("neworder/subscription/{subsid}")
-	public String afterAddSubs(Model model, @LoginUser SessionUser user, @PathVariable Long subsid) throws ParseException {
+	public String afterAddSubs(Model model, @LoginUser SessionUser user, @PathVariable Long subsid){
 		model.addAttribute("user",user);
 		User realuser =  userRepository.findByPrivateid(user.getPrivateid()).get();
 		if (!subscriptionRepository.findBySubsidAndUser(subsid, realuser).isPresent())
@@ -120,7 +119,7 @@ public class ViewController {
 		List<String> categories = webClientService.getCategories();
 		model.addAttribute("categories",categories);
 
-		Subscription subscription = subscriptionRepository.findById(subsid).get();
+		Subscription subscription = subscriptionRepository.getById(subsid);
 		model.addAttribute("subscription", subscription);
 
 		ServiceList serviceList = subscription.getServiceList();

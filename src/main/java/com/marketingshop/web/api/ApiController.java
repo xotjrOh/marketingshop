@@ -2,10 +2,7 @@ package com.marketingshop.web.api;
 
 import com.marketingshop.web.annotation.LoginUser;
 import com.marketingshop.web.entity.*;
-import com.marketingshop.web.repository.CommentRepository;
-import com.marketingshop.web.repository.PaymentDataRepository;
-import com.marketingshop.web.repository.ServiceListRepository;
-import com.marketingshop.web.repository.UserRepository;
+import com.marketingshop.web.repository.*;
 import com.marketingshop.web.service.WebClientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +31,8 @@ public class ApiController { //get, post, patch, delete
     private PaymentDataRepository paymentDataRepository;
     @Autowired
     private ServiceListRepository serviceListRepository;
+    @Autowired
+    private SubscriptionRepository subscriptionRepository;
 
 
     /*------------------------------------------ServiceList 관련 서비스-------------------------------------*/
@@ -55,6 +54,12 @@ public class ApiController { //get, post, patch, delete
     public Optional<ServiceList> getService(String servicenum){
 
         return webClientService.getServiceByServicenum(servicenum);
+    }
+
+    @GetMapping("/getSubscription")
+    public Subscription getSubscription(Long subsid){
+
+        return subscriptionRepository.getById(subsid);
     }
 
 
