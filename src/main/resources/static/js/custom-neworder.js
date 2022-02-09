@@ -122,7 +122,8 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
             quantity.classList.remove("hidden");
 
             document.querySelector("#order_link > input").value="";
-            document.querySelector("#order_quantity > input").value="";
+            document.querySelector("#field-orderform-fields-quantity").value="";
+            document.querySelector("#field-orderform-fields-quantity").readOnly = false;
 
             document.querySelector("#field-orderform-fields-type").value="12";
             break;
@@ -156,16 +157,20 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
             break;
         case "2" :
             link = document.querySelector("#order_link");
-            /*let quantity = document.querySelector("#order_quantity");*/
+            quantity = document.querySelector("#order_quantity");
             comment = document.querySelector("#order_comment");
+
             link.classList.remove("hidden");
-            /*quantity.classList.remove("hidden"); //comments에 따라 값이 업데이트 되게 하는게 굳이 필요한가싶음 */
+            quantity.classList.remove("hidden"); //comments에 따라 값이 업데이트 되게 하는게 굳이 필요한가싶음
             comment.classList.remove("hidden");
 
             document.querySelector("#order_link > input").value="";
+            document.querySelector("#field-orderform-fields-quantity").value="";
+            document.querySelector("#field-orderform-fields-quantity").readOnly = true;
             document.querySelector("#order_comment > textarea").value="";
 
             document.querySelector("#field-orderform-fields-type").value="2";
+            break;
         case "10" :
             link = document.querySelector("#order_link");
 
@@ -174,6 +179,7 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
             document.querySelector("#order_link > input").value="";
 
             document.querySelector("#field-orderform-fields-type").value="10";
+            break;
         /* case "15" :
             let link = document.querySelector("#order_link");
             let quantity = document.querySelector("#order_quantity");
@@ -276,8 +282,10 @@ function defaultPrice(option){
 }
 
 function commentPrice(){
-    let comment = document.querySelector("#field-orderform-fields-comment").value;
-    let curPrice = Math.floor(document.querySelector("#field-orderform-fields-comment").dataset.price * comment.split('\n').length / 1000);
+    let commentQuantity = document.querySelector("#field-orderform-fields-comment").value.split('\n').length;
+    document.querySelector("#field-orderform-fields-quantity").value = commentQuantity;
+
+    let curPrice = Math.floor(document.querySelector("#field-orderform-fields-comment").dataset.price * commentQuantity / 1000);
     document.querySelector("#charge").value= priceToString(`${curPrice}`);
 }
 

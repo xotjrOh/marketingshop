@@ -37,8 +37,9 @@ public class OrderStatus{
     @JoinColumn(name = "subs_id")
     private Subscription subscription;
 
-    private String link; //처음에는 이 3개만 저장.
-    private String quantity; //처음에는 이 4개만 저장. 해당값은 비어있을수있다
+    private String link;
+    private String quantity;
+    private String comments;//처음에는 이 5개만 저장
 
     private String charge;
     private String start_count;
@@ -116,8 +117,10 @@ public class OrderStatus{
         } else if (orderForm.getType().equals("14") || orderForm.getType().equals("2")){ //{{!14 Custom Comments Package 2개}} {{!2 Custom Comments 3개}}
             link = orderForm.getLink();
 
-            String LINE_SEPERATOR=System.getProperty("line.separator");
-            quantity = String.valueOf(orderForm.getComments().split(LINE_SEPERATOR).length); //1000개를 넘기지 않을듯
+            /*String LINE_SEPERATOR=System.getProperty("line.separator");
+            quantity = String.valueOf(orderForm.getComments().split(LINE_SEPERATOR).length);*/ //1000개를 넘기지 않을듯
+            quantity = orderForm.getQuantity();
+            comments = orderForm.getComments();
         } else if (orderForm.getType().equals("10")){ //{{!10 Package 1개}}
             link = orderForm.getLink();
             quantity = "1";

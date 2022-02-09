@@ -7,6 +7,8 @@ import com.marketingshop.web.entity.Subscription;
 import com.marketingshop.web.entity.User;
 import com.marketingshop.web.repository.*;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,6 +74,8 @@ public class WebClientService {
         int min = Integer.parseInt(serviceList.getMin());
         int max = Integer.parseInt(serviceList.getMax());
 
+        System.out.println("지금 수량"+ orderForm.getQuantity());
+
         if (orderForm.getType().equals("12")){ //{{!12 Default 2개}}
             if (orderForm.getLink().isEmpty() || orderForm.getQuantity().isEmpty()) return "빈칸을 기입해주세요.";
             if ( Integer.parseInt(orderForm.getQuantity()) < min ||
@@ -91,12 +95,10 @@ public class WebClientService {
             params.add("posts", orderForm.getPosts());
             params.add("delay", "0"); //나중에 설정값 넣을수도
         } else if (orderForm.getType().equals("14") || orderForm.getType().equals("2")){ //{{!14 Custom Comments Package 2개}} {{!2 Custom Comments 3개}}
-            if (orderForm.getLink().isEmpty() || orderForm.getComments().isEmpty()) return "빈칸을 기입해주세요.";
-
-            String LINE_SEPERATOR=System.getProperty("line.separator");
-            int quantity = orderForm.getComments().split(LINE_SEPERATOR).length;
-            System.out.println(quantity);
-            if ( quantity < min || quantity > max ) return "최소, 최대 범위를 확인해주세요."; //직접 댓글 개수 구해야함
+            if (orderForm.getLink().isEmpty() || orderForm.getQuantity().isEmpty() || orderForm.getComments().isEmpty()) return "빈칸을 기입해주세요.";
+            if ( Integer.parseInt(orderForm.getQuantity()) < min ||
+                 Integer.parseInt(orderForm.getQuantity()) > max)
+                return "최소, 최대 범위를 확인해주세요.";
 
             params.add("link", orderForm.getLink());
             params.add("comments", orderForm.getComments());
@@ -123,7 +125,8 @@ public class WebClientService {
             return "잔액이 부족합니다.";
         user.setBalance(user.getBalance() - price);
 
-        /*try {
+        Long order;
+        try {
             String orderid = webClient.post().uri("/api/v2") //주문 오류입니다. 삭제된 서비스일 수 있습니다.
                     .bodyValue(params)
                     .retrieve()
@@ -132,12 +135,12 @@ public class WebClientService {
 
             JSONParser jsonParser = new JSONParser();
             JSONObject orderidJson = (JSONObject) jsonParser.parse(orderid);
-            Long order = (Long) orderidJson.get("order"); //없어진 서비스 주문하면 어찌되는지 확인하기
+            order = (Long) orderidJson.get("order"); //없어진 서비스 주문하면 어찌되는지 확인하기
         } catch(Exception e){
-            log.info("{}님이 알 수 없는 주문발생, orderform : {}, params : {}",privateid,orderForm,params);
+            log.info("{}님이 알 수 없는 주문발생, orderform : {}, params : {}, exception : {}",privateid,orderForm,params,e);
             return "잘못된 주문입니다. 관리자에게 문의하세요";
-        }*/
-        Long order = 7527413l;
+        }
+        /*Long order = 7527413l;*/
 
         serviceList.salesPlus();
         try {
@@ -151,6 +154,7 @@ public class WebClientService {
                 subscriptionRepository.save(subscription);
             }
         }catch(Exception e){
+            log.info("{}님이 주문내역 업데이트중 오류, orderform : {}, params : {}, exception : {}, orderid : {}",privateid,orderForm,params,e,order);
             return "주문은 정상적으로 처리되었으나 주문내역 업데이트 중 오류가 발생했습니다.";
         }
         return  String.valueOf(order);
