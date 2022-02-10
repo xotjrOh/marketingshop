@@ -11,10 +11,10 @@ function addCharge() { //이거 안씀
     IMP.init('imp67149559');
     let money = document.querySelector("#amount").value;
     console.log(money);
-    /*if (money < 5000){
+    if (money < 5000){
         alert("최소 5,000원부터 충전이 가능합니다");
         return;
-    }*/
+    }
 
     let msg="";
 
