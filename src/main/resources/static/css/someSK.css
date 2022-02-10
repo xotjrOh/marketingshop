@@ -375,3 +375,22 @@ legend {
     text-decoration: none;
 }
 
+.deposit[data-status=대기] {
+    background-color: rgba(42, 43, 49, 0.1)!important;
+}
+.deposit[data-status="In progress"] {
+    background-color: #f7ca06!important;
+}
+.deposit[data-status=완료] {
+    background-color: rgba(122, 193, 49, 0.3)!important;
+}
+.deposit[data-status=Partial] {
+    background-color: #D0021B!important;
+}
+.deposit[data-status=Processing] {
+    background-color: #f7ca06!important;
+}
+.deposit[data-status=취소] {
+    background-color: rgba(76, 77, 85, 0.5)!important;
+}
+

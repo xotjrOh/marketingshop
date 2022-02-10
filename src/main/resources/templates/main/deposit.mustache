@@ -7,15 +7,18 @@
         <main class="main py-3 px-3 px-xl-5 w-100">
             <div class="row">
                 <div class="col-12 col-xl-8">
-                    <form class="card" method="post" action="">
+                    <form class="card" method="get" action="/addCharge">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="method" class="control-label"><font color="#000">결제수단</font></label>
-                                <select class="form-control" id="method" name="AddFoundsForm[type]">
+                                <label for="method" class="control-label">
+                                    <font color="#000">입금자명</font>
+                                </label>
+                                <input class="form-control" type="text" id="method" name="payname" value="" placeholder="홍길동">
+                                <!--<select class="form-control" id="method" name="AddFoundsForm[type]">
                                     <option value="kakaopay">카카오페이(간편결제)</option>
-                                    <option value="html5_inicis">일반결제</option>
-                                    <option value="payco">페이코</option>
-                                </select>
+                                    &lt;!&ndash;<option value="html5_inicis">일반결제</option>
+                                    <option value="payco">페이코</option>&ndash;&gt;
+                                </select>-->
                             </div>
                             <div class="form-group">
                                 <label for="amount" class="control-label">
@@ -26,11 +29,11 @@
                                     <div class="input-group-prepend bg-muted">
                                         <span class="input-group-text"><i class="fas fa-won-sign"></i></span>
                                     </div>
-                                    <input type="number" class="form-control" name="AddFoundsForm[amount]" id="amount" value="" step="5000" placeholder="0">
+                                    <input type="number" class="form-control" name="money" id="amount" value="" step="5000" placeholder="0">
                                 </div>
                             </div>
                             <input type="hidden" name="_csrf" value="7SIXa9dLwUZehZBlWC2tCkeYHr9dNOrPGtKiuDjIIze6bU4z4R3xAAvx0idvd584Bukz_jdio7ZJovHvQKYSQA==">
-                            <button type="button" class="btn btn-primary btn-block" id="addCharge-btn" onclick="addCharge()">충전</button>
+                            <button type="submit" class="btn btn-primary btn-block" id="addCharge-btn" onclick="alert('동일한 입금자명으로<br>2시간 이내에 충전해주세요')">충전</button>
                         </div>
                     </form>
 
@@ -44,17 +47,19 @@
                                 <tr>
                                     <th>결제번호</th>
                                     <th>결제일시</th>
-                                    <th>결제수단</th>
+                                    <th>입금자명</th>
                                     <th>충전금액</th>
+                                    <th>상태</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {{#paymentData}}
-                                <tr>
+                                <tr class="deposit" data-status="{{status}}">
                                     <td>{{id}}</td>
                                     <td><span class="nowrap">{{createdate}}</span></td>
-                                    <td>{{pg}}</td>
+                                    <td>{{payname}}</td>
                                     <td>{{money}}</td>
+                                    <td>{{status}}</td>
                                 </tr>
                                 {{/paymentData}}
                                 </tbody>

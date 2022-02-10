@@ -23,16 +23,18 @@ public class PaymentData {
     private User user; //nickname을 get하기 위한, google_123456
 
     @NotNull
+    private String payname;//입금자명
+    @NotNull
     private int money;
-    @NotNull
-    private String pg;
-    @NotNull
-    private String merchant_uid;
+    private String status;//완료,대기,취소
+
+    private String pg;//안씀
+    private String merchant_uid;//안씀
 
     private String createdate;
 
     @PrePersist
-    public void cretedAt(){
+    public void createdAt(){
         LocalDateTime now = LocalDateTime.now();
         String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"));
         this.createdate = formatedNow;

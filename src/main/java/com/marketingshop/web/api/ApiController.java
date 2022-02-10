@@ -1,7 +1,9 @@
 package com.marketingshop.web.api;
 
-import com.marketingshop.web.annotation.LoginUser;
-import com.marketingshop.web.entity.*;
+import com.marketingshop.web.entity.Comment;
+import com.marketingshop.web.entity.ServiceList;
+import com.marketingshop.web.entity.Subscription;
+import com.marketingshop.web.entity.User;
 import com.marketingshop.web.repository.*;
 import com.marketingshop.web.service.WebClientService;
 import lombok.extern.slf4j.Slf4j;
@@ -89,7 +91,7 @@ public class ApiController { //get, post, patch, delete
         return webClientService.getUserByPrivateId(privateId);
     }
 
-    @GetMapping("/addCharge")
+    /*@GetMapping("/addCharge") //아임포트용. 사용하려면 paymentData생성자 바꿔야함
     @Transactional(rollbackFor = Exception.class)
     public void addCharge(int amount, String pg, String merchant_uid, @LoginUser SessionUser user){ //오로지 db값 증가시키려는 목적
         log.info("{} : {}님이 {}원을 충전하였습니다", merchant_uid, user.getPrivateid(), amount);
@@ -98,7 +100,7 @@ public class ApiController { //get, post, patch, delete
 
         PaymentData paymentData = new PaymentData(null,realUser,amount,pg,merchant_uid,null);
         paymentDataRepository.save(paymentData);
-    }
+    }*/
 
 
     /*---------------------------------------------Comment 관련 서비스----------------------------------------*/
