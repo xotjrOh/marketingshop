@@ -370,7 +370,9 @@ public class WebClientService {
                 "Vimeo.com Views",
 
                 "\uD83D\uDE80\uD83C\uDF10 Website Traffic - WorldWide [ + Choose Referrer ]",
+                "\uD83D\uDE80\uD83C\uDF10 Website Traffic - Worldwide - from Exchange Platforms (PTC)",
                 "\uD83D\uDE80\uD83C\uDF10 Website Traffic - Choose GEO",
+                "\uD83D\uDCE6 Website Premium Traffic Packages [ GEO ]",
                 "\uD83D\uDE80\uD83C\uDDF0\uD83C\uDDF7 Website Traffic from South Korea [ + Choose Referrer ]",
                 "\uD83D\uDE80\uD83C\uDDEF\uD83C\uDDF5 Website Traffic from Japan [ + Choose Referrer ]",
                 "\uD83D\uDE80\uD83C\uDDE8\uD83C\uDDF3 Website Traffic from China [ + Choose Referrer ]",
