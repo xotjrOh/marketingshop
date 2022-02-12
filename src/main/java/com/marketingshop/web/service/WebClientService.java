@@ -193,8 +193,13 @@ public class WebClientService {
             int price = (int) (Float.parseFloat(serviceList.getRate()) * 2200);
             serviceList.setPrice(price);
 
-            String korname = String.format("%s -- %s원 / 1,000개", serviceList.getName(), decFormat.format(price));
-            serviceList.setKorname(korname);
+            if (serviceList.getType().equals("Package") || serviceList.getType().equals("Custom Comments Package")){
+                String korname = String.format("%s -- %s원 / 1개", serviceList.getName(), decFormat.format(price));
+                serviceList.setKorname(korname);
+            } else {
+                String korname = String.format("%s -- %s원 / 1,000개", serviceList.getName(), decFormat.format(price));
+                serviceList.setKorname(korname);
+            }
 
             if (serviceList.getCategory().toLowerCase().contains("instagram")) {
                 String category = serviceList.getCategory();
@@ -305,7 +310,9 @@ public class WebClientService {
                 "Instagram Post Likes [ LQ/HQ Mixed ]",
                 "Instagram Post Likes [ HQ/Real ]",
                 "Instagram Post Likes [ Real & Active ] \uD83D\uDD25",
+                "Instagram Post Likes [ GEO Targeted ]",
                 "Instagram Impressions / Reach / Profile Visits / Saves",
+                "Instagram Verified Followers \uD83D\uDD25",
                 "Instagram Followers [No Refill]",
                 "Instagram Followers [+ Refill Guarantee]",
                 "Instagram Followers [ GEO Targeted/Aged ]",
@@ -314,6 +321,7 @@ public class WebClientService {
                 "Instagram [ \uD835\uDC02\uD835\uDC21\uD835\uDC22\uD835\uDC27\uD835\uDC1A ] Specials", //중국
                 "Instagram Views",
                 "Instagram Post Comments",
+                "Instagram Post Comments [ Verified Profiles ] \uD83D\uDD25",
                 /*"Instagram Comment Likes",*/
                 "Instagram \uD835\uDC00\uD835\uDC2E\uD835\uDC2D\uD835\uDC28 Post Likes",
                 "Instagram \uD835\uDC00\uD835\uDC2E\uD835\uDC2D\uD835\uDC28 Impressions / Profile Visits / Reach",
@@ -368,6 +376,7 @@ public class WebClientService {
                 "Telegram",
                 "Quora.com Views",
                 "Vimeo.com Views",
+                "❖ Rumble.com Views",
 
                 "\uD83D\uDE80\uD83C\uDF10 Website Traffic - WorldWide [ + Choose Referrer ]",
                 "\uD83D\uDE80\uD83C\uDF10 Website Traffic - Worldwide - from Exchange Platforms (PTC)",
@@ -378,7 +387,7 @@ public class WebClientService {
                 "\uD83D\uDE80\uD83C\uDDE8\uD83C\uDDF3 Website Traffic from China [ + Choose Referrer ]",
                 "\uD83D\uDE80\uD83C\uDDED\uD83C\uDDF0 Website Traffic from Hong Kong [ + Choose Referrer ]",
                 "\uD83D\uDE80\uD83C\uDDFA\uD83C\uDDF8 Website Traffic from USA [ + Choose Referrer ]",
-                "\uD83D\uDCF1 Website Traffic [100% Mobile - Custom GEO]",
+                "\uD83D\uDCF1 Website Traffic [ 100% Mobile - Custom GEO ] \uD83D\uDD25",
                 "\uD83D\uDD17 Website SEO & Backlinks",
                 "\uD83D\uDCCA Website Social Signals",
                 "\uD83C\uDFAF  Website Niche Traffic - Cryptocurrency  [ + Choose GEO ]",
