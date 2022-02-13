@@ -218,7 +218,7 @@ public class ViewController {
 		 model.addAttribute("user",user);
 
 		 Pageable pageable = PageRequest.of(page-1,10, Sort.by("id").descending());
-		 Page<PaymentData> paymentList = depositService.getMultiPayment(user.getPrivateid(), pageable); //2시간 경과하면 상태 '취소'로 변경
+		 Page<PaymentData> paymentList = depositService.getMultiPayment(user.getPrivateid(), pageable); //12시간 경과하면 상태 '취소'로 변경
 
 		 int startPage = Math.max(1,page-3);
 		 int endPage = Math.min(paymentList.getTotalPages(),page+3);
