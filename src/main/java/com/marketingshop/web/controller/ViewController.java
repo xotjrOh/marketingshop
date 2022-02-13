@@ -300,7 +300,7 @@ public class ViewController {
 
 
 
-	//smm update내역 받아올때
+	//sk update내역 받아올때
 	@GetMapping("test")
 	public String test(Model model, @LoginUser SessionUser user) {
 		model.addAttribute("orders",true);

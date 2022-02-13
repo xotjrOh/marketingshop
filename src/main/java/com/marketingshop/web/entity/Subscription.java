@@ -37,7 +37,7 @@ public class Subscription {
 
     private String status;
     private String expiry;
-    private String use_posts; //smm에서 받은 사용값
+    private String use_posts; //sk에서 받은 사용값
 
     private String username;
     private String min;
