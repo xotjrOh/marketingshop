@@ -74,3 +74,16 @@ $('ul.nav-tabs li').on('click', function (e) {
     e.preventDefault();
     $(this).tab('show');
 })
+
+//클릭했을 경우 클립보드에 복사된다.
+function clickCopy(value){
+    let tempInput = document.createElement("input");
+    tempInput.style = "position: absolute; left: -1000px; top: -1000px"; //input 창 생성 후 위치 선정
+    tempInput.value = value; //매개값으로 받은 정보 input 에 삽입
+    document.body.appendChild(tempInput); //body태그에 인풋태그 삽입
+    tempInput.select(); //해당 인풋테크 select -> value 값이 선택된다.
+    document.execCommand("copy"); //해당 값을 복사를 시도
+    document.body.removeChild(tempInput); //정상적으로 복사되면 해당 인풋태그를 다시 삭제한다.
+
+    alert(value+" 이 복사되었습니다");
+}
