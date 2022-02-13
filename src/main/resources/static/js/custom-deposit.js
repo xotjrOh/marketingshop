@@ -1,3 +1,4 @@
+/*
 function addCharge() { //이거 안씀
     let pg = document.querySelector("#method").value;
     let pay_method;
@@ -25,19 +26,27 @@ function addCharge() { //이거 안씀
         amount: money,
         name: "마케팅샵 충전"
 
-        /*buyer_tel: '010-1234-5678',*/ //pg사에 따라 오류 발생 가능
-        /*buyer_name: '구매자이름',*/
-        /*buyer_email: 'iamport@siot.do',
+        */
+/*buyer_tel: '010-1234-5678',*//*
+ //pg사에 따라 오류 발생 가능
+        */
+/*buyer_name: '구매자이름',*//*
+
+        */
+/*buyer_email: 'iamport@siot.do',
         buyer_addr: '인천광역시 부평구',
-        buyer_postcode: '123-456'*/
+        buyer_postcode: '123-456'*//*
+
     }, function (rsp) {
         console.log(rsp);
         if (rsp.success) {
             msg += `${money}원 결제가 완료되었습니다.`;
-            /*msg += '고유ID : ' + rsp.imp_uid;
+            */
+/*msg += '고유ID : ' + rsp.imp_uid;
             msg += '상점 거래ID : ' + rsp.merchant_uid;
             msg += '결제 금액 : ' + rsp.paid_amount;
-            msg += '카드 승인번호 : ' + rsp.apply_num;*/
+            msg += '카드 승인번호 : ' + rsp.apply_num;*//*
+
             $.ajax({
                 type: "GET",
                 url: "/api/v2/addCharge", //충전 금액값을 보낼 url 설정
@@ -55,3 +64,13 @@ function addCharge() { //이거 안씀
         document.location.href="/customer/deposit/1"; //alert창 확인 후 이동할 url 설정
     });
 }
+*/
+
+
+$('ul.nav-tabs li').on('click', function (e) {
+    for (let tabList of document.querySelectorAll('ul.nav-tabs li')){
+        tabList.classList.remove('active');
+    }
+    e.preventDefault();
+    $(this).tab('show');
+})

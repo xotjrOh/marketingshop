@@ -394,3 +394,76 @@ legend {
     background-color: rgba(76, 77, 85, 0.5)!important;
 }
 
+
+
+.nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+}
+.nav-tabs .nav-link {
+    margin-bottom: -1px;
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    border-color: #e9ecef #e9ecef #dee2e6;
+}
+.nav-tabs .nav-link.disabled {
+    color: #6c757d;
+    background-color: transparent;
+    border-color: transparent;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #495057;
+    background-color: #18191d;
+    border-color: #dee2e6 #dee2e6 #18191d;
+}
+.nav-tabs .dropdown-menu {
+    margin-top: -1px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.card-header-pills, .card-header-tabs {
+    margin-right: -.625rem;
+    margin-left: -.625rem;
+}
+.card-header-tabs {
+    margin-bottom: -.75rem;
+    border-bottom: 0;
+}
+.card.tabs .card-header, .sr-only {
+    padding: 0;
+}
+.alert, .card, .card.tabs .card-header .nav-tabs li.active a, .card.tabs .card-header .nav-tabs li:hover a, .table.modern td {
+    color: #463131;
+}
+.card.tabs .card-header .nav-tabs {
+    border-bottom: 1px solid rgba(78, 115, 223, 0.8);
+}
+.card.tabs .card-header .nav-tabs li.active, .card.tabs .card-header .nav-tabs li:hover {
+    background: rgba(78, 115, 223, 0.8);
+}
+.card.tabs .card-header .nav-tabs li a, .card.tabs .card-header .nav-tabs li a:active, .card.tabs .card-header .nav-tabs li a:visited {
+    color: #4C4D55;
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    font-weight: 700;
+}
+.tab-content>.tab-pane {
+    display: none;
+}
+.tab-content>.active {
+    display: block;
+}
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+.card-header:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+.card .card-header {
+    border-bottom: 0;
+    background-color: transparent;
+    position: relative;
+}
