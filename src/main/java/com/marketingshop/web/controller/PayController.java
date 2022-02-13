@@ -58,10 +58,10 @@ public class PayController {
 		User realUser = userRepository.findByPrivateid(user.getPrivateid()).get();
 		//realUser.setBalance(realUser.getBalance()+amount);
 
-		PaymentData paymentData = new PaymentData(null,realUser,payname,int_money,"대기","무통장입금",null,null);
+		PaymentData paymentData = new PaymentData(null,realUser,payname,int_money,"대기","무통장입금",null,null,null);
 		paymentDataRepository.save(paymentData);
 
-		return "<script>alert('\"동일한\" 입금자명으로 2시간 이내에 이체해주세요');location.href='/customer/deposit/1';</script>";
+		return "<script>alert('\"동일한\" 입금자명으로 12시간 이내에 이체해주세요');location.href='/customer/deposit/1';</script>";
 	}
 
 }

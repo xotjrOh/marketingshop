@@ -4,6 +4,7 @@ import com.marketingshop.web.annotation.LoginUser;
 import com.marketingshop.web.dto.OrderForm;
 import com.marketingshop.web.entity.*;
 import com.marketingshop.web.repository.*;
+import com.marketingshop.web.service.DepositService;
 import com.marketingshop.web.service.OrderStatusService;
 import com.marketingshop.web.service.SubscriptionService;
 import com.marketingshop.web.service.WebClientService;
@@ -50,6 +51,8 @@ public class ViewController {
 	private SubscriptionRepository subscriptionRepository;
 	@Autowired
 	private SubscriptionService subscriptionService;
+	@Autowired
+	private DepositService depositService;
 
 
 	@GetMapping("neworder")
@@ -215,7 +218,7 @@ public class ViewController {
 		 model.addAttribute("user",user);
 
 		 Pageable pageable = PageRequest.of(page-1,10, Sort.by("id").descending());
-		 Page<PaymentData> paymentList = paymentDataRepository.findByUser(userRepository.findByPrivateid(user.getPrivateid()).get(), pageable);
+		 Page<PaymentData> paymentList = depositService.getMultiPayment(user.getPrivateid(), pageable); //2시간 경과하면 상태 '취소'로 변경
 
 		 int startPage = Math.max(1,page-3);
 		 int endPage = Math.min(paymentList.getTotalPages(),page+3);

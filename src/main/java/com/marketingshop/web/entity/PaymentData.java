@@ -1,6 +1,7 @@
 package com.marketingshop.web.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -32,6 +33,9 @@ public class PaymentData {
     private String merchant_uid;//안씀
 
     private String createdate;
+
+    @CreationTimestamp
+    private LocalDateTime date;
 
     @PrePersist
     public void createdAt(){
