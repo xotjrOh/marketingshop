@@ -24,6 +24,7 @@ public class ServiceList { //리셋시 지움 지움 생김
 	private String rate;
 	private String min;
 	private String max;
+	@ColumnDefault("0")
 	private String refill;
 
 	//이제 추가하는 내용들
