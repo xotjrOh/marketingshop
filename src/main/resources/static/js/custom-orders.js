@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function(){
         console.log(commentDTO);
         let commentid = document.querySelector("#change-rate-commentid").value;
         console.log(commentid);
-        fetch(`http://localhost:8080/api/v2/comments/${commentid}`,{
+        fetch(`http://mktingshop.com/api/v2/comments/${commentid}`,{
             method: "PATCH",
             body: JSON.stringify(commentDTO),
             headers:{

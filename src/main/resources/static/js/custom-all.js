@@ -1,7 +1,7 @@
 window.addEventListener("load", function(){ // userdata값이 header값에 로드시마다 업데이트  //공통->id,돈 업뎃
     let privateId = document.querySelector("#sidebarToggleTop").dataset.privateid;
 
-    fetch(`http://localhost:8080/api/v2/userByPrivateId?privateId=${privateId}`)
+    fetch(`http://mktingshop.com/api/v2/userByPrivateId?privateId=${privateId}`)
         .then(res => res.json())
         .then(data =>{
             let nicknameBox = document.querySelector("#userDropdown > span");
@@ -20,7 +20,7 @@ function changeNickname(){ //닉네임 변경
     let nicknameVal = document.querySelector("#changeNickname").value;
     let privateId = document.querySelector("#sidebarToggleTop").dataset.privateid;
 
-    fetch(`http://localhost:8080/api/v2/changeNickname?nickname=${nicknameVal}&privateId=${privateId}`)
+    fetch(`http://mktingshop.com/api/v2/changeNickname?nickname=${nicknameVal}&privateId=${privateId}`)
         .then(res => res.json())
         .then(data =>{
             if (data==true){

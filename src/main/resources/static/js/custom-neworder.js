@@ -65,7 +65,7 @@ function change(category){ // 카테고리 선택시 서비스 업데이트, lab
     category = encodeURIComponent(category);
     let target = document.querySelector("#orderform-service");
 
-    fetch(`http://localhost:8080/api/v2/servicesByCategory?category=${category}`)
+    fetch(`http://mktingshop.com/api/v2/servicesByCategory?category=${category}`)
         .then(res => res.json())
         .then(serviceLists =>{
             target.options.length = 0;
@@ -191,7 +191,7 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
 
 
     //servicenum을 통해 모든 데이터를 받아와서 각 태그에 값을 대입해놓음 //price min max꽂기, servicenum도 꽂기// description도 꽂기
-    fetch(`http://localhost:8080/api/v2/getService?servicenum=${servicenum}`)
+    fetch(`http://mktingshop.com/api/v2/getService?servicenum=${servicenum}`)
         .then(res => res.json())
         .then(service =>{
             let min = priceToString(`${service.min}`);
@@ -242,7 +242,7 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
     let targetNode = document.querySelector("#comment-list-show");
     targetNode.innerHTML="";
 
-    fetch(`http://localhost:8080/api/v2/comments/${servicenum}`)
+    fetch(`http://mktingshop.com/api/v2/comments/${servicenum}`)
         .then(res => res.json())
         .then(comments =>{
             document.querySelector("#comment-star-title").innerHTML += ` ${comments.length}개`;

@@ -1,7 +1,7 @@
 window.addEventListener("load",()=>{
     let subsid = location.href.split('/')[5];
 
-    fetch(`http://localhost:8080/api/v2/getSubscription?subsid=${subsid}`)
+    fetch(`http://mktingshop.com/api/v2/getSubscription?subsid=${subsid}`)
         .then(res => res.json())
         .then(subscription =>{
             let username = subscription.username;
