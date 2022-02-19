@@ -68,8 +68,7 @@ public class ViewController {
 
 	@PostMapping("addOrder")
 	public String addOrder(@LoginUser SessionUser user, OrderForm orderForm, RedirectAttributes rttr) throws ParseException {
-		/*if (orderForm.getCharge().contains(","))
-			System.out.println("hi");*/
+		/*if (orderForm.getCharge().contains(","))*/
 		String result = webClientService.addOrder(user.getPrivateid(), orderForm); //api 두 번 호출, 주문 및 db 저장
 		log.info("{}가 {}를 구매하였습니다. 결과값은 \'{}\'입니다.",user.getPrivateid(),orderForm.getService(),result);
 
@@ -143,7 +142,6 @@ public class ViewController {
 		model.addAttribute("user",user);
 		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("orderid").descending()); //Page request [number: 11, size 1, sort: orderid: DESC]
 
-		System.out.println("search"+search);
 		if (search == null) search="";
 		Page<OrderStatus> orderlist = orderStatusService.getMultiOrderStatusListBySearch(user.getPrivateid(), search, pageable);//Page 12 of 12 containing com.marketingshop.web.entity.OrderStatus instances
 

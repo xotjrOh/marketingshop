@@ -49,15 +49,12 @@ public class SubscriptionService {
         params.add("action", "status");
         params.add("order", String.valueOf(orderid));
 
-        System.out.println("상태확인 직전");
-
         String subsTemp = webClient.post().uri("/api/v2")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(params)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-        System.out.println(subsTemp);
 
         JSONParser jsonParser = new JSONParser();
         JSONObject subsTempJson = (JSONObject)jsonParser.parse(subsTemp);
@@ -66,7 +63,6 @@ public class SubscriptionService {
         if (subscriptionRepository.findById(orderid).isPresent())
             subscription = subscriptionRepository.findById(orderid).get();
         else subscription = new Subscription();
-        System.out.println("service끝나기직전");
 
         return subscription.update(subsTempJson, user, serviceList, orderid);
     }

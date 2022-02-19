@@ -54,7 +54,6 @@ public class OrderStatusService {
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-        System.out.println(orderStatusTemp);
         /*ObjectMapper objectMapper = new ObjectMapper();
         OrderStatusTemp test = objectMapper.readValue(orderStatusTemp, OrderStatusTemp.class);
         log.info("{} 잘 생성됨",test.toString());*/

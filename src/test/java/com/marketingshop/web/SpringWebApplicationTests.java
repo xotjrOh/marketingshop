@@ -16,7 +16,6 @@ class SpringWebApplicationTests {
 	@Test
 	void contextLoads() {
 		String password = bCryptPasswordEncoder.encode("random");
-		System.out.println(password);
 	}
 
 }

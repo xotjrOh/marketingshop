@@ -116,7 +116,6 @@ public class ApiController { //get, post, patch, delete
     @GetMapping("/comments/{serviceNum}")
     @Transactional(rollbackFor = Exception.class)
     public List<Comment> getCommentList(@PathVariable String serviceNum){
-        System.out.println(commentRepository.findByServiceListOrderByIdDesc(serviceListRepository.getById(serviceNum)));
         return commentRepository.findByServiceListOrderByIdDesc(serviceListRepository.getById(serviceNum));
     }
 

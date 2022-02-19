@@ -4,6 +4,7 @@ import com.marketingshop.web.dto.OAuthAttributes;
 import com.marketingshop.web.entity.SessionUser;
 import com.marketingshop.web.entity.User;
 import com.marketingshop.web.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -20,6 +21,7 @@ import java.util.Collections;
 //google, naver, kakao 에 구애받지 않고 값을 저장하는 함수들이 구현. 자원을 저장키위한 클래스
 //추정 : login요청이 오면 OAuth2UserService타입으로 ioc되어있는(지금 클래스 말하는거) loadUser함수가 실행되는듯함
 @Service
+@Slf4j
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User>{
 
 	@Autowired
@@ -46,7 +48,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		
 		//dto를 entity에 담고 저장. session에 넘겨서 들고다님 //user: com.marketingshop.web.auth.entity.User@3c4b1ca1
 		User user = saveOrUpdate(attributes);
-		System.out.println(user.toString());
 		httpSession.setAttribute("user", new SessionUser(user));
 		
 		
@@ -62,7 +63,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 			User user = userRepository.findByPrivateid(attributes.getUserid())
 					.map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
 					.orElse(attributes.toEntity(guestNum));
-			System.out.println(user.toString());
+			log.info("로그인 정보 nickname={}, privateID={}",user.getNickname(),user.getPrivateid());
 			
 			return userRepository.save(user);
 		

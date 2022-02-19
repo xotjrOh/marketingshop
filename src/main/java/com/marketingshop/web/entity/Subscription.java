@@ -69,7 +69,6 @@ public class Subscription {
         serviceList = serviceListData;
         user = userData;
 
-        System.out.println(json);
         this.subsid = subsid;
 
         status = (String) json.get("status");

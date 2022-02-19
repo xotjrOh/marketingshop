@@ -28,16 +28,12 @@ public class OAuthAttributes {
 	//(google,kakao,naver)/(sub,id,response)등등 파라미터로 전달
 	public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
 		if (registrationId.equals("kakao")) {
-			System.out.println("카카오입니다.");
 			return ofKakao(userNameAttributeName, attributes);
 		} else if (registrationId.equals("naver")) {
-			System.out.println("네이버입니다.");
 			return ofNaver(userNameAttributeName, attributes);
 		} else if (registrationId.equals("google")) {
-			System.out.println("구글입니다.");
 			return ofGoogle(userNameAttributeName, attributes);
 		}
-		System.out.println("페이스북입니다.");
 		return ofFacebook(userNameAttributeName, attributes);
 	}
 	//kakao_attributes: {id=2035526094, connected_at=2021-12-15T23:45:20Z, properties={nickname=오태석, profile_image=http://k.kakaocdn.net/dn/KQAZE/btrmWrb2gyt/A4GjT1UFZK96qvEXyesD90/img_640x640.jpg, thumbnail_image=http://k.kakaocdn.net/dn/KQAZE/btrmWrb2gyt/A4GjT1UFZK96qvEXyesD90/img_110x110.jpg}, kakao_account={profile_nickname_needs_agreement=false, profile_image_needs_agreement=false, profile={nickname=오태석, thumbnail_image_url=http://k.kakaocdn.net/dn/KQAZE/btrmWrb2gyt/A4GjT1UFZK96qvEXyesD90/img_110x110.jpg, profile_image_url=http://k.kakaocdn.net/dn/KQAZE/btrmWrb2gyt/A4GjT1UFZK96qvEXyesD90/img_640x640.jpg, is_default_image=false}, has_email=true, email_needs_agreement=false, is_email_valid=true, is_email_verified=true, email=xotjr8054@naver.com}
@@ -59,7 +55,6 @@ public class OAuthAttributes {
 	//Naver attributes: {resultcode=00, message=success, response={id=0z1FMvR-LTcm02b97ti3k5ScXSnVXR_cu55tadT9sLQ, profile_image=https://phinf.pstatic.net/contact/20210104_76/1609690302899ba4xK_JPEG/%C7%A5%C1%F6_%BF%CF%BC%BA%BA%BB.jpg, email=xotjr8054@naver.com, name=오태석}}
 	private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
 		//kakao에서 얻은 값들 저장/ profile은 nickname, image_url등을 포함함.
-		System.out.println("Naver attributes: "+attributes);
 		Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 		String userId = "naver_" + (String) response.get("id");
 		

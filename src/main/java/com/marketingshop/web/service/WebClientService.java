@@ -74,8 +74,6 @@ public class WebClientService {
         int min = Integer.parseInt(serviceList.getMin());
         int max = Integer.parseInt(serviceList.getMax());
 
-        System.out.println("지금 수량"+ orderForm.getQuantity());
-
         if (orderForm.getType().equals("12")){ //{{!12 Default 2개}}
             if (orderForm.getLink().isEmpty() || orderForm.getQuantity().isEmpty()) return "빈칸을 기입해주세요.";
             if ( Integer.parseInt(orderForm.getQuantity()) < min ||
@@ -110,8 +108,6 @@ public class WebClientService {
             params.add("quantity", orderForm.getQuantity());
             params.add("comment_username", orderForm.getComment_username);
         }*/
-        System.out.println(orderForm);
-        System.out.println(params);
 
         User user = userRepository.findByPrivateid(privateid).get();
 
