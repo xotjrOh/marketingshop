@@ -52,7 +52,7 @@ public class SubsController {
 	@Transactional(rollbackFor = Exception.class)
 	public String subscriptionsStop(@PathVariable String subsid, @LoginUser SessionUser user) throws InterruptedException {
 		String WEB_DRIVER_ID = "webdriver.chrome.driver";
-		String WEB_DRIVER_PATH = "C:\\Users\\xotjr\\.spyder-py3\\chromedriver.exe";
+		String WEB_DRIVER_PATH = "/home/ubuntu/autoDeposit/chromedriver.exe";
 		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
 		WebDriver driver = new ChromeDriver();
