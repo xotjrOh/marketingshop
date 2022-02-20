@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,7 +56,13 @@ public class SubsController {
 		String WEB_DRIVER_PATH = "/home/ubuntu/autoDeposit/chromedriver";
 		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
-		WebDriver driver = new ChromeDriver();
+		ChromeOptions opt = new ChromeOptions();
+		opt.addArguments("headless");
+		opt.addArguments("--blink-settings=imagesEnabled=false");
+		opt.addArguments("--disable-dev-shm-usage");
+
+		WebDriver driver = new ChromeDriver(opt);
+
 		String url = "https://smmkings.com/";
 		driver.get(url);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
