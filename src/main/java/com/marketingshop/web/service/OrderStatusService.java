@@ -105,17 +105,16 @@ public class OrderStatusService {
             for (String orderid : orderidList) {
                 Long id = Long.valueOf(orderid);
                 JSONObject orderStatusJson = (JSONObject) orderStatusJsons.get(orderid);
+                String newStatus = (String) orderStatusJson.get("status");
 
-                OrderStatus orderStatus; String newStatus;
-                boolean chk = false;
+                OrderStatus orderStatus;
+                boolean chk = false; //상태변화 있었거나 새삥이면 true
                 if (orderStatusRepository.findById(id).isPresent()) { //댓글 초기화 때문에 나눠야함
                     orderStatus = orderStatusRepository.getById(id);
-                    newStatus = (String) orderStatusJson.get("status");
                     if (!orderStatus.getStatus().equals(newStatus))
                         chk=true;
                 } else {
                     orderStatus = new OrderStatus(user, serviceList, String.valueOf(orderStatusJson.get("charge")),subscription);
-                    newStatus = orderStatus.getStatus();
                     chk =true;
                 }
 

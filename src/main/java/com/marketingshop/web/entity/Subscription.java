@@ -36,6 +36,7 @@ public class Subscription {
     private User user;
 
     private String status;
+    private String kor_status;
     private String expiry;
     private String use_posts; //sk에서 받은 사용값
 
@@ -72,17 +73,23 @@ public class Subscription {
         this.subsid = subsid;
 
         status = (String) json.get("status");
+        switch(status) {
+            case "Active":
+                kor_status="활성화";
+                functag = "<a href='/subscriptions/stop/"+subsid+"' class='btn btn-danger btn-sm'>취소</a>";
+                break;
+            case "Completed":
+                kor_status="완료";
+                functag = "<a href='/subscriptions/reorder/"+subsid+"' class='btn btn-success btn-sm'>재주문</a>";
+                break;
+            case "Canceled":
+                kor_status="취소";
+                functag = "<a href='/subscriptions/reorder/"+subsid+"' class='btn btn-success btn-sm'>재주문</a>";
+                break;
+        }
+
         expiry = (String) json.get("expiry");
         use_posts = (String) json.get("posts"); //처음이라 무조건 0
-
-        if (status.equals("Active"))
-            functag = "<a href='/subscriptions/stop/"+subsid+"' class='btn btn-danger btn-sm'>취소</a>";
-        else if (status.equals("Completed"))
-            functag = "<a href='/subscriptions/reorder/"+subsid+"' class='btn btn-success btn-sm'>재주문</a>";
-        else if (status.equals("Canceled"))
-            functag = "<a href='/subscriptions/reorder/"+subsid+"' class='btn btn-success btn-sm'>재주문</a>";
-        else
-            functag = "<div> html 글자 오타 찾아라</div>";
 
         if (use_posts.equals("0"))
             use_posts_tag = "0";
