@@ -53,11 +53,14 @@ public class ViewController {
 	private SubscriptionService subscriptionService;
 	@Autowired
 	private DepositService depositService;
+	@Autowired
+	private DescriptionRepository descriptionRepository;
 
 
 	@GetMapping("neworder")
 	public String neworder(Model model, @LoginUser SessionUser user) {
 		model.addAttribute("neworder",true);
+		model.addAttribute("description",descriptionRepository.getById(1l).getContent());
 		model.addAttribute("user",user);
 
 		List<String> categories = webClientService.getCategories();
@@ -93,6 +96,7 @@ public class ViewController {
 			return "404"; //본인 주문 아닌거 조회 못하게.
 
 		model.addAttribute("neworder",true);
+		model.addAttribute("description",descriptionRepository.getById(1l).getContent());
 		model.addAttribute("addorder",true);
 
 		List<String> categories = webClientService.getCategories();
@@ -116,6 +120,7 @@ public class ViewController {
 			return "404"; //본인 주문 아닌거 조회 못하게.
 
 		model.addAttribute("neworder",true);
+		model.addAttribute("description",descriptionRepository.getById(1l).getContent());
 		model.addAttribute("addorder",true);
 
 		List<String> categories = webClientService.getCategories();

@@ -44,6 +44,8 @@ public class SubsController {
 	private SubscriptionRepository subscriptionRepository;
 	@Autowired
 	private SubscriptionService subscriptionService;
+	@Autowired
+	private DescriptionRepository descriptionRepository;
 
 
 	@GetMapping("subscriptions/stop/{subsid}")
@@ -81,6 +83,7 @@ public class SubsController {
 			return "404"; //본인 주문 아닌거 조회 못하게.
 
 		model.addAttribute("neworder",true);
+		model.addAttribute("description",descriptionRepository.getById(1l).getContent());
 		model.addAttribute("addorder",true);
 		model.addAttribute("reorder",true);
 
