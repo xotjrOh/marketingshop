@@ -114,7 +114,12 @@ public class OrderStatus{
         if (orderForm.getType().equals("12")){ //{{!12 Default 2개}}
             link = orderForm.getLink();
             quantity = decFormat.format(Integer.parseInt(orderForm.getQuantity()));
-        } else if (orderForm.getType().equals("14") || orderForm.getType().equals("2")){ //{{!14 Custom Comments Package 2개}} {{!2 Custom Comments 3개}}
+        } else if (orderForm.getType().equals("14")){ //{{!14 Custom Comments Package 2개}}
+            link = orderForm.getLink();
+
+            quantity = "1";
+            comments = orderForm.getComments();
+        } else if (orderForm.getType().equals("2")){ //{{!2 Custom Comments 3개}}
             link = orderForm.getLink();
 
             /*String LINE_SEPERATOR=System.getProperty("line.separator");

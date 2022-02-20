@@ -73,6 +73,7 @@ public class WebClientService {
         ServiceList serviceList = serviceListRepository.findByService(orderForm.getService()).get();
         int min = Integer.parseInt(serviceList.getMin());
         int max = Integer.parseInt(serviceList.getMax());
+        int price;
 
         if (orderForm.getType().equals("12")){ //{{!12 Default 2개}}
             if (orderForm.getLink().isEmpty() || orderForm.getQuantity().isEmpty()) return "빈칸을 기입해주세요.";
@@ -81,6 +82,8 @@ public class WebClientService {
                 return "최소, 최대 범위를 확인해주세요.";
             params.add("link", orderForm.getLink());
             params.add("quantity", orderForm.getQuantity());
+
+            price = serviceList.getPrice() * Integer.parseInt(orderForm.getQuantity()) / 1000;
         } else if (orderForm.getType().equals("100")){ //{{!100 Subscriptions 3개}}
             if (orderForm.getUsername().isEmpty() || orderForm.getMin().isEmpty() || orderForm.getMax().isEmpty() || orderForm.getPosts().isEmpty()) return "빈칸을 기입해주세요.";
             if ( Integer.parseInt(orderForm.getMin()) < min ||
@@ -92,17 +95,32 @@ public class WebClientService {
             params.add("max", orderForm.getMax());
             params.add("posts", orderForm.getPosts());
             params.add("delay", "0"); //나중에 설정값 넣을수도
-        } else if (orderForm.getType().equals("14") || orderForm.getType().equals("2")){ //{{!14 Custom Comments Package 2개}} {{!2 Custom Comments 3개}}
+
+            price = serviceList.getPrice() * Integer.parseInt(orderForm.getPosts()) * (Integer.parseInt(orderForm.getMin()) + Integer.parseInt(orderForm.getMax())) / 2000;
+        } else if (orderForm.getType().equals("14")){ //{{!14 Custom Comments Package 2개}}
+            if (orderForm.getLink().isEmpty() || orderForm.getComments().isEmpty()) return "빈칸을 기입해주세요.";
+
+            params.add("link", orderForm.getLink());
+            params.add("comments", orderForm.getComments());
+
+            price = serviceList.getPrice();
+        }  else if (orderForm.getType().equals("2")){ //{{!2 Custom Comments 3개}}
             if (orderForm.getLink().isEmpty() || orderForm.getQuantity().isEmpty() || orderForm.getComments().isEmpty()) return "빈칸을 기입해주세요.";
             if ( Integer.parseInt(orderForm.getQuantity()) < min ||
-                 Integer.parseInt(orderForm.getQuantity()) > max)
+                    Integer.parseInt(orderForm.getQuantity()) > max)
                 return "최소, 최대 범위를 확인해주세요.";
 
             params.add("link", orderForm.getLink());
             params.add("comments", orderForm.getComments());
-        } else if (orderForm.getType().equals("10")){ //{{!10 Package 1개}}
+
+            String LINE_SEPERATOR=System.getProperty("line.separator");
+            int quantity = orderForm.getComments().split(LINE_SEPERATOR).length;
+            price = serviceList.getPrice() * quantity / 1000;
+        } else { //{{!10 Package 1개}}
             if (orderForm.getLink().isEmpty()) return "빈칸을 기입해주세요.";
             params.add("link", orderForm.getLink());
+
+            price = serviceList.getPrice();
         } /*else if (orderForm.getType().equals("15"))//{{!15 Comment Likes 3개}} 임의 추정
             params.add("link", orderForm.getLink());
             params.add("quantity", orderForm.getQuantity());
@@ -116,8 +134,6 @@ public class WebClientService {
             return "가격이 업데이트 되지 않았습니다.";
         }
 
-        int price = serviceList.getPrice() * Integer.parseInt(orderForm.getQuantity()) / 1000;
-        /*int price = Integer.parseInt(orderForm.getCharge().replace(",", ""));*/
         if (user.getBalance() - price < 0)
             return "잔액이 부족합니다.";
         user.setBalance(user.getBalance() - price);
