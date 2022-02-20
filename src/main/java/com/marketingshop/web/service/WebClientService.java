@@ -159,11 +159,11 @@ public class WebClientService {
         try {
             if (!orderForm.getType().equals("100")) {
                 OrderStatus orderStatus = orderStatusService.getOrderStatus(order); //smm api 값들 업데이트 시킴
-                orderStatus.inputValueUpdate(user, serviceList, orderForm);
+                orderStatus.inputValueUpdate(user, serviceList, orderForm, price);
                 orderStatusRepository.save(orderStatus);
             } else {
                 Subscription subscription = subscriptionService.getSubscription(order, user, serviceList); //type에 따라 아예 저장하는 테이블이 달라짐
-                subscription.inputValueUpdate(serviceList, orderForm);
+                subscription.inputValueUpdate(serviceList, orderForm, price);
                 subscriptionRepository.save(subscription);
             }
         }catch(Exception e){

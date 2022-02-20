@@ -110,15 +110,14 @@ public class Subscription {
         return this; //죄다 저장하고 orderStatus도 값 두개 쌔삥으로 생성
     }
 
-    public Subscription inputValueUpdate(ServiceList serviceListData, OrderForm orderForm) { //나중에 뷰에서 완료상태면 다르게 표시되게
+    public Subscription inputValueUpdate(ServiceList serviceListData, OrderForm orderForm, int price) { //나중에 뷰에서 완료상태면 다르게 표시되게
         username = orderForm.getUsername();
         min = orderForm.getMin();
         max = orderForm.getMax();
         posts = orderForm.getPosts();
 
         DecimalFormat decFormat = new DecimalFormat("###,###");
-
-        charge = decFormat.format(serviceListData.getPrice() * Integer.parseInt(orderForm.getQuantity()) / 1000);
+        charge = decFormat.format(price);
 
         return this;
     }

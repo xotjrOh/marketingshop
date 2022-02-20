@@ -106,7 +106,7 @@ public class OrderStatus{
         return this;
     }
 
-    public OrderStatus inputValueUpdate(User userData, ServiceList serviceListData, OrderForm orderForm) { //orderForm.charge 업데이트해야함 ㅇㅇ 콤마 제거해서
+    public OrderStatus inputValueUpdate(User userData, ServiceList serviceListData, OrderForm orderForm, int price) { //orderForm.charge 업데이트해야함 ㅇㅇ 콤마 제거해서
         user = userData;
         serviceList = serviceListData;
 
@@ -131,7 +131,7 @@ public class OrderStatus{
             quantity = "1";
         }
 
-        charge = decFormat.format(serviceListData.getPrice() * Integer.parseInt(orderForm.getQuantity()) / 1000);
+        charge = decFormat.format(price);
 
         return this;
     }
