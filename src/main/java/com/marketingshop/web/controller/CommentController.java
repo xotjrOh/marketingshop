@@ -48,11 +48,9 @@ public class CommentController {
 		Float star = Math.round(commentRepository.findAVGByServiceNum(serviceNum)*10)/10.0f;
 		serviceListRepository.getById(serviceNum).setStar(star);
 
-		if (!orderStatus.getCharge().equals("선차감")) {
-			User realUser = userRepository.findByPrivateid(user.getPrivateid()).get();
-			int refund = Integer.parseInt(orderStatus.getCharge().replace(",", "")) / 10;
-			realUser.setBalance(realUser.getBalance() + refund); //save없이도 저장될듯. 본체를 부른거라
-		}
+		User realUser = userRepository.findByPrivateid(user.getPrivateid()).get();
+		int refund = Integer.parseInt(orderStatus.getCharge().replace(",", "")) / 10;
+		realUser.setBalance(realUser.getBalance() + refund); //save없이도 저장될듯. 본체를 부른거라
 
 		return "redirect:"+curpage;
 	}

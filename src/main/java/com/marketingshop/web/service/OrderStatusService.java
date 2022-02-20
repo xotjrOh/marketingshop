@@ -119,7 +119,8 @@ public class OrderStatusService {
                 }
 
                 OrderStatus updated = orderStatus.update(orderStatusJson,id);
-                orderStatusRepository.save(updated);
+                OrderStatus saved = orderStatusRepository.save(updated);
+                saved.setCreatedate("필요시 문의");
 
                 if (chk) { //환불여부 체크
                     if (newStatus.equals("Partial") || newStatus.equals("Canceled")) {
@@ -128,6 +129,7 @@ public class OrderStatusService {
                         int refund = remainQuantity * serviceList.getPrice() / 1000;
 
                         user.setBalance(user.getBalance()+refund);
+                        saved.setCharge(String.valueOf( Integer.parseInt(saved.getCharge().replace(",","")) - refund ));
                         log.info("{}가 subsDetail 조회중 {} 상품으로 {} 만큼 환불받았습니다",user.getPrivateid(),id,refund);
                     }
                 }
