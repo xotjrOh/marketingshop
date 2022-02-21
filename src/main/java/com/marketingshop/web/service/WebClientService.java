@@ -222,21 +222,23 @@ public class WebClientService {
                     .replace("Likes","좋아요")
                     .replace("Impressions","노출")
                     .replace("Reach","도달")
-                    .replace("LQ","낮은퀄")
+                    /*.replace("LQ","낮은퀄")
                     .replace("UHQ","높은퀄")
                     .replace("HQ","일반퀄")
                     .replace("Real","높은퀄")
                     .replace("Active","실제유저")
-                    .replace("Mixed","혼합퀄")
+                    .replace("Mixed","혼합퀄")*/
                     .replace("Max","최대")
                     .replace("NO-DROP","이탈X")
                     .replace("Worldwide","전세계")
-                    .replace("South korea","한국인")
+                    .replace("South Korea","한국인")
                     .replace("EU","유럽인")
+                    .replace("Arabic","아랍어")
                     .replace("Arab","아랍인")
                     .replace("Based","기반")
                     .replace("Female","여성")
                     .replace("Male","남성")
+                    .replace("Russian","러시아인")
                     .replace("Russia","러시아인")
                     .replace("USA","미국인")
                     .replace("Turkey","터키인")
@@ -259,7 +261,6 @@ public class WebClientService {
                     .replace(" Days Refill","일 리필")
                     .replace("Aged Profiles","고령의 프로필")
                     .replace("Turkish","터키어")
-                    .replace("Arabic","아랍어")
                     .replace(" Days Auto-Refill","일 자동리필")
                     .replace("NON DROP","이탈X")
                     .replace("Custom","지정")
@@ -278,8 +279,13 @@ public class WebClientService {
                     .replace("Positive","긍정적인")
                     .replace("Germany","독일인")
                     .replace("France","프랑스인")
+                    .replace("Accounts","계정")
                     .replace("Account","계정")
                     .replace("Auto","자동")
+                    .replace("AUTO","자동")
+                    .replace("AU","호주")
+                    .replace("UK","영국")
+                    .replace("Telegram","텔레그램")
                     .replace("\uD835\uDC08\uD835\uDC26\uD835\uDC29\uD835\uDC2B\uD835\uDC1E\uD835\uDC2C\uD835\uDC2C\uD835\uDC22\uD835\uDC28\uD835\uDC27\uD835\uDC2C","노출")
                     .replace("Story","스토리")
                     .replace("ALL POSTS","모든 스토리")
@@ -299,6 +305,7 @@ public class WebClientService {
                     .replace("Bangladesh","방글라데시인")
                     .replace("Brazil","브라질인")
                     .replace("Egypt","이집트인")
+                    .replace("Indian","인도인")
                     .replace("India","인도인")
                     .replace("Viet Nam","베트남인")
                     .replace("Romania","루마니아인")
@@ -376,6 +383,11 @@ public class WebClientService {
                     .replace("Great Britain","그레이트브리튼인")
                     .replace("Lebanon","레바논인")
                     .replace("Canada","캐나다인")
+                    .replace("China","중국인")
+                    .replace("Ukraine","우크라이나")
+                    .replace("Czech Republic","체코")
+                    .replace("Moldova","몰도바")
+                    .replace("Switzerland","스위스")
                     .replace("Subscribers","구독자")
                     .replace("No Refill","리필 없음")
                     .replace("Community","커뮤니티")
@@ -448,8 +460,20 @@ public class WebClientService {
                     .replace("Any Country","원하는 국가")
                     .replace("Signals","신호")
                     .replace("Marketplace","마켓플레이스")
+                    .replace("Min","최소")
+                    .replace("Visits","방문")
+                    .replace("Search","검색")
                     .replace("V","버전")
-                    .replace("S","서버");
+                    .replace("S","서버")
+                    .replace("구글.","Google.")
+                    .replace("서버ogou","Sogou")
+                    .replace("구글API","GoogleAPI")
+                    .replace("AW서버","AWS")
+                    .replace("서버teemit","Steemit")
+                    .replace("버전K","VK")
+                    .replace("T버전","TV")
+                    .replace("서버uper","Super")
+                    .replace("버전imeo","Vimeo");
             serviceList.setKorname(korname);
 
             if (serviceList.getCategory().toLowerCase().contains("instagram")) {
@@ -504,11 +528,11 @@ public class WebClientService {
                     .replace("Instagram","인스타그램")
                     .replace("Post","게시물")
                     .replace("Likes","좋아요")
-                    .replace("LQ","낮은퀄")
+                    /*.replace("LQ","낮은퀄")
                     .replace("HQ","일반퀄")
                     .replace("Mixed","혼합")
                     .replace("Real","높은퀄")
-                    .replace("Active","실제유저")
+                    .replace("Active","실제유저")*/
                     .replace("GEO Targeted","국가 선택")
                     .replace("Impressions","노출")
                     .replace("Reach","도달")
@@ -529,7 +553,7 @@ public class WebClientService {
                     .replace("\uD835\uDC00\uD835\uDC2E\uD835\uDC2D\uD835\uDC28","자동")
                     .replace("Story","스토리")
                     .replace("Reel","릴")
-                    .replace("Live","라디오")
+                    .replace("Live","라이브")
                     .replace("Video","영상")
                     .replace("Email","이메일")
                     .replace("Extractor","추출")
@@ -540,12 +564,14 @@ public class WebClientService {
                     .replace("\uD835\uDC11\uD835\uDC00\uD835\uDC15™","직접 광고")
                     .replace("\uD835\uDC11\uD835\uDC00\uD835\uDC15-\uD835\uDC0C\uD835\uDC13\uD835\uDC12™","구글검색 광고(수익)")
                     .replace("Subscribers","구독자")
-                    .replace("Youtube","유튜브")
+                    .replace("YouTube","유튜브")
+                    .replace("South Korea","한국")
                     .replace("South-Korea","한국")
                     .replace("Shares","공유")
                     .replace("Choose Referrer","플랫폼 선택")
                     .replace("Choose Speed","속도 선택")
                     .replace("Worldwide","전세계")
+                    .replace("WorldWide","전세계")
                     .replace("Choose GEO","국가 선택")
                     .replace("Japan","일본")
                     .replace("USA","미국")
@@ -582,9 +608,9 @@ public class WebClientService {
         /*List<String> categories = serviceListRepository.findDistinctCategory();*/
 
         List<String> categories = Arrays.asList(
-                "인스타그램 게시물 좋아요 [ 낮은퀄/일반퀄 혼합 ]",
-                "인스타그램 게시물 좋아요 [ 일반퀄/높은퀄 ]",
-                "인스타그램 게시물 좋아요 [ 높은퀄 & 실제유저 ] \uD83D\uDD25",
+                "인스타그램 게시물 좋아요 [ LQ/HQ Mixed ]",
+                "인스타그램 게시물 좋아요 [ HQ/Real ]",
+                "인스타그램 게시물 좋아요 [ Real & Active ] \uD83D\uDD25",
                 "인스타그램 게시물 좋아요 [ 국가 선택 ]",
                 "인스타그램 노출 / 도달 / 프로필 방문 / 저장",
                 "인스타그램 검증된 팔로워 \uD83D\uDD25",
