@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", function(){ //카테고리앞에 아이콘 달기
+/*window.addEventListener("DOMContentLoaded", function(){ //카테고리앞에 아이콘 달기
     let CategoryNodes = document.querySelectorAll(".category-option");
     for (let CategoryNode of CategoryNodes){
         let content = CategoryNode.innerHTML;
@@ -47,7 +47,7 @@ window.addEventListener("DOMContentLoaded", function(){ //카테고리앞에 아
         }
         CategoryNode.innerHTML = content;
     }
-});
+});*/
 
 /*window.addEventListener("DOMContentLoaded", change(document.querySelector("#orderform-category option").value));*/ //첫화면 카테고리에 따라 서비스 업데이트 //뷰단에 바로 만들어두기
 window.onload = function(){

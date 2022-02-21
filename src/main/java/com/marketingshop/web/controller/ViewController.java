@@ -312,7 +312,7 @@ public class ViewController {
 		model.addAttribute("orders",true);
 		model.addAttribute("user",user);
 
-		webClientService.getSmmServices();
+		/*webClientService.getSmmServices();*/
 		webClientService.changekor();
 
 		return "test3";

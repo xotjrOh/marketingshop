@@ -31,10 +31,13 @@ class OrderStatusServiceTest {
 
     @Test
     void justTest(){
-        String str = "he,ll,o,";
+        String str = "he,ll,o,a";
         if (str.contains(",")){
             System.out.println("진입");
-            str = str.replace(",","");};
+            str = str.replace("he,","dding")
+                    .replace("l","a")
+                    .replace("a","b");
+        }
         System.out.println(str);
 
     }

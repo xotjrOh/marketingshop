@@ -205,13 +205,252 @@ public class WebClientService {
             int price = (int) (Float.parseFloat(serviceList.getRate()) * 2200);
             serviceList.setPrice(price);
 
+            String korname;
             if (serviceList.getType().equals("Package") || serviceList.getType().equals("Custom Comments Package")){
-                String korname = String.format("%s -- %s원 / 1개", serviceList.getName(), decFormat.format(price));
-                serviceList.setKorname(korname);
+                korname = String.format("%s -- %s원 / 1개", serviceList.getName(), decFormat.format(price));
             } else {
-                String korname = String.format("%s -- %s원 / 1,000개", serviceList.getName(), decFormat.format(price));
-                serviceList.setKorname(korname);
+                korname = String.format("%s -- %s원 / 1,000개", serviceList.getName(), decFormat.format(price));
             }
+            korname = korname.replace("Instagram","인스타그램")
+                    .replace("Dislikes","싫어요")
+                    .replace("Email Scraping by User [Followers]","사용자 팔로워를 통한 이메일 수집")
+                    .replace("Email Scraping by User [Following]","사용자 팔로잉을 통한 이메일 수집")
+                    .replace("Email Scraping by #Hashtags","#해시태그 를 통한 이메일 수집")
+                    .replace("RAV-GS™ - Real & Active Views","구글검색 광고")
+                    .replace("RAV-MTS™ - High Monetization Views","구글검색 광고(수익 극대화)")
+                    .replace("RAV™ - Real & Active Views","직접 광고")
+                    .replace("Likes","좋아요")
+                    .replace("Impressions","노출")
+                    .replace("Reach","도달")
+                    .replace("LQ","낮은퀄")
+                    .replace("UHQ","높은퀄")
+                    .replace("HQ","일반퀄")
+                    .replace("Real","높은퀄")
+                    .replace("Active","실제유저")
+                    .replace("Mixed","혼합퀄")
+                    .replace("Max","최대")
+                    .replace("NO-DROP","이탈X")
+                    .replace("Worldwide","전세계")
+                    .replace("South korea","한국인")
+                    .replace("EU","유럽인")
+                    .replace("Arab","아랍인")
+                    .replace("Based","기반")
+                    .replace("Female","여성")
+                    .replace("Male","남성")
+                    .replace("Russia","러시아인")
+                    .replace("USA","미국인")
+                    .replace("Turkey","터키인")
+                    .replace("Usuarios Latinos","라틴계 사용자")
+                    .replace("Posts","게시물")
+                    .replace("Post","게시물")
+                    .replace("\uD835\uDC02\uD835\uDC28\uD835\uDC26\uD835\uDC1B\uD835\uDC28 \uD835\uDC0F\uD835\uDC1A\uD835\uDC1C\uD835\uDC24","패키지") //콤보팩
+                    .replace("\uD835\uDC11\uD835\uDC1E\uD835\uDC1A\uD835\uDC1C\uD835\uDC21","도달")
+                    .replace("\uD835\uDC0F\uD835\uDC2B\uD835\uDC28\uD835\uDC1F\uD835\uDC22\uD835\uDC25\uD835\uDC1E \uD835\uDC15\uD835\uDC22\uD835\uDC2C\uD835\uDC22\uD835\uDC2D\uD835\uDC2C","프로필 방문")
+                    .replace("Profile Visits","프로필 방문")
+                    .replace("Photo","사진")
+                    .replace("Video","영상")
+                    .replace("Highlights Views","하이라이트 조회수")
+                    .replace("Saves","저장")
+                    .replace("INSTANT","즉시")
+                    .replace("Verified","검증된")
+                    .replace("Followers","팔로워")
+                    .replace("Follower","팔로워")
+                    .replace("Artist","아티스트")
+                    .replace(" Days Refill","일 리필")
+                    .replace("Aged Profiles","고령의 프로필")
+                    .replace("Turkish","터키어")
+                    .replace("Arabic","아랍어")
+                    .replace(" Days Auto-Refill","일 자동리필")
+                    .replace("NON DROP","이탈X")
+                    .replace("Custom","지정")
+                    .replace("Random","임의의")
+                    .replace("Commercial","상업성")
+                    .replace("Comments","댓글")
+                    .replace("Comment","댓글")
+                    .replace("Asian Mix","아시아인")
+                    .replace("Japan","일본인")
+                    .replace("Chinese","중국인")
+                    .replace("Views","조회수")
+                    .replace("Reel","릴")
+                    .replace("Accepted","모두 허용")
+                    .replace("\uD835\uDC02\uD835\uDC28\uD835\uDC26\uD835\uDC1B\uD835\uDC28","패키지")
+                    .replace("Emoji","이모지")
+                    .replace("Positive","긍정적인")
+                    .replace("Germany","독일인")
+                    .replace("France","프랑스인")
+                    .replace("Account","계정")
+                    .replace("Auto","자동")
+                    .replace("\uD835\uDC08\uD835\uDC26\uD835\uDC29\uD835\uDC2B\uD835\uDC1E\uD835\uDC2C\uD835\uDC2C\uD835\uDC22\uD835\uDC28\uD835\uDC27\uD835\uDC2C","노출")
+                    .replace("Story","스토리")
+                    .replace("ALL POSTS","모든 스토리")
+                    .replace("Sticker Links Clicks","스티커 링크 클릭")
+                    .replace("Live","라이브")
+                    .replace("YouTube","유튜브")
+                    .replace("Unique","실제")
+                    .replace("Engagements","참여")
+                    .replace("\uD835\uDC04\uD835\uDC27\uD835\uDC20\uD835\uDC25\uD835\uDC22\uD835\uDC2C\uD835\uDC21 \uD835\uDC12\uD835\uDC29\uD835\uDC1E\uD835\uDC1A\uD835\uDC24\uD835\uDC1E\uD835\uDC2B\uD835\uDC2C","영어 사용 시청자")
+                    .replace("\uD835\uDC05\uD835\uDC2B\uD835\uDC1E\uD835\uDC27\uD835\uDC1C\uD835\uDC21 \uD835\uDC12\uD835\uDC29\uD835\uDC1E\uD835\uDC1A\uD835\uDC24\uD835\uDC1E\uD835\uDC2B\uD835\uDC2C","프랑스어 사용 시청자")
+                    .replace("\uD835\uDC12\uD835\uDC29\uD835\uDC1A\uD835\uDC27\uD835\uDC22\uD835\uDC2C\uD835\uDC21 \uD835\uDC12\uD835\uDC29\uD835\uDC1E\uD835\uDC1A\uD835\uDC24\uD835\uDC1E\uD835\uDC2B\uD835\uDC2C","스페인어 사용 시청자")
+                    .replace("\uD835\uDC06\uD835\uDC1E\uD835\uDC2B\uD835\uDC26\uD835\uDC1A\uD835\uDC27 \uD835\uDC12\uD835\uDC29\uD835\uDC1E\uD835\uDC1A\uD835\uDC24\uD835\uDC1E\uD835\uDC2B\uD835\uDC2C","독일어 사용 시청자")
+                    .replace("\uD835\uDC00\uD835\uDC2B\uD835\uDC1A\uD835\uDC1B\uD835\uDC22\uD835\uDC1C \uD835\uDC12\uD835\uDC29\uD835\uDC1E\uD835\uDC1A\uD835\uDC24\uD835\uDC1E\uD835\uDC2B\uD835\uDC2C","아랍어 사용 시청자")
+                    .replace("\uD835\uDC0F\uD835\uDC28\uD835\uDC2B\uD835\uDC2D\uD835\uDC2E\uD835\uDC20\uD835\uDC2E\uD835\uDC1E\uD835\uDC2C\uD835\uDC1E \uD835\uDC12\uD835\uDC29\uD835\uDC1E\uD835\uDC1A\uD835\uDC24\uD835\uDC1E\uD835\uDC2B\uD835\uDC2C","포르투갈어 사용 시청자")
+                    .replace("United Arab (UAE)","아랍에미리트인")
+                    .replace("Argentina","아르헨티나인")
+                    .replace("Bangladesh","방글라데시인")
+                    .replace("Brazil","브라질인")
+                    .replace("Egypt","이집트인")
+                    .replace("India","인도인")
+                    .replace("Viet Nam","베트남인")
+                    .replace("Romania","루마니아인")
+                    .replace("Morocco","모로코인")
+                    .replace("Colombia","콜롬비아인")
+                    .replace("Philippines","필리핀인")
+                    .replace("Ecuador","에콰도르인")
+                    .replace("Tunisia","튀니지인")
+                    .replace("Saudi Arabia","사우디아라비아인")
+                    .replace("Croatia","크로아티아인")
+                    .replace("Venezuela","베네수엘라인")
+                    .replace("Italy","이탈리아인")
+                    .replace("Pakistan","파키스탄인")
+                    .replace("Nepal","네팔인")
+                    .replace("Mexico","멕시코인")
+                    .replace("Algeria","알제리인")
+                    .replace("Bulgaria","불가리아인")
+                    .replace("Netherlands","네덜란드인")
+                    .replace("Greece","그리스인")
+                    .replace("Spain","스페인인")
+                    .replace("Thailand","태국인")
+                    .replace("North Macedonia","북마케도니아인")
+                    .replace("Sweden","스웨덴인")
+                    .replace("Afghanistan","아프가니스탄인")
+                    .replace("Albania","알바니아인")
+                    .replace("Angola","앙골라인")
+                    .replace("Azerbaijan","아제르바이잔인")
+                    .replace("Bolivia","볼리비아인")
+                    .replace("Bosnia and Herzegovina","보스니아 헤르체고비나인")
+                    .replace("Cambodia","캄보디아인")
+                    .replace("Chile","칠레인")
+                    .replace("Costa Rica","코스타리카인")
+                    .replace("Dominican Republic","도미니카 공화국인")
+                    .replace("El Salvador","엘살바도르인")
+                    .replace("Georgia","조지아인")
+                    .replace("Ghana","가나인")
+                    .replace("Guatemala","과테말라인")
+                    .replace("Honduras","온두라스인")
+                    .replace("Hong Kong","홍콩인")
+                    .replace("Hungary","헝가리인")
+                    .replace("Iraq","이라크인")
+                    .replace("Israel","이스라엘인")
+                    .replace("Jamaica","자메이카인")
+                    .replace("Jordan","요르단인")
+                    .replace("Kenya","케냐인")
+                    .replace("Kuwait","쿠웨이트인")
+                    .replace("Laos","라오스인")
+                    .replace("Libya","리비아인")
+                    .replace("Malaysia","말레이시아인")
+                    .replace("Mongolia","몽골인")
+                    .replace("Montenegro","몬테네그로인")
+                    .replace("Myanmar","미얀마인")
+                    .replace("Nicaragua","니카라과인")
+                    .replace("Oman","오만인")
+                    .replace("Panama","파나마인")
+                    .replace("Paraguay","파라과이인")
+                    .replace("Peru","페루인")
+                    .replace("Portugal","포르투갈인")
+                    .replace("Puerto Rico","푸에르토리코인")
+                    .replace("Qatar","카타르인")
+                    .replace("Singapore","싱가폴인")
+                    .replace("Senegal","세네갈인")
+                    .replace("Slovenia","슬로베니아인")
+                    .replace("Sri Lanka","스리랑카인")
+                    .replace("Sudan","수단인")
+                    .replace("Syria","시리아인")
+                    .replace("Taiwan","대만인")
+                    .replace("Tanzania","탄자니아인")
+                    .replace("Trinidad and Tobago","트리니다드 토바고인")
+                    .replace("Uruguay","우루과이인")
+                    .replace("Serbia","세르비아인")
+                    .replace("Indonesia","인도네시아인")
+                    .replace("Australia","호주인")
+                    .replace("Poland","폴란드인")
+                    .replace("Great Britain","그레이트브리튼인")
+                    .replace("Lebanon","레바논인")
+                    .replace("Canada","캐나다인")
+                    .replace("Subscribers","구독자")
+                    .replace("No Refill","리필 없음")
+                    .replace("Community","커뮤니티")
+                    .replace("UPVOTES","상승")
+                    .replace("Social Shares","소셜 공유")
+                    .replace("Facebook","페이스북")
+                    .replace("Twitter","트위터")
+                    .replace("Reddit","레딧")
+                    .replace("Pinterest","핀터레스트")
+                    .replace("Linkedin","링크드인")
+                    .replace("Tumblr","텀블러")
+                    .replace("Blogger","블로거")
+                    .replace("\uD835\uDC0F\uD835\uDC1E\uD835\uDC2B \uD835\uDC03\uD835\uDC1A\uD835\uDC32","/ 1일")
+                    .replace("Ultra-Fast Speed","매우 빠름")
+                    .replace("ULTRA-FAST","매우 빠름")
+                    .replace("TikTok","틱톡")
+                    .replace("Shares","공유")
+                    .replace("Emoticons","이모티콘")
+                    .replace("WOW","멋져요")
+                    .replace("LOVE","최고에요")
+                    .replace("ANGRY","화나요")
+                    .replace("HAHA","웃겨요")
+                    .replace("SAD","슬퍼요")
+                    .replace("Fan Page","팬 페이지")
+                    .replace("Low Retention","빠른 이탈")
+                    .replace("High Retention","느린 이탈")
+                    .replace("Stream","스트림")
+                    .replace("30 Minutes Retention","30분 유지")
+                    .replace("CUSTOM","지정")
+                    .replace("RANDOM","임의의")
+                    .replace("FEMALE","여성")
+                    .replace("MALE","남성")
+                    .replace("Twitch.TV","트위치")
+                    .replace("Twitch","트위치")
+                    .replace("NON-DROP","이탈X")
+                    .replace("Channel","채널")
+                    .replace("Profile Click","프로필 클릭")
+                    .replace("Spotify","스포티파이")
+                    .replace("Track","트랙")
+                    .replace("Plays","재생")
+                    .replace("Album","앨범")
+                    .replace("Monthly Listeners","월별 리스너")
+                    .replace("Soundcloud","사운드클라우드")
+                    .replace("Reposts","재게시")
+                    .replace("RePins","리핀")
+                    .replace("Board","보드")
+                    .replace("High-Speed","빠름")
+                    .replace("Members","회원")
+                    .replace("Last","최근")
+                    .replace("Answer","답변")
+                    .replace("Natural Speed","자연스러운 속도")
+                    .replace("Fast Speed","빠름")
+                    .replace("Traffic","트래픽")
+                    .replace("Google.com","구글")
+                    .replace("Google","구글")
+                    .replace("Social Networks","소셜 네트워크")
+                    .replace("Social","소셜")
+                    .replace("Organic","유기적")
+                    .replace("Keywords","키워드")
+                    .replace("Direct Visits","직접 방문")
+                    .replace("Pop-Under Ads","팝언더 광고")
+                    .replace("Wikipedia","위키피디아")
+                    .replace("Amazon.com","아마존")
+                    .replace("Premium","프리미엄")
+                    .replace("Naver Search","네이버 검색")
+                    .replace("Daum.net Search","다음 검색")
+                    .replace("Mobile Devices","핸드폰")
+                    .replace("iPhone","아이폰")
+                    .replace("Mobile","핸드폰")
+                    .replace("Any Country","원하는 국가")
+                    .replace("Signals","신호")
+                    .replace("Marketplace","마켓플레이스")
+                    .replace("V","버전")
+                    .replace("S","서버");
+            serviceList.setKorname(korname);
 
             if (serviceList.getCategory().toLowerCase().contains("instagram")) {
                 String category = serviceList.getCategory();
@@ -258,157 +497,181 @@ public class WebClientService {
                 int idx = category.toLowerCase().indexOf("vimeo");
                 serviceList.setCategory(category.substring(idx));
             }
+
+            String category = serviceList.getCategory()
+                    .replace("RAV™ - Real & Active Views","직접 광고")
+                    .replace("APV™ Automated Passive Views","자동화된 시청자")
+                    .replace("Instagram","인스타그램")
+                    .replace("Post","게시물")
+                    .replace("Likes","좋아요")
+                    .replace("LQ","낮은퀄")
+                    .replace("HQ","일반퀄")
+                    .replace("Mixed","혼합")
+                    .replace("Real","높은퀄")
+                    .replace("Active","실제유저")
+                    .replace("GEO Targeted","국가 선택")
+                    .replace("Impressions","노출")
+                    .replace("Reach","도달")
+                    .replace("Profile Visits","프로필 방문")
+                    .replace("Saves","저장")
+                    .replace("Verified","검증된")
+                    .replace("Followers","팔로워")
+                    .replace("No Refill","리필X")
+                    .replace("Refill Guarantee","리필 보장")
+                    .replace("Aged","고령의 프로필")
+                    .replace("Specials","서비스 모음")
+                    .replace("\uD835\uDC12\uD835\uDC28\uD835\uDC2E\uD835\uDC2D\uD835\uDC21 \uD835\uDC0A\uD835\uDC28\uD835\uDC2B\uD835\uDC1E\uD835\uDC1A","한국인")
+                    .replace("\uD835\uDC09\uD835\uDC1A\uD835\uDC29\uD835\uDC1A\uD835\uDC27","일본인")
+                    .replace("\uD835\uDC02\uD835\uDC21\uD835\uDC22\uD835\uDC27\uD835\uDC1A","중국인")
+                    .replace("Views","조회수")
+                    .replace("Comments","댓글")
+                    .replace("Profiles","프로필")
+                    .replace("\uD835\uDC00\uD835\uDC2E\uD835\uDC2D\uD835\uDC28","자동")
+                    .replace("Story","스토리")
+                    .replace("Reel","릴")
+                    .replace("Live","라디오")
+                    .replace("Video","영상")
+                    .replace("Email","이메일")
+                    .replace("Extractor","추출")
+                    .replace("Shorts","쇼츠")
+                    .replace("\uD835\uDC11\uD835\uDC00\uD835\uDC15-\uD835\uDC06\uD835\uDC12™","구글검색 광고")
+                    .replace("Language Targeted","언어 기반")
+                    .replace("GEO Targeted","국가 기반")
+                    .replace("\uD835\uDC11\uD835\uDC00\uD835\uDC15™","직접 광고")
+                    .replace("\uD835\uDC11\uD835\uDC00\uD835\uDC15-\uD835\uDC0C\uD835\uDC13\uD835\uDC12™","구글검색 광고(수익)")
+                    .replace("Subscribers","구독자")
+                    .replace("Youtube","유튜브")
+                    .replace("South-Korea","한국")
+                    .replace("Shares","공유")
+                    .replace("Choose Referrer","플랫폼 선택")
+                    .replace("Choose Speed","속도 선택")
+                    .replace("Worldwide","전세계")
+                    .replace("Choose GEO","국가 선택")
+                    .replace("Japan","일본")
+                    .replace("USA","미국")
+                    .replace("Live Stream","라이브 스트림")
+                    .replace("Premiere","프리미어")
+                    .replace("TikTok","틱톡")
+                    .replace("Facebook","페이스북")
+                    .replace("FanPage","팬 페이지")
+                    .replace("Others","기타")
+                    .replace("Twitch","트위치")
+                    .replace("Twitter","트위터")
+                    .replace("Spotify","스포티파이")
+                    .replace("Track Plays","트랙 재생")
+                    .replace("Monthly Listeners","월별 리스너")
+                    .replace("Soundcloud","사운드클라우드")
+                    .replace("Pinterest","핀터레스트")
+                    .replace("Telegram","텔레그램")
+                    .replace("Website Traffic","웹사이트 트래픽")
+                    .replace("Website Premium Traffic Packages","웹사이트 넘치는 트래픽")
+                    .replace("Custom GEO","국가 선택")
+                    .replace("GEO","국가 선택")
+                    .replace("China","중국")
+                    .replace("Hong Kong","홍콩")
+                    .replace("Mobile","핸드폰")
+                    .replace("Website Social Signals","웹사이트 소셜 신호")
+                    .replace("Marketplace","마켓플레이스");
+
+            serviceList.setCategory(category);
         }
     }
 
     //@Transactional(rollbackFor = Exception.class) //카테고리중 안쓰는거 제외시키고 리턴
     public List<String> getCategories(){
-        /*List<String> categories = serviceListRepository.findDistinctCategory();
-        categories.remove("- Private");
-        categories.remove("♛ Popular on SMMKings");
-        categories.remove("\uD83D\uDE80\uD83C\uDDEC\uD83C\uDDE7 Website Traffic from UK [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDEE\uD83C\uDDF3 Website Traffic from India [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDE7\uD83C\uDDF7 Website Traffic from Brazil [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDEE\uD83C\uDDE9 Website Traffic from Indonesia [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDE9\uD83C\uDDEA Website Traffic from Germany [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDEB\uD83C\uDDF7 Website Traffic from France [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF9\uD83C\uDDF7 Website Traffic from Turkey [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF7\uD83C\uDDFA Website Traffic from Russia [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF3\uD83C\uDDF1 Website Traffic from Netherlands [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF5\uD83C\uDDF1 Website Traffic from Poland [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDEE\uD83C\uDDF9 Website Traffic from Italy [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDEA\uD83C\uDDF8 Website Traffic from Spain [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDE8\uD83C\uDDE6 Website Traffic from Canada [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDFA\uD83C\uDDE6 Website Traffic from Ukraine [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDE8\uD83C\uDDFF Website Traffic from Czech [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF5\uD83C\uDDF0  Website Traffic from Pakistan [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDEA\uD83C\uDDEC  Website Traffic from Egypt [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF9\uD83C\uDDED Website Traffic from Thailand [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF9\uD83C\uDDFC Website Traffic from Taiwan [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDFB\uD83C\uDDF3 Website Traffic from Vietnam [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF8\uD83C\uDDEC Website Traffic from Singapore [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF5\uD83C\uDDF9 Website Traffic from Portugal [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF7\uD83C\uDDF4 Website Traffic from Romania [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF2\uD83C\uDDFD Website Traffic from Mexico [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF8\uD83C\uDDEA Website Traffic from Sweden [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDE8\uD83C\uDDED Website Traffic from Switzerland [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF2\uD83C\uDDE9 Website Traffic from Moldova [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDE6\uD83C\uDDFA Website Traffic from Australia [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDFF\uD83C\uDDE6 Website Traffic from South Africa [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDEE\uD83C\uDDEA Website Traffic from Ireland [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDEE\uD83C\uDDF7 Website Traffic from Iran [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDEE\uD83C\uDDF1 Website Traffic from Israel [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDE6\uD83C\uDDF7 Website Traffic from Argentina [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDE7\uD83C\uDDE9 Website Traffic from Bangladesh [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDE8\uD83C\uDDF4 Website Traffic from Colombia [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDEB\uD83C\uDDEE Website Traffic from Finland [ + Choose Referrer ]");
-        categories.remove("\uD83D\uDE80\uD83C\uDDF5\uD83C\uDDED Website Traffic from Philippines [ + Choose Referrer ]");
-        categories.remove("YouTube Thailand Shares [ + Choose Referrer ]"); //❖ 🇹🇭
-        categories.remove("YouTube India Shares [ + Choose Referrer ]"); //❖ 🇮🇳
-        categories.remove("YouTube Vietnam Shares [ + Choose Referrer ]"); //❖ 🇻🇳
-        categories.remove("YouTube Brazil Shares [ + Choose Referrer ]"); //❖ 🇧🇷
-        categories.remove("YouTube Turkey Shares [ + Choose Referrer ]"); //❖ 🇹🇷
-        categories.remove("YouTube Italy Shares [ + Choose Referrer ]"); //❖ 🇮🇹
-        categories.remove("YouTube Philippines Shares [ + Choose Referrer ]"); //❖ 🇵🇭
-        categories.remove("YouTube Canada Shares [ + Choose Referrer ]"); //❖ 🇨🇦
-        categories.remove("YouTube Indonesia Shares [ + Choose Referrer ]"); //❖ 🇮🇩
-        categories.remove("YouTube Taiwan Shares [ + Choose Referrer ]"); //❖ 🇹🇼
-        categories.remove("YouTube Russia Shares [ + Choose Referrer ]"); //❖ 🇷🇺
-        categories.remove("YouTube Nigeria Shares [ + Choose Referrer ]"); //❖ 🇳🇬
-        categories.remove("YouTube Bangladesh Shares [ + Choose Referrer ]"); //❖ 🇧🇩
-        categories.remove("YouTube Pakistan Shares [ + Choose Referrer ]"); //❖ 🇵🇰*/
+        /*List<String> categories = serviceListRepository.findDistinctCategory();*/
 
         List<String> categories = Arrays.asList(
-                "Instagram Post Likes [ LQ/HQ Mixed ]",
-                "Instagram Post Likes [ HQ/Real ]",
-                "Instagram Post Likes [ Real & Active ] \uD83D\uDD25",
-                "Instagram Post Likes [ GEO Targeted ]",
-                "Instagram Impressions / Reach / Profile Visits / Saves",
-                "Instagram Verified Followers \uD83D\uDD25",
-                "Instagram Followers [No Refill]",
-                "Instagram Followers [+ Refill Guarantee]",
-                "Instagram Followers [ GEO Targeted/Aged ]",
-                "Instagram [ \uD835\uDC12\uD835\uDC28\uD835\uDC2E\uD835\uDC2D\uD835\uDC21 \uD835\uDC0A\uD835\uDC28\uD835\uDC2B\uD835\uDC1E\uD835\uDC1A ] Specials", //한국
-                "Instagram [ \uD835\uDC09\uD835\uDC1A\uD835\uDC29\uD835\uDC1A\uD835\uDC27 ] Specials", //일본
-                "Instagram [ \uD835\uDC02\uD835\uDC21\uD835\uDC22\uD835\uDC27\uD835\uDC1A ] Specials", //중국
-                "Instagram Views",
-                "Instagram Post Comments",
-                "Instagram Post Comments [ Verified Profiles ] \uD83D\uDD25",
-                /*"Instagram Comment Likes",*/
-                "Instagram \uD835\uDC00\uD835\uDC2E\uD835\uDC2D\uD835\uDC28 Post Likes",
-                "Instagram \uD835\uDC00\uD835\uDC2E\uD835\uDC2D\uD835\uDC28 Impressions / Profile Visits / Reach",
-                "Instagram \uD835\uDC00\uD835\uDC2E\uD835\uDC2D\uD835\uDC28 Views",
-                "Instagram \uD835\uDC00\uD835\uDC2E\uD835\uDC2D\uD835\uDC28 Comments",
-                "Instagram Story",
-                "Instagram TV [IGTV]",
-                "Instagram Reel",
-                "Instagram Live Video",
-                "Instagram Email Extractor",
+                "인스타그램 게시물 좋아요 [ 낮은퀄/일반퀄 혼합 ]",
+                "인스타그램 게시물 좋아요 [ 일반퀄/높은퀄 ]",
+                "인스타그램 게시물 좋아요 [ 높은퀄 & 실제유저 ] \uD83D\uDD25",
+                "인스타그램 게시물 좋아요 [ 국가 선택 ]",
+                "인스타그램 노출 / 도달 / 프로필 방문 / 저장",
+                "인스타그램 검증된 팔로워 \uD83D\uDD25",
+                "인스타그램 팔로워 [리필X]",
+                "인스타그램 팔로워 [+ 리필 보장]",
+                "인스타그램 팔로워 [ 국가 선택/고령의 프로필 ]",
+                "인스타그램 [ 한국인 ] 서비스 모음", //한국
+                "인스타그램 [ 일본인 ] 서비스 모음", //일본
+                "인스타그램 [ 중국인 ] 서비스 모음", //중국
+                "인스타그램 조회수",
+                "인스타그램 게시물 댓글",
+                "인스타그램 게시물 댓글 [ 검증된 프로필 ] \uD83D\uDD25",
+                /*"인스타그램 Comment 좋아요",*/
+                "인스타그램 자동 게시물 좋아요",
+                "인스타그램 자동 노출 / 프로필 방문 / 도달",
+                "인스타그램 자동 조회수",
+                "인스타그램 자동 댓글",
+                "인스타그램 스토리",
+                "인스타그램 TV [IGTV]",
+                "인스타그램 릴",
+                "인스타그램 라이브 영상",
+                "인스타그램 이메일 추출",
 
-                "YouTube Video/Shorts Views",
-                "YouTube Video/Shorts Views [ \uD835\uDC11\uD835\uDC00\uD835\uDC15-\uD835\uDC06\uD835\uDC12™ - Language Targeted ]", //𝐑𝐀𝐕-𝐆𝐒
-                "YouTube Video/Shorts Views [ \uD835\uDC11\uD835\uDC00\uD835\uDC15-\uD835\uDC06\uD835\uDC12™ - GEO Targeted ]", //𝐑𝐀𝐕-𝐆𝐒
-                "YouTube Video/Shorts Views [ \uD835\uDC11\uD835\uDC00\uD835\uDC15™ - Language Targeted ]", //𝐑𝐀𝐕
-                "YouTube Video/Shorts Views [ \uD835\uDC11\uD835\uDC00\uD835\uDC15™ - GEO Targeted ]", //𝐑𝐀𝐕
-                "YouTube Video/Shorts Views [ \uD835\uDC11\uD835\uDC00\uD835\uDC15-\uD835\uDC0C\uD835\uDC13\uD835\uDC12™ - Language Targeted ]", //𝐑𝐀𝐕-𝐌𝐓𝐒
-                "YouTube Video/Shorts Views [ \uD835\uDC11\uD835\uDC00\uD835\uDC15-\uD835\uDC0C\uD835\uDC13\uD835\uDC12™ - GEO Targeted ]", //𝐑𝐀𝐕-𝐌𝐓𝐒
-                "YouTube Subscribers",
-                "YouTube Likes",
-                "YouTube Comments",
-                "YouTube South-Korea Shares [ + Choose Referrer ]",
-                "YouTube Shares  [ + Choose Speed ]",
-                "YouTube Worldwide Shares [ + Choose Referrer ]",
-                "YouTube Shares [ + Choose GEO ]",
-                "YouTube Japan Shares [ + Choose Referrer ]",
-                "YouTube USA Shares [ + Choose Referrer ]",
-                "YouTube \uD835\uDC00\uD835\uDC2E\uD835\uDC2D\uD835\uDC28 Video/Shorts Views", //𝐀𝐮𝐭𝐨
-                "YouTube \uD835\uDC00\uD835\uDC2E\uD835\uDC2D\uD835\uDC28 Video Shares", //𝐀𝐮𝐭𝐨
-                "YouTube Live Stream / Premiere [RAV™ - Real & Active Views]",
-                "YouTube Live Stream / Premiere [APV™ Automated Passive Views]",
+                "유튜브 영상/쇼츠 조회수",
+                "유튜브 영상/쇼츠 조회수 [ 구글검색 광고 - 언어 기반 ]", //𝐑𝐀𝐕-𝐆𝐒
+                "유튜브 영상/쇼츠 조회수 [ 구글검색 광고 - 국가 기반 ]", //𝐑𝐀𝐕-𝐆𝐒
+                "유튜브 영상/쇼츠 조회수 [ 직접 광고 - 언어 기반 ]", //𝐑𝐀𝐕
+                "유튜브 영상/쇼츠 조회수 [ 직접 광고 - 국가 기반 ]", //𝐑𝐀𝐕
+                "유튜브 영상/쇼츠 조회수 [ 구글검색 광고(수익) - 언어 기반 ]", //𝐑𝐀𝐕-𝐌𝐓𝐒
+                "유튜브 영상/쇼츠 조회수 [ 구글검색 광고(수익) - 국가 기반 ]", //𝐑𝐀𝐕-𝐌𝐓𝐒
+                "유튜브 구독자",
+                "유튜브 좋아요",
+                "유튜브 댓글",
+                "유튜브 한국 공유 [ + 플랫폼 선택 ]",
+                "유튜브 공유  [ + 속도 선택 ]",
+                "유튜브 전세계 공유 [ + 플랫폼 선택 ]",
+                "유튜브 공유 [ + 국가 선택 ]",
+                "유튜브 일본 공유 [ + 플랫폼 선택 ]",
+                "유튜브 미국 공유 [ + 플랫폼 선택 ]",
+                "유튜브 자동 영상/쇼츠 조회수", //𝐀𝐮𝐭𝐨
+                "유튜브 자동 영상 공유", //𝐀𝐮𝐭𝐨
+                "유튜브 라이브 스트림 / 프리미어 [직접 광고]",
+                "유튜브 라이브 스트림 / 프리미어 [자동화된 시청자]",
 
-                "TikTok [Views / Shares ]",
-                "TikTok Followers",
-                "TikTok Likes",
-                "TikTok Comments",
-                "TikTok \uD835\uDC00\uD835\uDC2E\uD835\uDC2D\uD835\uDC28 Views",
+                "틱톡 [조회수 / 공유 ]",
+                "틱톡 팔로워",
+                "틱톡 좋아요",
+                "틱톡 댓글",
+                "틱톡 자동 조회수",
 
-                "Facebook Post Likes",
-                "Facebook FanPage Likes",
-                "Facebook Video Views",
-                "Facebook Live Stream Views",
-                "Facebook [Others]",
+                "페이스북 게시물 좋아요",
+                "페이스북 팬 페이지 좋아요",
+                "페이스북 영상 조회수",
+                "페이스북 라이브 스트림 조회수",
+                "페이스북 [기타]",
 
-                "❖ Twitch",
+                "❖ 트위치",
 
-                "Twitter Followers",
-                "Twitter [Views / Others]",
+                "트위터 팔로워",
+                "트위터 [조회수 / 기타]",
 
-                "Spotify Track Plays",
-                "Spotify Monthly Listeners",
-                "Soundcloud",
-                "Pinterest",
-                "Telegram",
-                "Quora.com Views",
-                "Vimeo.com Views",
-                "❖ Rumble.com Views",
+                "스포티파이 트랙 재생",
+                "스포티파이 월별 리스너",
+                "사운드클라우드",
+                "핀터레스트",
+                "텔레그램",
+                "Quora.com 조회수",
+                "Vimeo.com 조회수",
+                "❖ Rumble.com 조회수",
 
-                "\uD83D\uDE80\uD83C\uDF10 Website Traffic - WorldWide [ + Choose Referrer ]",
-                "\uD83D\uDE80\uD83C\uDF10 Website Traffic - Worldwide - from Exchange Platforms (PTC)",
-                "\uD83D\uDE80\uD83C\uDF10 Website Traffic - Choose GEO",
-                "\uD83D\uDCE6 Website Premium Traffic Packages [ GEO ]",
-                "\uD83D\uDE80\uD83C\uDDF0\uD83C\uDDF7 Website Traffic from South Korea [ + Choose Referrer ]",
-                "\uD83D\uDE80\uD83C\uDDEF\uD83C\uDDF5 Website Traffic from Japan [ + Choose Referrer ]",
-                "\uD83D\uDE80\uD83C\uDDE8\uD83C\uDDF3 Website Traffic from China [ + Choose Referrer ]",
-                "\uD83D\uDE80\uD83C\uDDED\uD83C\uDDF0 Website Traffic from Hong Kong [ + Choose Referrer ]",
-                "\uD83D\uDE80\uD83C\uDDFA\uD83C\uDDF8 Website Traffic from USA [ + Choose Referrer ]",
-                "\uD83D\uDCF1 Website Traffic [ 100% Mobile - Custom GEO ] \uD83D\uDD25",
+                "\uD83D\uDE80\uD83C\uDF10 웹사이트 트래픽 - 전세계 [ + 플랫폼 선택 ]",
+                "\uD83D\uDE80\uD83C\uDF10 웹사이트 트래픽 - 전세계 - from Exchange Platforms (PTC)",
+                "\uD83D\uDE80\uD83C\uDF10 웹사이트 트래픽 - 국가 선택",
+                "\uD83D\uDCE6 웹사이트 넘치는 트래픽 [ 국가 선택 ]",
+                "\uD83D\uDE80\uD83C\uDDF0\uD83C\uDDF7 웹사이트 트래픽 from 한국 [ + 플랫폼 선택 ]",
+                "\uD83D\uDE80\uD83C\uDDEF\uD83C\uDDF5 웹사이트 트래픽 from 일본 [ + 플랫폼 선택 ]",
+                "\uD83D\uDE80\uD83C\uDDE8\uD83C\uDDF3 웹사이트 트래픽 from 중국 [ + 플랫폼 선택 ]",
+                "\uD83D\uDE80\uD83C\uDDED\uD83C\uDDF0 웹사이트 트래픽 from 홍콩 [ + 플랫폼 선택 ]",
+                "\uD83D\uDE80\uD83C\uDDFA\uD83C\uDDF8 웹사이트 트래픽 from 미국 [ + 플랫폼 선택 ]",
+                "\uD83D\uDCF1 웹사이트 트래픽 [ 100% 핸드폰 - 국가 선택 ] \uD83D\uDD25",
                 "\uD83D\uDD17 Website SEO & Backlinks",
-                "\uD83D\uDCCA Website Social Signals",
-                "\uD83C\uDFAF  Website Niche Traffic - Cryptocurrency  [ + Choose GEO ]",
-                "\uD83C\uDFAF Website Niche Traffic - Betting/Gambling/Casino [ + Choose GEO ]",
+                "\uD83D\uDCCA 웹사이트 소셜 신호",
+                "\uD83C\uDFAF  Website Niche Traffic - Cryptocurrency  [ + 국가 선택 ]",
+                "\uD83C\uDFAF Website Niche Traffic - Betting/Gambling/Casino [ + 국가 선택 ]",
 
-                "❖ Crypto.com Marketplace Views", //💎 Crypto.com Marketplace Views 🔥🔥
-                "❖ SuperRare.com Views" //💎 SuperRare.com Views 🔥🔥
+                "❖ Crypto.com 마켓플레이스 조회수", //💎 Crypto.com Marketplace 조회수 🔥🔥
+                "❖ SuperRare.com 조회수" //💎 SuperRare.com 조회수 🔥🔥
                 );
 
         return categories;
