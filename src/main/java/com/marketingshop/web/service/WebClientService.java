@@ -544,7 +544,6 @@ public class WebClientService {
                     .replace("Mixed","혼합")
                     .replace("Real","높은퀄")
                     .replace("Active","실제유저")*/
-                    .replace("GEO Targeted","국가 기반")
                     .replace("Impressions","노출")
                     .replace("Reach","도달")
                     .replace("Profile Visits","프로필 방문")

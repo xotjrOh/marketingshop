@@ -324,3 +324,42 @@ function qna_danger(){
     let danger = document.querySelector("#QnA-danger");
     danger.classList.add("show");
 }
+
+function sortOfTime(){
+    let servicenum = document.querySelector("#orderform-service-id").innerHTML.substr(1);
+    let target = document.querySelector("#orderform-service");
+
+    fetch(`http://mktingshop.com/api/v2/sortTime/${servicenum}`)
+          .then(res => res.json())
+          .then(serviceLists =>{
+                target.options.length = 0;
+                for(let serviceList of serviceLists){ //serviceList는 서비스의 모든정보 내포
+                    let opt = document.createElement("option");
+                    switch (serviceList.type) {
+                        case 'Default':
+                            opt.dataset.type=12; //comment에 default인데 0인것도 존재. 오타인듯
+                            break;
+                        case 'Subscriptions':
+                            opt.dataset.type=100;
+                            break;
+                        case 'Custom Comments Package':
+                            opt.dataset.type=14;
+                            break;
+                        case 'Custom Comments':
+                            opt.dataset.type=2;
+                            break;
+                        case 'Package':
+                            opt.dataset.type=10;
+                            break;
+                        case 'Comment Likes':
+                            opt.dataset.type=15;
+                            break;
+                    }
+                    opt.value = serviceList.service;
+                    opt.innerHTML = serviceList.korname;
+                    target.appendChild(opt);
+                }
+                let ServiceOptions = target.options;
+                selectService(ServiceOptions);
+          }).catch(e=>console.log("카테고리가 제대로 읽히지 않습니다"));
+}

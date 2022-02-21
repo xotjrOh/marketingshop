@@ -52,6 +52,12 @@ public class ApiController { //get, post, patch, delete
         return webClientService.getServicesByCategory(category);
     }
 
+    @GetMapping("/sortTime")
+    public List<ServiceList> sortTime(String servicenum){
+        String category = serviceListRepository.getById(servicenum).getCategory();
+        return serviceListRepository.findByCategoryOrderByTime(category);
+    }
+
     @GetMapping("/getService")
     public Optional<ServiceList> getService(String servicenum){
 
