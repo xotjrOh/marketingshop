@@ -219,10 +219,14 @@ public class WebClientService {
                     .replace("RAV-GS™ - Real & Active Views","구글검색 광고")
                     .replace("RAV-MTS™ - High Monetization Views","구글검색 광고(수익 극대화)")
                     .replace("RAV™ - Real & Active Views","직접 광고")
+                    .replace("APV™ Automated Passive Views","자동화된 시청자")
+                    .replace("Engines","엔진")
+                    .replace("See Description","상세설명 참고")
                     .replace("Likes","좋아요")
                     .replace("Impressions","노출")
                     .replace("Reach","도달")
                     .replace("Saudi Arabia","사우디아라비아인")
+                    .replace("United Arab (UAE)","아랍에미리트인")
                     /*.replace("LQ","낮은퀄")
                     .replace("UHQ","높은퀄")
                     .replace("HQ","일반퀄")
@@ -304,7 +308,6 @@ public class WebClientService {
                     .replace("\uD835\uDC06\uD835\uDC1E\uD835\uDC2B\uD835\uDC26\uD835\uDC1A\uD835\uDC27 \uD835\uDC12\uD835\uDC29\uD835\uDC1E\uD835\uDC1A\uD835\uDC24\uD835\uDC1E\uD835\uDC2B\uD835\uDC2C","독일어 사용 시청자")
                     .replace("\uD835\uDC00\uD835\uDC2B\uD835\uDC1A\uD835\uDC1B\uD835\uDC22\uD835\uDC1C \uD835\uDC12\uD835\uDC29\uD835\uDC1E\uD835\uDC1A\uD835\uDC24\uD835\uDC1E\uD835\uDC2B\uD835\uDC2C","아랍어 사용 시청자")
                     .replace("\uD835\uDC0F\uD835\uDC28\uD835\uDC2B\uD835\uDC2D\uD835\uDC2E\uD835\uDC20\uD835\uDC2E\uD835\uDC1E\uD835\uDC2C\uD835\uDC1E \uD835\uDC12\uD835\uDC29\uD835\uDC1E\uD835\uDC1A\uD835\uDC24\uD835\uDC1E\uD835\uDC2B\uD835\uDC2C","포르투갈어 사용 시청자")
-                    .replace("United Arab (UAE)","아랍에미리트인")
                     .replace("Argentina","아르헨티나인")
                     .replace("Bangladesh","방글라데시인")
                     .replace("Brazil","브라질인")
@@ -484,7 +487,8 @@ public class WebClientService {
                     .replace("Buy서버ell","BuySell")
                     .replace("서버tumbleupon","Stumbleupon")
                     .replace("서버tumbleupon","Stumbleupon")
-                    .replace("버전imeo","Vimeo");
+                    .replace("버전imeo","Vimeo")
+                    .replace("서버hopping","Shopping");
             serviceList.setKorname(korname);
 
             if (serviceList.getCategory().toLowerCase().contains("instagram")) {
