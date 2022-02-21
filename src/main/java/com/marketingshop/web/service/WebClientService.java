@@ -234,6 +234,7 @@ public class WebClientService {
                     .replace("WorldWide","전세계")
                     .replace("Worldwide","전세계")
                     .replace("South Korea","한국인")
+                    .replace("South-Korea","한국인")
                     .replace("EU","유럽인")
                     .replace("Arabic","아랍어")
                     .replace("Arab","아랍인")
