@@ -309,8 +309,8 @@ public class ViewController {
 	//sk update내역 받아올때
 	@GetMapping("test")
 	public String test(Model model, @LoginUser SessionUser user) {
-		model.addAttribute("orders",true);
-		model.addAttribute("user",user);
+		/*model.addAttribute("orders",true);
+		model.addAttribute("user",user);*/
 
 		/*webClientService.getSmmServices();*/
 		webClientService.changekor();
