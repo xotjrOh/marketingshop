@@ -120,7 +120,7 @@ public class OrderStatusService {
 
                 OrderStatus updated = orderStatus.update(orderStatusJson,id);
                 OrderStatus saved = orderStatusRepository.save(updated);
-                saved.setCreatedate("필요시 문의");
+                saved.setCreatedate("0000년 00월 00일 00시 00분 00초");
 
                 if (chk) { //환불여부 체크
                     if (newStatus.equals("Partial") || newStatus.equals("Canceled")) {
