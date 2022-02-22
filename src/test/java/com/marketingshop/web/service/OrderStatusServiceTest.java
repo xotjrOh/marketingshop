@@ -31,14 +31,18 @@ class OrderStatusServiceTest {
 
     @Test
     void justTest(){
-        String str = "he,ll,o,a";
+        /*String str = "he,ll,o,a";
         if (str.contains(",")){
             System.out.println("진입");
             str = str.replace("he,","dding")
                     .replace("l","a")
                     .replace("a","b");
-        }
-        System.out.println(str);
+        }*/
+
+        String time1 = "13시 40분";
+
+        String time2 = "13시 42분";
+        System.out.println("time1<time2");
 
     }
 

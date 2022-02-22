@@ -50,6 +50,7 @@ public class ServiceList { //리셋시 지움 지움 생김
 	private Float star;
 
 	private String timetocomplete;
+	private int int_time;
 
 	public void salesPlus(){
 		sales += 1;

@@ -16,7 +16,7 @@ public interface ServiceListRepository extends JpaRepository<ServiceList, String
     @Query(value = "select * from servicelist where category = ?1 order by sequence",nativeQuery = true)
     List<ServiceList> findByCategory(String category);
 
-    @Query(value = "select * from servicelist where category = ?1 order by timetocomplete desc",nativeQuery = true)
+    @Query(value = "select * from servicelist where category = ?1 order by int_time desc",nativeQuery = true)
     List<ServiceList> findByCategoryOrderByTime(String category);
 
     Optional<ServiceList> findByService(String service);
