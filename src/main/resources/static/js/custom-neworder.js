@@ -329,7 +329,7 @@ function sortOfTime(){
     let servicenum = document.querySelector("#orderform-service-id").innerHTML.substr(1);
     let target = document.querySelector("#orderform-service");
 
-    fetch(`http://mktingshop.com/api/v2/sortTime/${servicenum}`)
+    fetch(`http://mktingshop.com/api/v2/sortTime?servicenum=${servicenum}`)
           .then(res => res.json())
           .then(serviceLists =>{
                 target.options.length = 0;
@@ -337,7 +337,7 @@ function sortOfTime(){
                     let opt = document.createElement("option");
                     switch (serviceList.type) {
                         case 'Default':
-                            opt.dataset.type=12; //comment에 default인데 0인것도 존재. 오타인듯
+                            opt.dataset.type=12;
                             break;
                         case 'Subscriptions':
                             opt.dataset.type=100;
