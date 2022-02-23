@@ -488,7 +488,12 @@ public class WebClientService {
                     .replace("서버tumbleupon","Stumbleupon")
                     .replace("서버tumbleupon","Stumbleupon")
                     .replace("버전imeo","Vimeo")
-                    .replace("서버hopping","Shopping");
+                    .replace("서버hopping","Shopping")
+                    .replace("\uD83D\uDD25","")
+                    .replace("⚡","")
+                    .replace("\uD83D\uDC8E","")
+                    .replace("♛","")
+                    .replace("⭐️","");
             serviceList.setKorname(korname);
 
             if (serviceList.getCategory().toLowerCase().contains("instagram")) {
