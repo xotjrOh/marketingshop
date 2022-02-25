@@ -31,7 +31,7 @@ public class ServiceList { //리셋시 지움 지움 생김
 	@ColumnDefault("0")
 	@Column(insertable=false, updatable=false) //??해결위해 재시작시 두개다 지움
 	private int price;
-	@Column(insertable=false)// ??해결위해 재시작시 업데이트 지움
+	@Column(insertable=false, updatable=false)// ??해결위해 재시작시 업데이트 지움
 	private String korname;
 	@Column//(insertable=false, updatable=false)
 	private String korcategory;
