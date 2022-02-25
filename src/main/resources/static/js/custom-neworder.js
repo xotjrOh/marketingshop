@@ -194,8 +194,8 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
     fetch(`http://mktingshop.com/api/v2/getService?servicenum=${servicenum}`)
         .then(res => res.json())
         .then(service =>{
-            let min = priceToString(`${service.min}`);
-            let max = priceToString(`${service.max}`);
+            let min = justPriceToString(`${service.min}`);
+            let max = justPriceToString(`${service.max}`);
             let price;
 
             let serviceidBox = document.querySelector("#orderform-service-id");
