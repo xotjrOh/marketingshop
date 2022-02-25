@@ -363,3 +363,10 @@ function sortOfTime(){
                 selectService(ServiceOptions);
           }).catch(e=>console.log("카테고리가 제대로 읽히지 않습니다"));
 }
+
+window.addEventListener('pageshow', function(event){
+    if (event.persisted) {
+        console.log('뒤로가기로 접근하였습니다');
+        window.location.reload();
+    }
+})
