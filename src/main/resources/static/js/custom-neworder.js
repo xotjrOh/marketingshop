@@ -214,7 +214,7 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
                     break;
                 case "14" :
                     document.querySelector("#field-orderform-fields-comment").removeEventListener("keyup",commentPrice);
-                    document.querySelector("#charge").value= priceToString(`${service.price}`);
+                    document.querySelector("#charge").value= priceToString(`${service.price}`)+'원';
                     break;
                 case "2" :
                     document.querySelector("#field-orderform-fields-comment").dataset.price=service.price;

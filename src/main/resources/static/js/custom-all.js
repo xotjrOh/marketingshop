@@ -17,7 +17,7 @@ function justPriceToString(price) { //3자리마다 콤마 표현 / neworder에 
 }
 
 function priceToString(price) { //3자리마다 콤마 표현 / neworder에 있는거 옮겨서 문제되면 다시 복구
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+'원';
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
 }
 
 function changeNickname(){ //닉네임 변경
