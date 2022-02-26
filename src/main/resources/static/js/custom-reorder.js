@@ -19,6 +19,6 @@ window.addEventListener("load",()=>{
             minmax[1].value = max;
             //subsPrice();
             let curPrice = Math.floor(price * posts * (min + max) / 2000);
-            document.querySelector("#charge").value= priceToString(`${curPrice}`);
+            document.querySelector("#charge").value= priceToString(`${curPrice}원`);
     });
 });

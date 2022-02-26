@@ -194,8 +194,8 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
     fetch(`http://mktingshop.com/api/v2/getService?servicenum=${servicenum}`)
         .then(res => res.json())
         .then(service =>{
-            let min = justPriceToString(`${service.min}`);
-            let max = justPriceToString(`${service.max}`);
+            let min = priceToString(`${service.min}`);
+            let max = priceToString(`${service.max}`);
             let price;
 
             let serviceidBox = document.querySelector("#orderform-service-id");
@@ -214,14 +214,14 @@ function selectService(options){ // 서비스 선택시 모든 데이터 뷰로 
                     break;
                 case "14" :
                     document.querySelector("#field-orderform-fields-comment").removeEventListener("keyup",commentPrice);
-                    document.querySelector("#charge").value= priceToString(`${service.price}`)+'원';
+                    document.querySelector("#charge").value= priceToString(`${service.price}원`);
                     break;
                 case "2" :
                     document.querySelector("#field-orderform-fields-comment").dataset.price=service.price;
                     document.querySelector("#field-orderform-fields-comment").addEventListener("keyup",commentPrice);
                     break;
                 case "10" :
-                    document.querySelector("#charge").value= priceToString(`${service.price}`);
+                    document.querySelector("#charge").value= priceToString(`${service.price}원`);
                     break;
             }
 
@@ -278,7 +278,7 @@ function allHidden(){ // 우선적으로 모두 히든으로 변경
 
 function defaultPrice(option){
     let curPrice = Math.floor(option.dataset.price * option.value / 1000);
-    document.querySelector("#charge").value= priceToString(`${curPrice}`);
+    document.querySelector("#charge").value= priceToString(`${curPrice}원`);
 }
 
 function commentPrice(){
@@ -286,7 +286,7 @@ function commentPrice(){
     document.querySelector("#field-orderform-fields-quantity").value = commentQuantity;
 
     let curPrice = Math.floor(document.querySelector("#field-orderform-fields-comment").dataset.price * commentQuantity / 1000);
-    document.querySelector("#charge").value= priceToString(`${curPrice}`);
+    document.querySelector("#charge").value= priceToString(`${curPrice}원`);
 }
 
 function subsPrice(){
@@ -304,7 +304,7 @@ function subsPrice(){
     posts *= 1; min *= 1; max *= 1;
 
     let curPrice = Math.floor(price * posts * (min+max) / 2000);
-    document.querySelector("#charge").value= priceToString(`${curPrice}`);
+    document.querySelector("#charge").value= priceToString(`${curPrice}원`);
 }
 
 
@@ -364,9 +364,10 @@ function sortOfTime(){
           }).catch(e=>console.log("카테고리가 제대로 읽히지 않습니다"));
 }
 
-window.addEventListener('pageshow', function(event){
-    if (event.persisted) {
-        console.log('뒤로가기로 접근하였습니다');
-        window.location.reload();
-    }
-})
+if(window.performance.navigation.type == 2) {
+    location.reload();
+}
+
+if(window.performance.getEntriesByType("navigation")[0].type == "back_forward") {
+    location.reload();
+}
