@@ -5,12 +5,16 @@ if(document.readyState == "loading"){
     /*$('#orderform-category').val(curCategory).prop("selected");*/
 }
 
-window.onload = function(){ //다른걸로 덮어쓰기로 해결
+/*window.onload = function(){ //다른걸로 덮어쓰기로 해결
     let curService = document.querySelector("#field-orderform-fields-cur-service").value;
-    setTimeout(() =>$('#orderform-service').val(curService).trigger("change"),30);
+    $('#orderform-service').val(curService).trigger("change");
     console.log("현재서비스 : ",curService);
-}
+}*/
 
+window.setTimeout(function(){
+    let curService = document.querySelector("#field-orderform-fields-cur-service").value;
+    $('#orderform-service').val(curService).trigger("change");
+},600);
 
 
 
