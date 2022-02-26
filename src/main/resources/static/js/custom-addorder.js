@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 if(document.readyState == "loading"){
     console.log("로딩상황");
-    *//*$('#orderform-category').val(curCategory).prop("selected");*//*
+    /*$('#orderform-category').val(curCategory).prop("selected");*/
 }
 
 document.querySelector("#field-orderform-fields-cur-service").onload = function(){
