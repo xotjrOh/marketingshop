@@ -15,7 +15,8 @@ window.onload = function(){
     window.setTimeout(function(){
         let curService = document.querySelector("#field-orderform-fields-cur-service").value;
         $('#orderform-service').val(curService).trigger("change");
-},300)};
+        reorder();
+},200)};
 
 
 

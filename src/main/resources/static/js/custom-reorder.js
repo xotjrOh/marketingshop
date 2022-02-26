@@ -1,4 +1,4 @@
-window.addEventListener("load",()=>{
+function reorder(){
     let subsid = location.href.split('/')[5];
 
     fetch(`http://mktingshop.com/api/v2/getSubscription?subsid=${subsid}`)
@@ -21,4 +21,4 @@ window.addEventListener("load",()=>{
             let curPrice = Math.floor(price * posts * (min + max) / 2000);
             document.querySelector("#charge").value= priceToString(`${curPrice}원`);
     });
-});
+};
