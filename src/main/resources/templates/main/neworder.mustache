@@ -11,7 +11,7 @@
                         <div class="card-body">
                             <form action="/customer/addOrder" method="post" id="order-form" class="form form-horizontal">
                                 <div class="form-group">
-                                    <label for="orderform-category" class="control-label">카테고리</label>
+                                    <label for="orderform-category" class="control-label">카테고리 (스크롤 가능)</label>
                                     <select class="form-control" id="orderform-category" name="category" style="font-family: 'FontAwesome','Second Font name'" onchange="change(this.value)">
                                         {{#categories}}
                                         <option class="category-option" value="{{.}}">{{.}}</option>

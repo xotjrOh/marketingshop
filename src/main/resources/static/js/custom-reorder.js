@@ -1,5 +1,6 @@
 window.addEventListener("load",()=>{
     let subsid = location.href.split('/')[5];
+    console.log(location.href.split('/')[4]);console.log(location.href.split('/')[5]);console.log(location.href.split('/')[6]);
 
     fetch(`http://mktingshop.com/api/v2/getSubscription?subsid=${subsid}`)
         .then(res => res.json())
