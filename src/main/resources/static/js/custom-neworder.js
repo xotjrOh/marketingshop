@@ -325,11 +325,6 @@ function qna_danger(){
     danger.classList.add("show");
 }
 
-function mostQnA(){
-    let lq = document.querySelector("#QnA-quality");
-    lq.classList.add("show");
-}
-
 function sortOfTime(){
     let servicenum = document.querySelector("#orderform-service-id").innerHTML.substr(1);
     let target = document.querySelector("#orderform-service");
