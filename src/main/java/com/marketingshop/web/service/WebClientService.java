@@ -63,7 +63,7 @@ public class WebClientService {
         return serviceList;
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    //@Transactional(rollbackFor = Exception.class)
     public String addOrder(String privateid,OrderForm orderForm) throws ParseException {
         MultiValueMap<String,Object> params = new LinkedMultiValueMap<>();
         params.add("key", apiKey);
