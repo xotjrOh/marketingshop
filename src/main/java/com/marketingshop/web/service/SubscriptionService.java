@@ -1,5 +1,6 @@
 package com.marketingshop.web.service;
 
+import com.marketingshop.web.config.ExternalProperties;
 import com.marketingshop.web.entity.ServiceList;
 import com.marketingshop.web.entity.Subscription;
 import com.marketingshop.web.entity.User;
@@ -39,13 +40,14 @@ public class SubscriptionService {
 
     @Autowired
     private WebClient webClient;
-    private String apiKey = "9ad7be959340d16c54fb19ca200722ac";
+    @Autowired
+    private ExternalProperties externalProperties;
 
 
     @Transactional(rollbackFor = Exception.class)
     public Subscription getSubscription(Long orderid, User user, ServiceList serviceList) throws ParseException {
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
+        params.add("key", externalProperties.getApiKey());
         params.add("action", "status");
         params.add("order", String.valueOf(orderid));
 
@@ -82,7 +84,7 @@ public class SubscriptionService {
         if (subsidsComma.isEmpty()) return subscriptionList;
 
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
+        params.add("key", externalProperties.getApiKey());
         params.add("action", "status");
         params.add("orders", subsidsComma);
 
@@ -134,7 +136,7 @@ public class SubscriptionService {
         if (subsidsComma.isEmpty()) return subscriptionList;
 
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
+        params.add("key", externalProperties.getApiKey());
         params.add("action", "status");
         params.add("orders", subsidsComma);
 

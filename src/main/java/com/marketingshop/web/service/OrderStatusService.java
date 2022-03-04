@@ -1,5 +1,6 @@
 package com.marketingshop.web.service;
 
+import com.marketingshop.web.config.ExternalProperties;
 import com.marketingshop.web.entity.OrderStatus;
 import com.marketingshop.web.entity.ServiceList;
 import com.marketingshop.web.entity.Subscription;
@@ -39,12 +40,13 @@ public class OrderStatusService {
 
     @Autowired
     private WebClient webClient;
-    private String apiKey = "9ad7be959340d16c54fb19ca200722ac";
+    @Autowired
+    private ExternalProperties externalProperties;
 
     @Transactional(rollbackFor = Exception.class)
     public OrderStatus getOrderStatus(Long orderid) throws ParseException { //addorder에서 상단 flash때매 1번 사용됨
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
+        params.add("key", externalProperties.getApiKey());
         params.add("action", "status");
         params.add("order", String.valueOf(orderid));
 
@@ -72,7 +74,7 @@ public class OrderStatusService {
     @Transactional(rollbackFor = Exception.class) //1페이지에 모든걸 호출할거라서.
     public List<OrderStatus> getOrderStatusBySubs(Long subsid, User user, ServiceList serviceList) throws ParseException {
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
+        params.add("key", externalProperties.getApiKey());
         params.add("action", "status");
         params.add("order", String.valueOf(subsid));
 
@@ -87,7 +89,7 @@ public class OrderStatusService {
 
         List<String> orderidList = (List)orderStatusTempJson.get("orders");
         MultiValueMap<String,String> paramss = new LinkedMultiValueMap<>();
-        paramss.add("key", apiKey);
+        paramss.add("key", externalProperties.getApiKey());
         paramss.add("action", "status");
         paramss.add("orders", String.join(",", orderidList));
 
@@ -159,7 +161,7 @@ public class OrderStatusService {
         if (orderidsComma.isEmpty()) return orderStatusList;
 
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
+        params.add("key", externalProperties.getApiKey());
         params.add("action", "status");
         params.add("orders", orderidsComma);
 
@@ -222,7 +224,7 @@ public class OrderStatusService {
         if (orderidsComma.isEmpty()) return orderStatusRepository.findByUserAndStatusAndLinkContaining(user, status, search, pageable);
 
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
+        params.add("key", externalProperties.getApiKey());
         params.add("action", "status");
         params.add("orders", orderidsComma);
 

@@ -1,7 +1,11 @@
 package com.marketingshop.web.controller;
 
 import com.marketingshop.web.annotation.LoginUser;
-import com.marketingshop.web.entity.*;
+import com.marketingshop.web.config.ExternalProperties;
+import com.marketingshop.web.entity.ServiceList;
+import com.marketingshop.web.entity.SessionUser;
+import com.marketingshop.web.entity.Subscription;
+import com.marketingshop.web.entity.User;
 import com.marketingshop.web.repository.*;
 import com.marketingshop.web.service.OrderStatusService;
 import com.marketingshop.web.service.SubscriptionService;
@@ -47,7 +51,8 @@ public class SubsController {
 	private SubscriptionService subscriptionService;
 	@Autowired
 	private DescriptionRepository descriptionRepository;
-
+	@Autowired
+	private ExternalProperties externalProperties;
 
 	@GetMapping("subscriptions/stop/{subsid}")
 	@Transactional(rollbackFor = Exception.class)
@@ -63,19 +68,19 @@ public class SubsController {
 
 		WebDriver driver = new ChromeDriver(opt);
 
-		String url = "https://smmkings.com/";
+		String url = externalProperties.getMainURL();
 		driver.get(url);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		//로그인
 		driver.findElement(new By.ByLinkText("GET STARTED")).click();
 		Thread.sleep(1000); //driver.wait(3000);
-		driver.findElement(By.name("LoginForm[username]")).sendKeys("xotjr8054");
+		driver.findElement(By.name("LoginForm[username]")).sendKeys(externalProperties.getId());
 		Thread.sleep(100);
-		driver.findElement(By.name("LoginForm[password]")).sendKeys("**ots8054");
+		driver.findElement(By.name("LoginForm[password]")).sendKeys(externalProperties.getPassword());
 		Thread.sleep(100);
 		driver.findElement(By.xpath("//*[@id=\"container\"]/div[2]/form/button[1]")).submit();
 		Thread.sleep(1000);
-		driver.get("https://smmkings.com/subscriptions/stop/"+subsid);
+		driver.get(externalProperties.getMainURL()+"/subscriptions/stop/"+subsid);
 		Thread.sleep(1000);
 		driver.quit();
 

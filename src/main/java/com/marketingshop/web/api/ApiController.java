@@ -1,5 +1,6 @@
 package com.marketingshop.web.api;
 
+import com.marketingshop.web.config.ExternalProperties;
 import com.marketingshop.web.entity.Comment;
 import com.marketingshop.web.entity.ServiceList;
 import com.marketingshop.web.entity.Subscription;
@@ -21,8 +22,8 @@ import java.util.Optional;
 @RequestMapping("/api/v2")
 @Slf4j
 public class ApiController { //get, post, patch, delete
-
-    private String apiKey = "9ad7be959340d16c54fb19ca200722ac";
+    @Autowired
+    private ExternalProperties externalProperties;
     @Autowired
     private WebClientService webClientService;
     @Autowired

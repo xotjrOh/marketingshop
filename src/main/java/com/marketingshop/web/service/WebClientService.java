@@ -1,5 +1,6 @@
 package com.marketingshop.web.service;
 
+import com.marketingshop.web.config.ExternalProperties;
 import com.marketingshop.web.dto.OrderForm;
 import com.marketingshop.web.entity.OrderStatus;
 import com.marketingshop.web.entity.ServiceList;
@@ -27,7 +28,8 @@ import java.util.Optional;
 public class WebClientService {
     @Autowired
     private WebClient webClient;
-    private String apiKey = "9ad7be959340d16c54fb19ca200722ac";
+    @Autowired
+    private ExternalProperties externalProperties;
 
     @Autowired
     private ServiceListRepository serviceListRepository;
@@ -48,7 +50,7 @@ public class WebClientService {
     @Transactional(rollbackFor = Exception.class)
     public List<ServiceList> getSmmServices() {
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
+        params.add("key", externalProperties.getApiKey());
         params.add("action", "services");
 
         List<ServiceList> serviceList = webClient.post().uri("/api/v2")
@@ -66,7 +68,7 @@ public class WebClientService {
     @Transactional(rollbackFor = Exception.class)
     public String addOrder(String privateid,OrderForm orderForm) throws ParseException {
         MultiValueMap<String,Object> params = new LinkedMultiValueMap<>();
-        params.add("key", apiKey);
+        params.add("key", externalProperties.getApiKey());
         params.add("action", "add");
         params.add("service", orderForm.getService());
 

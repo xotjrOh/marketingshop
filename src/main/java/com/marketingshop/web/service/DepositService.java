@@ -1,5 +1,6 @@
 package com.marketingshop.web.service;
 
+import com.marketingshop.web.config.ExternalProperties;
 import com.marketingshop.web.entity.PaymentData;
 import com.marketingshop.web.entity.User;
 import com.marketingshop.web.repository.*;
@@ -31,7 +32,8 @@ public class DepositService {
 
     @Autowired
     private WebClient webClient;
-    private String apiKey = "9ad7be959340d16c54fb19ca200722ac";
+    @Autowired
+    private ExternalProperties externalProperties;
 
 
     @Transactional(rollbackFor = Exception.class)
