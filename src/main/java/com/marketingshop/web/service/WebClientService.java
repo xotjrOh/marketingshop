@@ -148,6 +148,8 @@ public class WebClientService {
 
             JSONParser jsonParser = new JSONParser();
             JSONObject orderidJson = (JSONObject) jsonParser.parse(orderid);
+            log.info("orderidJson : {}",orderidJson);
+
             order = (Long) orderidJson.get("order"); //없어진 서비스 주문하면 어찌되는지 확인하기
         } catch(Exception e){
             log.info("{}님이 알 수 없는 주문발생, orderform : {}, params : {}, exception : {}",privateid,orderForm,params,e);
